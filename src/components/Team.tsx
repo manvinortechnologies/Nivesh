@@ -147,8 +147,8 @@ const Team: React.FC = () => {
                             onClick={() => scroll('left')}
                             disabled={!canScrollLeft}
                             className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${canScrollLeft
-                                    ? 'border-primary text-primary hover:bg-primary hover:text-white'
-                                    : 'border-neutral-300 text-neutral-300 cursor-not-allowed'
+                                ? 'border-primary text-primary hover:bg-primary hover:text-white'
+                                : 'border-neutral-300 text-neutral-300 cursor-not-allowed'
                                 }`}
                             aria-label="Scroll left"
                         >
@@ -161,8 +161,8 @@ const Team: React.FC = () => {
                             onClick={() => scroll('right')}
                             disabled={!canScrollRight}
                             className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${canScrollRight
-                                    ? 'border-primary text-primary hover:bg-primary hover:text-white'
-                                    : 'border-neutral-300 text-neutral-300 cursor-not-allowed'
+                                ? 'border-primary text-primary hover:bg-primary hover:text-white'
+                                : 'border-neutral-300 text-neutral-300 cursor-not-allowed'
                                 }`}
                             aria-label="Scroll right"
                         >
@@ -174,11 +174,6 @@ const Team: React.FC = () => {
                 </div>
             </div>
 
-            <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
         </section>
     );
 };
