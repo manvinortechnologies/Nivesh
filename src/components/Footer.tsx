@@ -28,6 +28,7 @@ const Footer: React.FC = () => {
                             <li>
                                 <a href="#about" className="text-neutral-400 hover:text-primary transition-colors">
                                     About Us
+                                    {/* About Us */}
                                 </a>
                             </li>
                             <li>
