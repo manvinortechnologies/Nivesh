@@ -1,12 +1,12 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import MFDRevolution from '../components/MFDRevolution';
 import Features from '../components/Features';
-import InvestmentProducts from '../components/InvestmentProducts';
-import BenefitsSection from '../components/BenefitsSection';
-import TechHumanSection from '../components/TechHumanSection';
+import ExistingMFDSection from '../components/ExistingMFDSection';
+import AspiringMFDSection from '../components/AspiringMFDSection';
 import GrowthStatistics from '../components/GrowthStatistics';
-import Team from '../components/Team';
 import Testimonials from '../components/Testimonials';
+import BenefitsSection from '../components/BenefitsSection';
 import CallToAction from '../components/CallToAction';
 import FAQSection from '../components/FAQSection';
 
@@ -14,13 +14,13 @@ const Home: React.FC = () => {
     return (
         <>
             <Hero />
+            <MFDRevolution />
             <Features />
-            <InvestmentProducts />
-            <BenefitsSection />
-            <TechHumanSection />
+            <ExistingMFDSection />
+            <AspiringMFDSection />
             <GrowthStatistics />
-            <Team />
             <Testimonials />
+            <BenefitsSection />
             <CallToAction />
             <FAQSection />
         </>

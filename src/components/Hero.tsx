@@ -1,93 +1,122 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Button from './ui/Button';
 
 const Hero: React.FC = () => {
-    return (
-        <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary-dark to-primary overflow-hidden">
-            {/* Decorative Circles */}
-            <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-white/10 rounded-full"></div>
-                <div className="absolute top-1/3 right-1/4 w-80 h-80 border border-white/10 rounded-full"></div>
-                <div className="absolute bottom-1/4 left-1/3 w-72 h-72 border border-white/10 rounded-full"></div>
-            </div>
+    const headlines = [
+        "Upgrade Your Business. Outgrow Your Market.",
+        "Want To Grow 5X? We Can Make It Happen.",
+        "Built for MFDs Who Refuse to Stay Small.",
+        "Stop Distributing. Start Dominating.",
+        "Build a High-Growth Advisory Business. Starting Today."
+    ];
 
-            {/* Content */}
-            <div className="relative container-custom pt-32 pb-20 md:pt-40 md:pb-32">
-                <div className="max-w-4xl mx-auto text-center mb-16">
-                    {/* Main Heading - White on gradient */}
-                    <h1 className="text-white mb-8 leading-tight">
-                        <span className="block text-4xl md:text-6xl font-normal mb-2">
-                            India's trusted
-                        </span>
-                        <span className="block text-4xl md:text-6xl font-semibold">
-                            Investment Advisory Platform
-                        </span>
+    const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentHeadlineIndex((prevIndex) => (prevIndex + 1) % headlines.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <section className="relative min-h-screen bg-gradient-to-br from-[#E63946] via-[#ff8a80] to-white overflow-hidden">
+            {/* Background Animation/Gradient */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+
+            <div className="container-custom relative pt-32 pb-20 md:pt-40 md:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                {/* Left Content */}
+                <div className="z-10">
+                    <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 min-h-[160px] md:min-h-[200px] transition-all duration-500 ease-in-out text-white">
+                        Grow 5X.. <br />
+                        <span className="text-black">smart tech, smarter advisors</span>
+                        <div className="text-2xl md:text-3xl mt-4 font-light text-white/90">
+                            {headlines[currentHeadlineIndex]}
+                        </div>
                     </h1>
 
-                    {/* Subtitle */}
-                    <p className="text-white/90 text-xl md:text-2xl font-light max-w-3xl mx-auto">
-                        Review, select, and rebalance your investments effortlessly
+                    <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl">
+                        Smart tech, proactive research, and a premium client experience that puts you ahead of every competitor.
                     </p>
-                </div>
 
-                {/* App Mockup */}
-                <div className="flex justify-center items-center mt-12">
-                    <div className="relative">
-                        {/* Phone Frame Mockup */}
-                        <div className="relative w-72 md:w-80 h-[600px] bg-white rounded-[3rem] shadow-2xl p-3">
-                            {/* Screen */}
-                            <div className="w-full h-full bg-gradient-to-b from-neutral-50 to-white rounded-[2.5rem] overflow-hidden">
-                                {/* Status Bar */}
-                                <div className="h-8 bg-neutral-100 flex items-center justify-between px-6 text-xs">
-                                    <span>9:41</span>
-                                    <div className="flex gap-1">
-                                        <div className="w-4 h-3 bg-neutral-400 rounded-sm"></div>
-                                        <div className="w-4 h-3 bg-neutral-400 rounded-sm"></div>
-                                        <div className="w-4 h-3 bg-neutral-400 rounded-sm"></div>
-                                    </div>
-                                </div>
+                    <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                        <Button variant="primary" size="lg" className="bg-black text-red-500 hover:bg-neutral-100 border-none shadow-lg">
+                            Supercharge Your Business
+                        </Button>
+                        <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+                            Become an MFD →
+                        </Button>
+                    </div>
 
-                                {/* App Content */}
-                                <div className="p-6">
-                                    {/* Header */}
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                                            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <div className="text-sm font-semibold text-neutral-900">Portfolio</div>
-                                            <div className="text-xs text-neutral-500">View Performance</div>
-                                        </div>
-                                    </div>
+                    <p className="text-sm text-white/80 font-medium mb-8">
+                        Launch your own branded wealth platform in days, not months.
+                    </p>
 
-                                    {/* Card */}
-                                    <div className="bg-white rounded-2xl shadow-lg p-5 mb-4">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <span className="text-xs text-neutral-500">Total Investment</span>
-                                            <span className="text-lg font-bold text-neutral-900">₹5,24,000</span>
-                                        </div>
-                                        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
-                                            <div className="w-3/4 h-full bg-gradient-to-r from-primary to-primary-dark rounded-full"></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Action Button */}
-                                    <div className="mt-6">
-                                        <button className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2">
-                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                                            </svg>
-                                            <span>Invest Now</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Notch */}
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-7 bg-neutral-900 rounded-b-3xl"></div>
+                    {/* Trust Strip */}
+                    <div className="border-t border-white/20 pt-6">
+                        <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs md:text-sm text-white/80">
+                            <span>Trusted by 10,000+ advisors</span>
+                            <span className="hidden md:inline">|</span>
+                            <span>Integrated with CAMS & KFin</span>
+                            <span className="hidden md:inline">|</span>
+                            <span>AMFI-compliant</span>
+                            <span className="hidden md:inline">|</span>
+                            <span>Launch in 1 hour</span>
+                            <span className="hidden md:inline">|</span>
+                            <span>Zero onboarding cost</span>
                         </div>
                     </div>
+                </div>
+
+                {/* Right Visual - Wealth Tree Concept */}
+                <div className="relative flex justify-center items-center h-[500px]">
+                    {/* Central Node */}
+                    <div className="relative z-20 w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(230,57,70,0.3)] animate-pulse-slow border-4 border-white/50">
+                        <div className="text-center">
+                            <div className="text-primary font-bold text-lg">Your Brand</div>
+                            <div className="text-xs text-neutral-500">You</div>
+                        </div>
+                    </div>
+
+                    {/* Orbiting Nodes */}
+                    <div className="absolute inset-0 animate-spin-slow">
+                        {/* Node 1: MF */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            MF
+                        </div>
+                        {/* Node 2: PMS */}
+                        <div className="absolute top-1/4 right-0 translate-x-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            PMS
+                        </div>
+                        {/* Node 3: AIF */}
+                        <div className="absolute bottom-1/4 right-0 translate-x-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            AIF
+                        </div>
+                        {/* Node 4: Bonds */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            Bonds
+                        </div>
+                        {/* Node 5: Insurance */}
+                        <div className="absolute bottom-1/4 left-0 -translate-x-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            Insurance
+                        </div>
+                        {/* Node 6: Loans (Optional/Extra) */}
+                        <div className="absolute top-1/4 left-0 -translate-x-1/2 w-20 h-20 bg-primary text-white border-2 border-white rounded-full flex items-center justify-center font-semibold text-sm shadow-xl transform hover:scale-110 transition-transform">
+                            Loans
+                        </div>
+                    </div>
+
+                    {/* Connecting Lines (SVG) */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40 animate-spin-slow" style={{ animationDirection: 'reverse' }}>
+                        <circle cx="50%" cy="50%" r="150" fill="none" stroke="#E63946" strokeWidth="1" strokeDasharray="10 10" />
+                        <line x1="50%" y1="50%" x2="50%" y2="20%" stroke="#E63946" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="80%" y2="35%" stroke="#E63946" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="80%" y2="65%" stroke="#E63946" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="50%" y2="80%" stroke="#E63946" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="20%" y2="65%" stroke="#E63946" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="20%" y2="35%" stroke="#E63946" strokeWidth="1" />
+                    </svg>
                 </div>
             </div>
         </section>

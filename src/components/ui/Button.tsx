@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonProps {
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary' | 'outline';
     size?: 'sm' | 'md' | 'lg';
     children: React.ReactNode;
     onClick?: () => void;
@@ -22,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
     const variantStyles = {
         primary: 'bg-primary text-white hover:bg-primary-dark shadow-sm hover:shadow-md',
         secondary: 'bg-transparent text-neutral-900 border-2 border-neutral-300 hover:border-neutral-400 focus:ring-neutral-400',
+        outline: 'bg-transparent border-2 border-current hover:bg-white/10 focus:ring-white',
     };
 
     const sizeStyles = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './ui/Card';
+import Button from './ui/Button';
 
 interface Testimonial {
     name: string;
@@ -13,22 +14,22 @@ const Testimonials: React.FC = () => {
     const testimonials: Testimonial[] = [
         {
             name: 'Rajesh Kumar',
-            role: 'Entrepreneur',
-            content: 'Nivesh transformed my approach to investing. The personalized advice and real-time analytics have helped me grow my portfolio by 35% in just one year.',
+            role: 'Financial Advisor',
+            content: 'I grew my client base 4x within a year—Nivesh gave me the tools and confidence.',
             imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh',
             rating: 5,
         },
         {
             name: 'Priya Sharma',
-            role: 'Software Engineer',
-            content: 'As a beginner investor, I was overwhelmed by options. Nivesh made it simple with expert guidance and a user-friendly platform. Highly recommended!',
+            role: 'Mutual Fund Distributor',
+            content: 'Everything runs digitally now—I focus on advice, not admin.',
             imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya',
             rating: 5,
         },
         {
             name: 'Amit Patel',
-            role: 'Business Owner',
-            content: 'The transparency and low fees are unmatched. I finally found a platform I can trust with my hard-earned money. Great service and returns!',
+            role: 'Wealth Manager',
+            content: 'My own app! My clients love the experience.',
             imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amit',
             rating: 5,
         },
@@ -39,29 +40,22 @@ const Testimonials: React.FC = () => {
             <div className="container-custom">
                 {/* Section Header */}
                 <div className="max-w-3xl mx-auto text-center mb-16">
-                    <h2 className="text-neutral-900 mb-6 leading-tight">
-                        <span className="block text-4xl md:text-5xl font-normal mb-2">
-                            What Our Clients
-                        </span>
-                        <span className="block text-4xl md:text-5xl font-semibold text-primary">
-                            Say
-                        </span>
+                    <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
+                        Advisors across India are <br />
+                        <span className="text-primary">scaling faster with Nivesh.</span>
                     </h2>
-                    <p className="text-lg text-neutral-600">
-                        Join thousands of satisfied investors who trust Nivesh with their financial future
-                    </p>
                 </div>
 
                 {/* Testimonials Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
                     {testimonials.map((testimonial, index) => (
-                        <Card key={index} className="h-full flex flex-col">
+                        <Card key={index} className="h-full flex flex-col hover:shadow-xl transition-shadow duration-300">
                             {/* Stars */}
                             <div className="flex gap-1 mb-4">
                                 {[...Array(testimonial.rating)].map((_, i) => (
                                     <svg
                                         key={i}
-                                        className="w-5 h-5 text-primary"
+                                        className="w-5 h-5 text-yellow-400"
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                     >
@@ -71,24 +65,31 @@ const Testimonials: React.FC = () => {
                             </div>
 
                             {/* Content */}
-                            <p className="text-neutral-600 mb-6 italic leading-relaxed flex-grow">
+                            <p className="text-lg text-neutral-700 mb-6 italic leading-relaxed flex-grow">
                                 "{testimonial.content}"
                             </p>
 
                             {/* Author */}
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 border-t border-neutral-100 pt-4">
                                 <img
                                     src={testimonial.imageUrl}
                                     alt={testimonial.name}
-                                    className="w-14 h-14 rounded-full bg-neutral-100"
+                                    className="w-12 h-12 rounded-full bg-neutral-100"
                                 />
                                 <div>
                                     <div className="font-semibold text-neutral-900">{testimonial.name}</div>
-                                    <div className="text-sm text-neutral-600">{testimonial.role}</div>
+                                    <div className="text-sm text-neutral-500">{testimonial.role}</div>
                                 </div>
                             </div>
                         </Card>
                     ))}
+                </div>
+
+                {/* CTA */}
+                <div className="text-center">
+                    <Button variant="outline" className="border-neutral-300 text-neutral-700 hover:border-primary hover:text-primary">
+                        Read Success Stories →
+                    </Button>
                 </div>
             </div>
         </section>
