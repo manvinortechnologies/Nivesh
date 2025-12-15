@@ -13,7 +13,7 @@ const AspiringMFDSection: React.FC = () => {
                         For Aspiring MFDs
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6">
-                        Start your wealth journey with Nivesh.
+                        Start Your Wealth Journey With Nivesh.
                     </h2>
                     <p className="text-lg text-neutral-600">
                         We help you become a Mutual Fund Distributor ... from AMFI certification to your first client.

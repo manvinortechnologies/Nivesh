@@ -71,10 +71,10 @@ const Features: React.FC = () => {
                 {/* Header */}
                 <div className="text-center mb-16 max-w-3xl mx-auto">
                     <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6">
-                        One platform. <span className="text-primary">Infinite possibilities.</span>
+                        One Platform. <span className="text-primary">Infinite Possibilities.</span>
                     </h2>
                     <p className="text-lg text-neutral-600">
-                        Manage every client, product, and process...from onboarding to growth..with ease.
+                        Manage every client, product, and process...from onboarding to growth...with ease.
                     </p>
                 </div>
 

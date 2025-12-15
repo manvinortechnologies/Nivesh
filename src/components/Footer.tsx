@@ -18,10 +18,8 @@ const Footer: React.FC = () => {
                         <p className="text-neutral-400 text-sm leading-relaxed mb-4">
                             India's trusted investment advisory platform. Empowering investors to make smarter financial decisions.
                         </p>
-                        <div className="space-y-2 text-sm text-neutral-400">
-                            <p>123 Financial District</p>
-                            <p>Mumbai, Maharashtra 400001</p>
-                            <p>India</p>
+                        <div className="space-y-1 text-sm text-neutral-400">
+                            <p><span className="font-semibold">Registered Office Address:</span> Private No-S-203, 20, ABC Complex, Veer Savarkar Block, Shakarpur, Shahdara, Delhi-110092</p>
                         </div>
                     </div>
 
@@ -97,7 +95,8 @@ const Footer: React.FC = () => {
                             <div>
                                 <p className="text-neutral-500 mb-1">Email</p>
                                 <a href="mailto:info@nivesh.com" className="text-neutral-400 hover:text-primary transition-colors">
-                                    info@nivesh.com
+                                Contact@nivesh.com
+                                
                                 </a>
                             </div>
                             <div>

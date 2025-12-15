@@ -1,7 +1,7 @@
 import React from 'react';
 import bse from '../assets/bse.jpeg';
 import cams from '../assets/cams.jpeg';
-import ghupsap from '../assets/ghupsap.jpeg';
+import gupshup from '../assets/gupshup.jpeg';
 import karvy from '../assets/karvy.jpeg';
 import ondc from '../assets/ONDC.jpeg';
 import mf from '../assets/mf.jpeg';
@@ -20,7 +20,7 @@ const BenefitsSection: React.FC = () => {
     const partners = [
         { name: 'BSE', logo: bse },
         { name: 'CAMS', logo: cams },
-        { name: 'Ghupsap', logo: ghupsap },
+        { name: 'Gupshup', logo: gupshup },
         { name: 'Karvy', logo: karvy },
         { name: 'ONDC', logo: ondc },
         { name: 'MF Utilities', logo: mf },
@@ -38,8 +38,8 @@ const BenefitsSection: React.FC = () => {
                             Why Choose Nivesh
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-8 leading-tight">
-                            Built for MFDs. <br />
-                            <span className="text-primary">Designed for growth.</span>
+                            Built For MFDs. <br />
+                            <span className="text-primary">Designed For Growth.</span>
                         </h2>
 
                         <ul className="space-y-6 mb-12">

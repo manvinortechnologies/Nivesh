@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardWeb from '../assets/dashboard_webImg.jpeg';
-import FormImage from '../assets/form.jpeg';
+import FormImage from '../assets/formImg.jpg';
 
 const MFDRevolution: React.FC = () => {
     return (
@@ -13,8 +13,8 @@ const MFDRevolution: React.FC = () => {
                             The MFD Revolution
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                            The business of distribution is changing. <br />
-                            <span className="text-primary">Don’t get left behind.</span>
+                            The Business Of Distribution Is Changing. <br />
+                            <span className="text-primary">Don’t Get Left Behind.</span>
                         </h2>
                         <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
                             Clients today expect goal-based, tech-enabled, multi-product advice.
@@ -37,30 +37,30 @@ const MFDRevolution: React.FC = () => {
                         <div className="relative grid grid-cols-2 gap-4">
                             {/* Old Way Card */}
                             <div className="bg-neutral-100 rounded-2xl p-4 transform rotate-[-2deg] translate-y-4 opacity-80 scale-95 hover:opacity-100 hover:scale-100 hover:rotate-0 transition-all duration-500 shadow-lg border border-neutral-200">
-                                <div className="flex items-center gap-2 mb-2 text-neutral-500">
+                                <div className="flex items-center gap-2 mb-4 text-neutral-500">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <span className="text-sm font-semibold uppercase tracking-wider">The Old Way</span>
                                 </div>
-                                <div className="space-y-2">
-                                    <div className="w-full max-h-60 rounded-lg overflow-hidden">
+                                <div className="space-y-3">
+                                    <div className="h-36 w-full rounded-lg overflow-hidden">
                                         <img
                                             src={FormImage}
                                             alt="Form"
-                                            className="w-full h-full object-contain"
+                                            className="w-full h-auto object-fit"
                                         />
                                     </div>
-                                    {/* <div className="mt-4 p-3 bg-white rounded border border-neutral-200">
+                                    <div className="mt-4 p-1 bg-white rounded border border-neutral-200">
                                         <div className="flex items-center gap-2 text-red-500 text-sm font-medium">
                                             <span>⚠ Manual Tracking</span>
                                         </div>
                                     </div>
-                                    <div className="p-3 bg-white rounded border border-neutral-200">
+                                    <div className="p-1 bg-white rounded border border-neutral-200">
                                         <div className="flex items-center gap-2 text-red-500 text-sm font-medium">
                                             <span>⚠ Excel Sheets</span>
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
 
@@ -74,19 +74,19 @@ const MFDRevolution: React.FC = () => {
                                 </div>
                                 <div className="space-y-4">
                                     {/* Chart Placeholder */}
-                                    <div className="h-40 w-full rounded-lg overflow-hidden border border-neutral-100">
+                                    <div className="h-44 w-full rounded-lg overflow-hidden border border-neutral-100">
                                         <img
                                             src={DashboardWeb}
                                             alt="Nivesh Dashboard"
-                                            className="w-full h-full object-cover object-top"
+                                            className="w-full h-full object-cover object-top mt-2"
                                         />
                                     </div>
 
                                     <div className="flex gap-2">
-                                        <div className="flex-1 p-1 bg-green-50 rounded text-center">
+                                        <div className="flex-1 p-2 bg-green-50 rounded text-center">
                                             <div className="text-xs text-green-600 font-medium">Digital</div>
                                         </div>
-                                        <div className="flex-1 p-1 bg-blue-50 rounded text-center">
+                                        <div className="flex-1 p-2 bg-blue-50 rounded text-center">
                                             <div className="text-xs text-blue-600 font-medium">Automated</div>
                                         </div>
                                     </div>

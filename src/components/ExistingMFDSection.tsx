@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './ui/Button';
 import DashboardImg from '../assets/dashboard_webImg.jpeg';
+import DashboardMobile from '../assets/dashboard_mobile.webp';
 
 const ExistingMFDSection: React.FC = () => {
     return (
@@ -13,7 +14,7 @@ const ExistingMFDSection: React.FC = () => {
                             For Existing MFDs
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                            Transform your practice into a <span className="text-primary">digital wealth brand.</span>
+                            Transform Your Practice Into A <span className="text-primary">Digital Wealth Brand.</span>
                         </h2>
 
                         <div className="space-y-4 mb-8">
@@ -70,12 +71,36 @@ const ExistingMFDSection: React.FC = () => {
                     <div className="order-1 lg:order-2 relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl transform rotate-6"></div>
 
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-neutral-200">
-                            <img
-                                src={DashboardImg}
-                                alt="Nivesh Dashboard Interface"
-                                className="w-full h-auto object-cover"
-                            />
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-neutral-200 bg-white px-12 md:px-16 lg:px-24">
+                            {/* Mobile dashboard preview - left */}
+                            <div className="absolute left-2 bottom-2 flex flex-col items-center z-10">
+                                <img
+                                    src={DashboardMobile}
+                                    alt="Nivesh Mobile Dashboard Interface (iOS)"
+                                    className="w-28 md:w-40 lg:w-28 rounded-xl shadow-lg border border-neutral-200 bg-white"
+                                />
+                                <span className="mt-1 text-xs font-medium text-neutral-600">iOS</span>
+                            </div>
+
+                            {/* Mobile dashboard preview - right */}
+                            <div className="absolute right-2 bottom-2 flex flex-col items-center z-10">
+                                <img
+                                    src={DashboardMobile}
+                                    alt="Nivesh Mobile Dashboard Interface (Android)"
+                                    className="w-28 md:w-40 lg:w-28 rounded-xl shadow-lg border border-neutral-200 bg-white"
+                                />
+                                <span className="mt-1 text-xs font-medium text-neutral-600">Android</span>
+                            </div>
+
+                            {/* Web dashboard */}
+                            <div className="flex flex-col items-center">
+                                <img
+                                    src={DashboardImg}
+                                    alt="Nivesh Dashboard Interface"
+                                    className="w-full h-auto object-cover"
+                                />
+                                <span className="mt-2 text-sm font-medium text-neutral-700">Web</span>
+                            </div>
                         </div>
 
                         {/* Floating Elements */}

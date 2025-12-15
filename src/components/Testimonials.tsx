@@ -66,44 +66,37 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 const Testimonials: React.FC = () => {
     const testimonials: Testimonial[] = [
         {
-            name: 'Rajesh Panwar',
-            role: 'Partner',
+            name: 'Rajesh Singh Panwar',
+            role: 'Partner with 11 Cr. AUM (Uttrakhand)',
             content: 'I was running a Vodafone outlet. Due to dengue, I couldn’t work for a month because of which I didn’t get any payout in that period. I realized that even if I continue to work in the same business for the next 10 years, I could fall into the same situation. Hence, I was looking for a business that can secure my future. At this time, I met Nivesh.com and learned about Mutual Funds. I understood that once I could build a sizeable AUM, I would continue to earn a trial commission even if I am unable to work at some point in the future. Today, thanks to Nivesh.com, I have achieved fast-paced growth and can boast of having the highest number of clients with them.',
             imageUrl: Favicon,
             rating: 5,
         },
         {
-            name: 'Abhimanyu Nehra',
-            role: 'Partner',
-            content: 'Abhimanyu has been an entrepreneur in the hospitality and real estate sectors based out of Delhi NCR. He had been thinking about the need of taking other asset classes to his clients, as he realized over-exposure to one asset class could pose a significant risk to him and his customers. He was aware of Mutual Funds but was not sure of how to get started. After coming in touch with Nivesh.com, he carefully evaluated the option of dealing with Nivesh.com versus directly with mutual funds and clearly saw the benefit of being part of a larger platform and great leverage of technology that Nivesh.com offered. He then spent some time trying to understand the basics of mutual fund investing and also obtained an AMFI Registration Number (ARN). Since then, he has been able to help his customers diversify into mutual funds in a much simpler manner leveraging the state of the art technology. He is clear that he is into this for the long term.',
-            imageUrl: Favicon,
-            rating: 5,
-        },
-        {
             name: 'Sunil Kumar Mittal',
-            role: 'Partner (Haryana)',
+            role: 'Partner with 4.5 Cr. AUM (Haryana)',
             content: 'I used to spend most of my time on paperwork and servicing. Now that I have partnered with Nivesh, I\'m just focusing on expanding my business.',
             imageUrl: Favicon,
             rating: 5,
         },
         {
             name: 'Rahul A Gupta',
-            role: 'Partner',
+            role: 'Partner with 6.6 Cr. AUM (Maharashtra)',
             content: 'My AUM has grown and my clients can place orders from anywhere through Nivesh digital platform. They also provide us with training that helps us in upgrading our knowledge.',
             imageUrl: Favicon,
             rating: 5,
         },
         {
             name: 'Mukesh Singh',
-            role: 'Partner',
+            role: 'Partner with 19 Cr. AUM (Uttrakhand)',
             content: 'Nivesh\'s application has multiple products, indeed very user-friendly, and has all the features the client requires',
             imageUrl: Favicon,
             rating: 5,
         },
         {
-            name: 'Yashwant Gupta',
-            role: 'Partner',
-            content: 'From traveling in buses to Jaipur and haggling with Mutual Funds companies for collecting clients’ statements to sitting in the comfort of my home and managing all the transactions in a few clicks on my phone, I have come a long way All thanks to Nivesh. There was a time when I was forced to stop the SIPs of my hard-earned customers as it was impossible to service them given the paperwork that required a lot of commuting and expenses. For every customer’s KYC, I had to go to a cybercafé, pay Rs 10 and get a printout. Then the choice of funds was a complex issue. To make it worse, it was a herculean task to track my brokerage as it was coming from various places. Nivesh came as a one-stop solution for all the problems and made investing a cake walk for me and my customers',
+            name: 'Abhimanyu Nehra',
+            role: 'Partner with 48 Cr. AUM (Delhi)',
+            content: 'Abhimanyu has been an entrepreneur in the hospitality and real estate sectors based out of Delhi NCR. He had been thinking about the need of taking other asset classes to his clients, as he realized over-exposure to one asset class could pose a significant risk to him and his customers. He was aware of Mutual Funds but was not sure of how to get started. After coming in touch with Nivesh.com, he carefully evaluated the option of dealing with Nivesh.com versus directly with mutual funds and clearly saw the benefit of being part of a larger platform and great leverage of technology that Nivesh.com offered. He then spent some time trying to understand the basics of mutual fund investing and also obtained an AMFI Registration Number (ARN). Since then, he has been able to help his customers diversify into mutual funds in a much simpler manner leveraging the state of the art technology. He is clear that he is into this for the long term.',
             imageUrl: Favicon,
             rating: 5,
         },
@@ -115,8 +108,8 @@ const Testimonials: React.FC = () => {
                 {/* Section Header */}
                 <div className="max-w-3xl mx-auto text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                        Advisors across India are <br />
-                        <span className="text-primary">scaling faster with Nivesh.</span>
+                        Advisors Across India Are <br />
+                        <span className="text-primary">Scaling Faster With Nivesh.</span>
                     </h2>
                 </div>
 

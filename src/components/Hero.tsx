@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4 mb-6">
                         <Button variant="primary" size="lg" className="bg-black text-white hover:bg-neutral-800 border-none shadow-lg flex items-center gap-2">
-                            Supercharge Your Business
+                        Existing MFD? Connect with Us
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                             </svg>
@@ -88,14 +88,14 @@ const Hero: React.FC = () => {
                 </div>
 
                 {/* Right Visual - Image Carousel */}
-                <div className="relative flex flex-col justify-center items-center h-[320px] md:h-[425px] w-full lg:col-span-5">
+                <div className="relative flex flex-col justify-center items-center h-[330px] md:h-[430px] w-full lg:col-span-5">
                     <div className="relative w-full h-full overflow-hidden mr-2">
                         {heroImages.map((img, index) => (
                             <img
                                 key={index}
                                 src={img}
                                 alt={`Hero Visual ${index + 1}`}
-                                className={`absolute inset-0 w-full h-full border object-fit transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                                     }`}
                             />
                         ))}
