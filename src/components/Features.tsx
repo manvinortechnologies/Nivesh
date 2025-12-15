@@ -34,7 +34,7 @@ const Features: React.FC = () => {
                 </svg>
             ),
             title: 'Multi-Product Suite',
-            description: 'MF, SIF, PMS, AIFs, Bonds, and Insurance—all in one place.',
+            description: 'MF, SIF, PMS, AIFs, Bonds, and Insurance...all in one place.',
         },
         {
             icon: (
@@ -74,7 +74,7 @@ const Features: React.FC = () => {
                         One platform. <span className="text-primary">Infinite possibilities.</span>
                     </h2>
                     <p className="text-lg text-neutral-600">
-                        Manage every client, product, and process—from onboarding to growth—with ease.
+                        Manage every client, product, and process...from onboarding to growth..with ease.
                     </p>
                 </div>
 
@@ -100,7 +100,7 @@ const Features: React.FC = () => {
 
                 {/* CTA */}
                 <div className="text-center">
-                    <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                    <Button variant="outline" className="border-primary text-primary hover:!bg-[#E63946] hover:text-white">
                         Explore the Platform →
                     </Button>
                 </div>

@@ -28,9 +28,9 @@ const CallToAction: React.FC = () => {
             <div className="container-custom">
                 <div className="max-w-4xl mx-auto text-center mb-20">
                     {/* Heading */}
-                    <h2 className="text-3xl md:text-5xl font-bold mb-8 leading-tight">
+                    <h2 className="text-3xl md:text-5xl text-[#243062] font-bold mb-8 leading-tight">
                         Your journey from distributor to <br />
-                        <span className="text-black">digital wealth brand starts here.</span>
+                        <span className="text-white">digital wealth brand starts here.</span>
                     </h2>
 
                     {/* Subtext */}

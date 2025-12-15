@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 interface FAQ {
     question: string;
-    answer: string | string[];
+    answer: React.ReactNode;
 }
 
 interface FAQCategory {
@@ -16,61 +16,121 @@ const FAQSection: React.FC = () => {
 
     const categories: FAQCategory[] = [
         {
-            name: 'Product Overview',
+            name: 'Partner Program',
             faqs: [
                 {
-                    question: 'How can Nivesh help me?',
-                    answer: [
-                        'Selecting top-performing investment opportunities',
-                        'Reviewing your portfolio to see what\'s working well (and what\'s not)',
-                        'Understanding when to exit underperforming funds and invest in stronger funds',
-                    ],
+                    question: 'How can I Become a Nivesh Partner?',
+                    answer: (
+                        <>
+                            <p className="mb-4">You will have to be a Nivesh partner with an AMFI-registered Mutual Fund Distributor Registration Number (ARN) if you want to become a Nivesh Partner. For ARN holders, you can begin immediately via simple empanelment.</p>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
                 {
-                    question: 'How do I start using Nivesh?',
-                    answer: 'Getting started with Nivesh is simple. Sign up for an account, complete your investor profile, and our platform will recommend personalized investment strategies based on your goals and risk tolerance.',
+                    question: 'What are the Charges for Becoming a Nivesh Partner?',
+                    answer: (
+                        <>
+                            <p className="mb-2">The price varies whether you have an ARN or not:</p>
+                            <ul className="space-y-2 mb-4">
+                                <li className="flex items-start gap-2">
+                                    <span className="text-primary mt-1">•</span>
+                                    <span><strong>ARN Holders</strong> – No charges. Free</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-primary mt-1">•</span>
+                                    <span><strong>Non-ARN Holders</strong> – ₹2950 for NISM training (if opted). Alternatively, you can study and pass the NISM exam on your own to get your ARN without this charge.</span>
+                                </li>
+                            </ul>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
                 {
-                    question: 'Can I track all my investments on Nivesh?',
-                    answer: 'Yes! Nivesh provides a comprehensive dashboard where you can track all your investments in real-time, view performance metrics, and get insights into your portfolio allocation.',
+                    question: 'Does Nivesh Charge any Renewal Fees?',
+                    answer: (
+                        <>
+                            <p className="mb-4">No. There is no renewal charge for Nivesh. Getting associated with Nivesh is free every year.</p>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
                 {
-                    question: 'Can I invest directly through Nivesh?',
-                    answer: 'Absolutely. Nivesh allows you to invest directly in mutual funds, stocks, and other investment instruments through our secure platform with just a few clicks.',
+                    question: 'How do I register on Nivesh Mutual Fund software?',
+                    answer: (
+                        <>
+                            <p className="mb-4">Simply, login to <a href="https://nivesh.com/en/partner" className="text-primary hover:underline">https://nivesh.com/en/partner</a> and complete the registration form. After you apply, someone from Team Nivesh will reach out to you and assist you in the onboarding.</p>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
             ],
         },
         {
-            name: 'Features & Plans',
+            name: 'Products & Services',
             faqs: [
                 {
-                    question: 'What features does Nivesh offer?',
-                    answer: 'Nivesh offers portfolio management, real-time analytics, expert advisory, automated rebalancing, tax optimization, and personalized investment recommendations.',
+                    question: 'What are the Products Which a Nivesh Partner can Access?',
+                    answer: (
+                        <>
+                            <p className="mb-2">As a licensed partner, you’ll be able to provide:</p>
+                            <ul className="space-y-1 mb-4 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> Mutual Funds</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> Fixed Deposits</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> Peer-to-Peer (P2P) Lending</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> AIF (Alternative Investment Funds)</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> Portfolio Management Services (PMS)</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> NPS (National Pension System)</li>
+                                <li className="flex items-center gap-2"><span className="text-primary">•</span> Corporate Bonds</li>
+                            </ul>
+                            <p className="mb-4">Here Comes Nivesh one of the Best Mutual Fund Distributor Platforms in India, which enables you to address every single client with varying financial requisites.</p>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
                 {
-                    question: 'Are there different pricing plans?',
-                    answer: 'Yes, we offer flexible pricing plans to suit different investor needs - from basic portfolio tracking to premium advisory services with dedicated support.',
-                },
-                {
-                    question: 'Is there a free trial available?',
-                    answer: 'Yes! We offer a 30-day free trial with access to all premium features so you can experience the full power of Nivesh before committing.',
+                    question: 'Do I Have to Pay for Additional Services Offered by Nivesh?',
+                    answer: (
+                        <>
+                            <p className="mb-4">No. All Nivesh Partners' use of platform services, including Signatory Partner Desk and Client Desk access, is provided free of charge.</p>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
             ],
         },
         {
-            name: 'Security & Compliance',
+            name: 'Platform Features',
             faqs: [
                 {
-                    question: 'Is my data secure on Nivesh?',
-                    answer: 'Absolutely. We use bank-level encryption and security measures to protect your data. All transactions are secured with SSL/TLS encryption and we never share your personal information.',
+                    question: 'What are the features provided by Nivesh Mutual Fund Software?',
+                    answer: (
+                        <>
+                            <p className="mb-2">There are multiple benefits available with Nivesh Mutual Fund Software like:</p>
+                            <p className="mb-2">Nivesh Mutual Fund Software is loaded with Powerful features and everything you need as an AMFI-registered Mutual Fund Distributor to grow your business with ease.</p>
+                            <ul className="space-y-2 mb-4">
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> All financial products on one digital platform</li>
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> 100% paperless transactions</li>
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> No hidden charges</li>
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Auto-generated reports: portfolio, capital gains, cash flow</li>
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Business tools: calculators, planners, model portfolios</li>
+                                <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Digital content for client engagement via WhatsApp, Facebook & more</li>
+                            </ul>
+                            <a href="https://nivesh.com/en/partner" className="text-primary font-medium hover:underline">Click here to join Nivesh</a>
+                        </>
+                    ),
                 },
                 {
-                    question: 'Is Nivesh SEBI registered?',
-                    answer: 'Yes, Nivesh is registered with SEBI (Securities and Exchange Board of India) and complies with all regulatory requirements for investment advisory services.',
-                },
-                {
-                    question: 'How is my investment protected?',
-                    answer: 'Your investments are held in your name with regulated depositories. Nivesh does not hold custody of your funds - we only provide advisory and execution services.',
+                    question: 'What are benefits of using Nivesh Mutual Fund Software?',
+                    answer: (
+                        <ul className="space-y-2">
+                            <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> 24*7 available portal</li>
+                            <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Dedicated relationship managers to manage path for success</li>
+                            <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Portfolio reviews and restructuring as per client's requirements</li>
+                            <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Paperless experience for both distributors and clients</li>
+                            <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span> Transform offline office to virtual office</li>
+                        </ul>
+                    ),
                 },
             ],
         },
@@ -143,18 +203,7 @@ const FAQSection: React.FC = () => {
                             {/* Answer */}
                             {openIndex === index && (
                                 <div className="px-6 pb-6 text-neutral-300">
-                                    {Array.isArray(faq.answer) ? (
-                                        <ul className="space-y-2">
-                                            {faq.answer.map((item, i) => (
-                                                <li key={i} className="flex items-start gap-3">
-                                                    <span className="text-primary mt-1">•</span>
-                                                    <span>{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        <p className="leading-relaxed">{faq.answer}</p>
-                                    )}
+                                    {faq.answer}
                                 </div>
                             )}
                         </div>

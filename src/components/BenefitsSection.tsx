@@ -1,4 +1,12 @@
 import React from 'react';
+import bse from '../assets/bse.jpeg';
+import cams from '../assets/cams.jpeg';
+import ghupsap from '../assets/ghupsap.jpeg';
+import karvy from '../assets/karvy.jpeg';
+import ondc from '../assets/ONDC.jpeg';
+import mf from '../assets/mf.jpeg';
+import sendgrid from '../assets/sendgrid.jpeg';
+import whatsapp from '../assets/whatsapp.jpeg';
 
 const BenefitsSection: React.FC = () => {
     const benefits = [
@@ -9,13 +17,24 @@ const BenefitsSection: React.FC = () => {
         "Scalable, compliant, and always up-to-date"
     ];
 
+    const partners = [
+        { name: 'BSE', logo: bse },
+        { name: 'CAMS', logo: cams },
+        { name: 'Ghupsap', logo: ghupsap },
+        { name: 'Karvy', logo: karvy },
+        { name: 'ONDC', logo: ondc },
+        { name: 'MF Utilities', logo: mf },
+        { name: 'SendGrid', logo: sendgrid },
+        { name: 'WhatsApp', logo: whatsapp },
+    ];
+
     return (
         <section className="py-20 md:py-32 bg-neutral-50">
             <div className="container-custom">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div>
-                        <div className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-6">
+                        <div className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-lg font-semibold mb-6">
                             Why Choose Nivesh
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-8 leading-tight">
@@ -40,21 +59,20 @@ const BenefitsSection: React.FC = () => {
                     {/* Right Visual - Partner Logos */}
                     <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-100">
                         <div className="text-center mb-8">
-                            <h3 className="text-lg font-semibold text-neutral-900">Trusted Partners</h3>
+                            <h4 className="text-[18px] mb-1 font-semibold text-neutral-900">WE WORK WITH LEADING PROVIDERS</h4>
                             <p className="text-sm text-neutral-500">Integrated with leading AMCs & R&TAs</p>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-8 items-center opacity-100">
-                            {/* Placeholders for Logos */}
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-blue-600">CAMS</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-teal-600">KFintech</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-blue-800">HDFC MF</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-blue-500">SBI MF</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-orange-600">ICICI Pru</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-rose-700">Axis MF</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-red-600">Kotak MF</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-red-700">Nippon</div>
-                            <div className="h-12 bg-white border border-black rounded flex items-center justify-center text-xs font-bold text-gray-600">+40 More</div>
+                        <div className="grid grid-cols-4 gap-4 items-center opacity-100">
+                            {partners.map((partner, index) => (
+                                <div key={index} className="h-24 flex items-center justify-center p-2 bg-white rounded-lg hover:shadow-md transition-shadow duration-300">
+                                    <img
+                                        src={partner.logo}
+                                        alt={partner.name}
+                                        className="max-h-full max-w-full object-contain"
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -64,3 +82,4 @@ const BenefitsSection: React.FC = () => {
 };
 
 export default BenefitsSection;
+
