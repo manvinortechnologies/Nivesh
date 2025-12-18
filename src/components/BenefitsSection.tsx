@@ -63,7 +63,8 @@ const BenefitsSection: React.FC = () => {
                             <p className="text-sm text-neutral-500">Integrated with leading AMCs & R&TAs</p>
                         </div>
 
-                        <div className="grid grid-cols-4 gap-4 items-center opacity-100">
+                        {/* Desktop/Tablet Grid View */}
+                        <div className="hidden md:grid grid-cols-4 gap-4 items-center opacity-100">
                             {partners.map((partner, index) => (
                                 <div key={index} className="h-24 flex items-center justify-center p-2 bg-white rounded-lg hover:shadow-md transition-shadow duration-300">
                                     <img
@@ -73,6 +74,32 @@ const BenefitsSection: React.FC = () => {
                                     />
                                 </div>
                             ))}
+                        </div>
+
+                        {/* Mobile Carousel View */}
+                        <div className="md:hidden overflow-hidden relative">
+                            <div className="flex animate-scroll-horizontal">
+                                {/* First set of logos */}
+                                {partners.map((partner, index) => (
+                                    <div key={index} className="flex-shrink-0 w-20 h-20 flex items-center justify-center p-2 bg-white rounded-lg mx-2">
+                                        <img
+                                            src={partner.logo}
+                                            alt={partner.name}
+                                            className="max-h-full max-w-full object-contain"
+                                        />
+                                    </div>
+                                ))}
+                                {/* Duplicate set for seamless loop */}
+                                {partners.map((partner, index) => (
+                                    <div key={`duplicate-${index}`} className="flex-shrink-0 w-20 h-20 flex items-center justify-center p-2 bg-white rounded-lg mx-2">
+                                        <img
+                                            src={partner.logo}
+                                            alt={partner.name}
+                                            className="max-h-full max-w-full object-contain"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,21 +9,21 @@ const MFDRevolution: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div>
-                        <div className="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 rounded-full text-lg font-semibold mb-6">
+                        <div className="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 rounded-full text-base md:text-lg font-semibold mb-6">
                             The MFD Revolution
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
+                        <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
                             The Business Of Distribution Is Changing. <br />
-                            <span className="text-primary">Don’t Get Left Behind.</span>
+                            <span className="text-primary">Don't Get Left Behind.</span>
                         </h2>
-                        <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                        <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
                             Clients today expect goal-based, tech-enabled, multi-product advice.
                             With Nivesh, MFDs evolve into wealth managers...combining personal trust with digital scale.
                         </p>
 
                         <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-r-xl">
-                            <p className="text-lg font-medium text-neutral-800 italic">
-                                “The future belongs to advisors who put clients at the center...and tech at their fingertips.”
+                            <p className="text-base md:text-lg font-medium text-neutral-800 italic">
+                                "The future belongs to advisors who put clients at the center...and tech at their fingertips."
                             </p>
                         </div>
                     </div>
@@ -52,12 +52,12 @@ const MFDRevolution: React.FC = () => {
                                         />
                                     </div>
                                     <div className="mt-4 p-1 bg-white rounded border border-neutral-200">
-                                        <div className="flex items-center gap-2 text-red-500 text-sm font-medium">
+                                        <div className="flex items-center gap-2 text-red-500 text-[12px] md:text-sm font-medium">
                                             <span>⚠ Manual Tracking</span>
                                         </div>
                                     </div>
                                     <div className="p-1 bg-white rounded border border-neutral-200">
-                                        <div className="flex items-center gap-2 text-red-500 text-sm font-medium">
+                                        <div className="flex items-center gap-2 text-red-500 text-[12px] md:text-sm font-medium">
                                             <span>⚠ Excel Sheets</span>
                                         </div>
                                     </div>

@@ -2,9 +2,72 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/Favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nivesh</title>
+    <title>Nivesh</title>
+    
+    <!-- Tawk.to Custom Styling -->
+    <style>
+      /* Custom styling for Tawk.to widget */
+      #tawkchat-container iframe {
+        z-index: 9999 !important;
+      }
+      
+      /* Ensure the widget button is visible */
+      #tawkchat-status-text-container {
+        z-index: 9998 !important;
+      }
+    </style>
+    
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/624d8749c72df874911d588e/1fvvdgtu2';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+      
+      // Configure Tawk.to to show form when chat is opened
+      Tawk_API.onLoad = function() {
+        // Customize the widget appearance
+        Tawk_API.setAttributes({
+          'hideOnMobile': false,
+          'hideOnDesktop': false
+        }, function(error){});
+        
+        // Ensure the widget is ready
+        console.log('Tawk.to widget loaded');
+      };
+      
+      // When chat widget is opened, ensure form is displayed
+      Tawk_API.onChatStarted = function() {
+        // The pre-chat form should be configured in Tawk.to dashboard
+        // This ensures the widget opens properly and shows the form
+        console.log('Chat started - form should be visible');
+      };
+      
+      // When chat widget is minimized/closed
+      Tawk_API.onChatMinimized = function() {
+        // Handle minimize if needed
+      };
+      
+      // When chat widget is maximized
+      Tawk_API.onChatMaximized = function() {
+        // Ensure form is visible when maximized
+        console.log('Chat maximized - form should be visible');
+      };
+      
+      // Handle widget ready state
+      Tawk_API.visitor = {
+        name: '',
+        email: ''
+      };
+    </script>
+    <!--End of Tawk.to Script-->
   </head>
   <body>
     <div id="root"></div>

@@ -103,11 +103,11 @@ const Testimonials: React.FC = () => {
     ];
 
     return (
-        <section className="py-20 md:py-32 bg-white">
+        <section className="py-12 md:py-32 bg-white">
             <div className="container-custom">
                 {/* Section Header */}
                 <div className="max-w-3xl mx-auto text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
+                    <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
                         Advisors Across India Are <br />
                         <span className="text-primary">Scaling Faster With Nivesh.</span>
                     </h2>
