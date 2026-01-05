@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import footer1 from '../assets/footer1.png';
 import footer2 from '../assets/footer2.png';
 import footer3 from '../assets/footer3.jpeg';
 
 const Footer: React.FC = () => {
-    const BASE_URL = 'https://nivesh.com';
-    const LANGUAGE_PREFIX = '/en';
-    
     const currentYear = new Date().getFullYear();
     const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
 
@@ -15,17 +13,15 @@ const Footer: React.FC = () => {
         if (path.startsWith('http://') || path.startsWith('https://')) {
             return path;
         }
-        
+
         // Handle anchor links
         if (path.startsWith('#')) {
             return path;
         }
-        
-        // Normalize path
+
+        // Normalize path - return as relative path
         const normalizedPath = path === '/' ? '' : path.startsWith('/') ? path : `/${path}`;
-        
-        // Build full URL with language prefix
-        return `${BASE_URL}${LANGUAGE_PREFIX}${normalizedPath}`;
+        return normalizedPath;
     };
 
     return (
@@ -37,7 +33,7 @@ const Footer: React.FC = () => {
                     <div className="col-span-2 md:col-span-1 lg:col-span-1">
                         <img src="/logo.png" alt="Nivesh" className="h-7 md:h-8 lg:h-10 mb-3 md:mb-4 lg:mb-6" />
                         <p className="text-neutral-400 text-xs leading-relaxed mb-3 md:mb-4">
-                            India's trusted investment advisory platform. Empowering investors to make smarter financial decisions.
+                            Digital First Wealth Platform
                         </p>
                         <div className="space-y-1 text-xs text-neutral-400">
                             <p><span className="font-semibold">Registered Office Address:</span> Private No-S-203, 20, ABC Complex, Veer Savarkar Block, Shakarpur, Shahdara, Delhi-110092</p>
@@ -49,7 +45,7 @@ const Footer: React.FC = () => {
                         <h3 className="text-white font-semibold mb-3 md:mb-4 lg:mb-6 text-xs md:text-sm">Quick Links</h3>
                         <ul className="space-y-2 text-xs">
                             <li>
-                                <a href={buildUrl('/about-us')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <a href={buildUrl('/about')} className="text-neutral-400 hover:text-primary transition-colors">
                                     About Us
                                 </a>
                             </li>
@@ -59,25 +55,25 @@ const Footer: React.FC = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href={buildUrl('/calculators')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/calculators" className="text-neutral-400 hover:text-primary transition-colors">
                                     Calculators
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/contact-us')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/contact-us" className="text-neutral-400 hover:text-primary transition-colors">
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/career')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/career" className="text-neutral-400 hover:text-primary transition-colors">
                                     Careers
-                                </a>
+                                </Link>
                             </li>
-                            
+
                             <li>
-                                <a href={buildUrl('/data-security')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/data-security" className="text-neutral-400 hover:text-primary transition-colors">
                                     Data Security
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -87,24 +83,27 @@ const Footer: React.FC = () => {
                         <h3 className="text-white font-semibold mb-3 md:mb-4 lg:mb-6 text-xs md:text-sm">Goals</h3>
                         <ul className="space-y-2 text-xs">
                             <li>
-                                <a href={buildUrl('/plan-for-retirement')} className="text-neutral-400 hover:text-primary transition-colors flex items-start">
+                                <Link 
+                                    to="/plan-for-retirement"
+                                    className="text-neutral-400 hover:text-primary transition-colors flex items-start"
+                                >
                                     <span>Retirement Plan</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/save-for-children')} className="text-neutral-400 hover:text-primary transition-colors flex items-start">
+                                <Link to="/save-for-children" className="text-neutral-400 hover:text-primary transition-colors flex items-start">
                                     <span>Save For Children</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/save-tax')} className="text-neutral-400 hover:text-primary transition-colors flex items-start">
+                                <Link to="/save-tax" className="text-neutral-400 hover:text-primary transition-colors flex items-start">
                                     <span>Save Tax</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/build-long-term-wealth')} className="text-neutral-400 hover:text-primary transition-colors flex items-start">
+                                <Link to="/build-long-term-wealth" className="text-neutral-400 hover:text-primary transition-colors flex items-start">
                                     <span>Build Long Term Wealth</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -161,29 +160,29 @@ const Footer: React.FC = () => {
                         <h3 className="text-white font-semibold mb-3 md:mb-4 lg:mb-6 text-xs md:text-sm">Partner</h3>
                         <ul className="space-y-2 text-xs mb-4">
                             <li>
-                                <a href={buildUrl('/partner')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/partner" className="text-neutral-400 hover:text-primary transition-colors">
                                     Partner
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/partner/become-mutual-fund-distributors')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/partner/become-mutual-fund-distributors" className="text-neutral-400 hover:text-primary transition-colors">
                                     Become Mutual Fund Distributors
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/partner/grow-your-mutual-fund')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/partner/grow-your-mutual-fund" className="text-neutral-400 hover:text-primary transition-colors">
                                     Grow Your Mutual Fund
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/nism-certification-exam')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/nism-certification-exam" className="text-neutral-400 hover:text-primary transition-colors">
                                     NISM Certification Exam
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/partner/all-about-amfi-arn-code')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/partner/all-about-amfi-arn-code" className="text-neutral-400 hover:text-primary transition-colors">
                                     All About AMFI ARN Code
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -248,17 +247,7 @@ const Footer: React.FC = () => {
                     {/* Download App - QR Code Section */}
                     <div className="col-span-2 md:col-span-1 lg:col-span-1">
                         <h3 className="text-white font-semibold mb-3 md:mb-4 lg:mb-6 text-xs md:text-sm">Download Our App</h3>
-                        <div className="bg-white p-2 md:p-3 rounded-lg inline-block mb-2 md:mb-3">
-                            {/* QR Code - Using QR Code API */}
-                            <img
-                                src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://nivesh.app/download"
-                                alt="Download App QR Code"
-                                className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
-                            />
-                        </div>
-                        <p className="text-xs text-neutral-400 mb-2 md:mb-3">
-                            Scan to download the Nivesh app
-                        </p>
+
 
                         {/* App Store Buttons */}
                         <div className="space-y-2">
@@ -343,12 +332,12 @@ const Footer: React.FC = () => {
                 <div className="container-custom py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-500">
                         <div className="flex flex-wrap justify-center md:justify-start gap-6">
-                            <a href={buildUrl('/privacy-and-policy')} className="hover:text-primary transition-colors">
+                            <Link to="/privacy-and-policy" className="hover:text-primary transition-colors">
                                 Privacy Policy
-                            </a>
-                            <a href={buildUrl('/terms-and-conditions')} className="hover:text-primary transition-colors">
+                            </Link>
+                            <Link  to="/terms-and-conditions" className="hover:text-primary transition-colors">
                                 Terms of Service
-                            </a>
+                            </Link>
                             <button
                                 onClick={() => setIsDisclaimerOpen(true)}
                                 className="hover:text-primary transition-colors text-left"

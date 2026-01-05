@@ -1,0 +1,587 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '../../components/ui/Button';
+import PMSImage from '../../assets/PMS.png';
+
+const PMS: React.FC = () => {
+    const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [activeTab, setActiveTab] = useState<'why' | 'who' | 'taxability'>('why');
+    const [calculatorData, setCalculatorData] = useState({
+        investmentAmount: 5000000, // 50 Lakhs default
+        rateOfInterest: 12,
+        timeInYears: 5,
+    });
+    const [futureValue, setFutureValue] = useState(0);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
+        calculateFutureValue();
+    }, [calculatorData]);
+
+    const toggleFaq = (index: number) => {
+        setOpenFaqs((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
+
+    const calculateFutureValue = () => {
+        const { investmentAmount, rateOfInterest, timeInYears } = calculatorData;
+        const r = rateOfInterest / 100;
+        const future = investmentAmount * Math.pow(1 + r, timeInYears);
+        setFutureValue(Math.round(future));
+    };
+
+    const formatCurrency = (amount: number): string => {
+        return new Intl.NumberFormat('en-IN', {
+            maximumFractionDigits: 0,
+        }).format(amount);
+    };
+
+    const features = [
+        {
+            title: 'Asset Allocation',
+            description: 'Dividing your investment among different asset classes is defined as asset allocation. This mix needs to be done in such a way that the investors can safeguard their funds from risk and generate superior returns on them.',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+            ),
+        },
+        {
+            title: 'Customization',
+            description: 'Portfolio Management Services provides a customized investment solution to investors. Portfolio managers have the liberty to diversify an investor\'s portfolio depending upon his risk appetite and returns generated on his existing investments.',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+            ),
+        },
+        {
+            title: 'Portfolio Performance Tracking',
+            description: 'Tracking the performance of a portfolio is one of the benefits of a PMS service. You can track your holdings in real-time and the investor is updated with the market situation as well.',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+            ),
+        },
+        {
+            title: 'Risk Management',
+            description: 'Investments come with a certain degree of risk. With the best PMS services, you can control the amount of risk you would want to take. With real-time tracking, under the Non-discretionary PMS , you can decide if the invested instrument needs to be held or redeemed before maturity',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            ),
+        },
+        {
+            title: 'Maintaining Liquidity',
+            description: 'Investments are made to fulfill financial goals. The best PMS services provider in India helps in maintaining liquidity so that you can redeem your investment in time of need.',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            ),
+        },
+        {
+            title: 'Knowledge',
+            description: 'The best Portfolio Management Services can help in reaching your financial goals. Apart from this it also helps investors in understanding their finances. By imparting continuous knowledge and investment strategies, it helps investors to understand how the funds work and helps in making informed choices.',
+            icon: (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            ),
+        },
+    ];
+
+    const partners = [
+        { name: 'SBI Asset Management' },
+        { name: 'Kotak Asset Management' },
+        { name: 'Abakkus' },
+        { name: 'Aditya Birla Capital' },
+        { name: 'Buoyant Capital PMS' },
+        { name: 'Carenlian' },
+        { name: 'Nippon India Portfolio Management' },
+        { name: 'Tata Asset Management Company' },
+        { name: 'Motilal Oswal Group' },
+        { name: 'ICICI Prudential Portfolio Management' },
+        { name: 'ASK Group' },
+    ];
+
+    const faqs = [
+        {
+            question: 'Is it Worth Investing in PMS?',
+            answer: 'For most retail investors, PMS are not a viable option, given the high starting amount. Portfolio management services are aimed at HNIs who wish to invest in a multitude of investing options. However, when it comes to retail investors PMS services can be a deterrent considering the high amount required to start with.',
+        },
+        {
+            question: 'What is the Minimum Amount of PMS in India?',
+            answer: 'According to SEBI guidelines, the minimum investment amount is INR 50 Lakhs.',
+        },
+        {
+            question: 'What is the Difference Between AIF and PMS?',
+            answer: 'Alternate Investment Funds gives the investor the flexibility to invest in derivatives, hedge funds, listed & unlisted shares and also have a certain amount of lock-in period. PMS services monitor and create a personalized portfolio for investors to lower the risk and maximize the returns. Portfolio Management Service funds, typically are liquid and do not have any lock in periods. However, both products tend to have high risk and high reward stances.',
+        },
+        {
+            question: 'How can I Invest in top pms in india?',
+            answer: 'Before investing in a PMS account, you will first need to establish a separate bank Demat account. Once the account is opened you will need to give a power of attorney to your portfolio manager over this bank account and Demat account. You will have the right to access these accounts and your portfolio manager will have to share a performance review of your investment once every six months.',
+        },
+        {
+            question: 'Can an NRI Avail the Portfolio Management Service?',
+            answer: 'As per RBI guidelines, NRIs can invest in a PMS account by opening a Portfolio Investment Scheme account. This has to be done through banks and other financial distributors.',
+        },
+    ];
+
+    return (
+        <div className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
+                <div className="container-custom">
+                    <div className="max-w-7xl mx-auto">
+                        {/* Breadcrumbs */}
+                        <nav className="mb-6">
+                            <ol className="flex items-center space-x-2 text-sm text-neutral-600">
+                                <li>
+                                    <Link to="/" className="hover:text-primary transition-colors">
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>/</li>
+                                <li className="text-neutral-900 font-medium">Portfolio Management Services</li>
+                            </ol>
+                        </nav>
+
+                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-center">
+                            <div className="lg:pr-6">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                    Portfolio Management Services (PMS)
+                                </h1>
+                                <p className="text-base md:text-lg text-neutral-700 mb-6 md:mb-8 leading-relaxed">
+                                    Professional portfolio management services tailored to your financial goals and risk appetite. Let expert fund managers handle your investments while you focus on what matters most.
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                        className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                                    >
+                                        I am Interested
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="lg:pl-6 lg:p-6">
+                                <div className="w-full h-[300px] md:h-[500px] lg:h-[550px] mr-2 overflow-hidden rounded-2xl shadow-2xl">
+                                    <img
+                                        src={PMSImage}
+                                        alt="Portfolio Management Services"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Aspects of Portfolio Management Services Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Aspects of Portfolio Management Services (PMS)
+                        </h2>
+                        
+                        {/* Tab Buttons */}
+                        <div className="flex flex-wrap justify-center gap-4 mb-8">
+                            <button
+                                onClick={() => setActiveTab('why')}
+                                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                                    activeTab === 'why'
+                                        ? 'bg-primary text-white shadow-lg'
+                                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                                }`}
+                            >
+                                Why
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('who')}
+                                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                                    activeTab === 'who'
+                                        ? 'bg-primary text-white shadow-lg'
+                                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                                }`}
+                            >
+                                Who
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('taxability')}
+                                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                                    activeTab === 'taxability'
+                                        ? 'bg-primary text-white shadow-lg'
+                                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                                }`}
+                            >
+                                Taxability on PMS Investment
+                            </button>
+                        </div>
+
+                        {/* Tab Content */}
+                        <div className="bg-neutral-50 rounded-lg p-8 border border-neutral-200">
+                            {activeTab === 'why' && (
+                                <div className="space-y-4">
+                                    <ul className="list-disc list-inside space-y-3 text-base text-neutral-700 leading-relaxed">
+                                        <li>Professionally managed portfolios.</li>
+                                        <li>Customised portfolio as per the financial needs to the investor.</li>
+                                        <li>Risk is also managed since the fund managers have a wealth of knowledge.</li>
+                                        <li>Possibility of superior returns.</li>
+                                    </ul>
+                                </div>
+                            )}
+
+                            {activeTab === 'who' && (
+                                <div className="space-y-6">
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed">
+                                            Portfolio Management Services are ideal for High-Net-Worth Individuals (HNIs) who:
+                                        </p>
+                                        <ul className="list-disc list-inside mt-4 space-y-2 text-base text-neutral-700">
+                                            <li>Have a minimum investment capacity of INR 50 Lakhs</li>
+                                            <li>Seek professional portfolio management and personalized investment strategies</li>
+                                            <li>Want active management of their investments by experienced fund managers</li>
+                                            <li>Prefer customized portfolios tailored to their specific financial goals and risk appetite</li>
+                                            <li>Require regular portfolio performance tracking and updates</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'taxability' && (
+                                <div className="space-y-6">
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed mb-4">
+                                            The taxability of Portfolio Management Services depends on the type of investments made within the PMS portfolio:
+                                        </p>
+                                        <ul className="list-disc list-inside space-y-2 text-base text-neutral-700">
+                                            <li>Capital gains from equity investments are taxed based on holding period (short-term or long-term)</li>
+                                            <li>Long-term capital gains on equity (held for more than 1 year) are taxed at 10% (above ₹1 lakh exemption)</li>
+                                            <li>Short-term capital gains on equity are taxed at 15%</li>
+                                            <li>Capital gains on debt instruments are taxed based on holding period with indexation benefits for long-term gains</li>
+                                            <li>Dividend income is taxable as per the investor's income tax slab</li>
+                                            <li>PMS fees and charges are not tax-deductible</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* How does Portfolio Management Service Work Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            How does Portfolio Management Service Work?
+                        </h2>
+                        <div className="space-y-6">
+                            <div className="bg-white rounded-lg p-6 border border-neutral-200">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                        1
+                                    </div>
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed">
+                                            <strong className="text-[#243062]">Step 1:</strong> The investor chooses which scheme they want to opt for; discretionary or non-discretionary PMS.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-white rounded-lg p-6 border border-neutral-200">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                        2
+                                    </div>
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed">
+                                            <strong className="text-[#243062]">Step 2:</strong> The investor invests the minimum amount which is INR 50 Lakhs.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-white rounded-lg p-6 border border-neutral-200">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                        3
+                                    </div>
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed">
+                                            <strong className="text-[#243062]">Step 3:</strong> If the investor opts for discretionary PMS they will receive continuous updates on the performance of their portfolio.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-white rounded-lg p-6 border border-neutral-200">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                        4
+                                    </div>
+                                    <div>
+                                        <p className="text-base text-neutral-700 leading-relaxed">
+                                            <strong className="text-[#243062]">Step 4:</strong> Evaluation and adjustments are done based on the requirements of the investor.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Features and Benefits Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Features and Benefits of Portfolio Management Services
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {features.map((feature, index) => (
+                                <div key={index} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                                            {feature.icon}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-semibold text-[#243062] mb-3">{feature.title}</h3>
+                                            <p className="text-base text-neutral-700 leading-relaxed">{feature.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Types of Portfolio Management Services Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Types of Portfolio Management Services
+                        </h2>
+                        <p className="text-base md:text-lg text-neutral-700 mb-8 leading-relaxed text-center">
+                            There are two types of Portfolio Management Services provided by the pms companies in india
+                        </p>
+                        <div className="space-y-6">
+                            <div className="bg-white rounded-lg p-8 border border-neutral-200">
+                                <h3 className="text-2xl font-bold text-[#243062] mb-4">Discretionary Portfolio Management Service:</h3>
+                                <p className="text-base text-neutral-700 leading-relaxed">
+                                    In discretionary PMS service, it is the portfolio manager that independently and individually manages the funds and securities. Investors do not have to make any financial decisions. They inform the portfolio manager of their needs and the manager works following them.
+                                </p>
+                            </div>
+                            <div className="bg-white rounded-lg p-8 border border-neutral-200">
+                                <h3 className="text-2xl font-bold text-[#243062] mb-4">Non-Discretionary Portfolio Management Service:</h3>
+                                <p className="text-base text-neutral-700 leading-relaxed">
+                                    When the portfolio manager manages the funds in harmony with the directions of the client it is termed as a Non-Discretionary Portfolio Management Service.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Our Partners Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Our Partners
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {partners.map((partner, index) => (
+                                <div key={index} className="bg-white border border-neutral-200 rounded-lg p-6 shadow-sm hover:shadow-lg transition-all">
+                                    <div className="bg-[#243062] px-6 py-4 flex items-center justify-between rounded-t-lg -m-6 mb-4">
+                                        <h4 className="text-lg font-semibold text-white">{partner.name}</h4>
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                            className="bg-white hover:bg-neutral-100 text-[#243062] px-4 py-2 rounded font-semibold"
+                                        >
+                                            Know More About {partner.name.split(' ')[0]} {partner.name.split(' ')[1] || ''}
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Statistics Section */}
+            <section className="py-12 md:py-20 bg-primary/10">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                            <div className="text-center">
+                                <div className="text-3xl md:text-4xl font-bold text-[#243062] mb-2">9,137</div>
+                                <div className="text-sm md:text-base text-neutral-700">Partners in 772 cities across India</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl md:text-4xl font-bold text-[#243062] mb-2">58,505</div>
+                                <div className="text-sm md:text-base text-neutral-700">Customers spread over 3,000 pincodes</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl md:text-4xl font-bold text-[#243062] mb-2">48,54,653</div>
+                                <div className="text-sm md:text-base text-neutral-700">Transactions Executed</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl md:text-4xl font-bold text-[#243062] mb-2">Rs. 6,478</div>
+                                <div className="text-sm md:text-base text-neutral-700">Crore- Transaction Value</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Calculator Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Use Our PMS Calculator to Figure Out the Future Value
+                        </h2>
+                        <div className="bg-neutral-50 rounded-lg p-8 border border-neutral-200">
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                                        Investment Amount
+                                    </label>
+                                    <input
+                                        type="range"
+                                        min="5000000"
+                                        max="100000000"
+                                        step="100000"
+                                        value={calculatorData.investmentAmount}
+                                        onChange={(e) =>
+                                            setCalculatorData({
+                                                ...calculatorData,
+                                                investmentAmount: parseInt(e.target.value),
+                                            })
+                                        }
+                                        className="w-full"
+                                    />
+                                    <div className="text-right text-sm text-neutral-600 mt-1">
+                                        ₹ {formatCurrency(calculatorData.investmentAmount)}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                                        Rate of Interest Annual (in %)
+                                    </label>
+                                    <input
+                                        type="range"
+                                        min="5"
+                                        max="20"
+                                        step="0.5"
+                                        value={calculatorData.rateOfInterest}
+                                        onChange={(e) =>
+                                            setCalculatorData({
+                                                ...calculatorData,
+                                                rateOfInterest: parseFloat(e.target.value),
+                                            })
+                                        }
+                                        className="w-full"
+                                    />
+                                    <div className="text-right text-sm text-neutral-600 mt-1">
+                                        {calculatorData.rateOfInterest}%
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                                        Time in Years
+                                    </label>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="20"
+                                        step="1"
+                                        value={calculatorData.timeInYears}
+                                        onChange={(e) =>
+                                            setCalculatorData({
+                                                ...calculatorData,
+                                                timeInYears: parseInt(e.target.value),
+                                            })
+                                        }
+                                        className="w-full"
+                                    />
+                                    <div className="text-right text-sm text-neutral-600 mt-1">
+                                        {calculatorData.timeInYears} Years
+                                    </div>
+                                </div>
+                                <div className="bg-white rounded-lg p-6 border border-neutral-200">
+                                    <div className="text-sm text-neutral-600 mb-2">Details:</div>
+                                    <div className="text-2xl font-bold text-[#243062]">
+                                        Future Value: ₹ {formatCurrency(futureValue)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQs Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Frequently Asked Questions (FAQs)
+                        </h2>
+                        <div className="space-y-4">
+                            {faqs.map((faq, index) => (
+                                <div key={index} className="bg-white rounded-lg border border-neutral-200 overflow-hidden">
+                                    <button
+                                        onClick={() => toggleFaq(index)}
+                                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
+                                    >
+                                        <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
+                                        <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
+                                            <svg
+                                                className="w-5 h-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M19 9l-7 7-7-7"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    {openFaqs[index] && (
+                                        <div className="px-6 py-4 border-t border-neutral-200">
+                                            <p className="text-base text-neutral-700 leading-relaxed">{faq.answer}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default PMS;
+

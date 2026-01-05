@@ -1,0 +1,472 @@
+import React, { useState } from 'react';
+import Button from '../../components/ui/Button';
+import MLDImage from '../../assets/MLD.jpeg';
+import MLD2Image from '../../assets/MLD2.webp';
+
+const MarketLinkedDebentures: React.FC = () => {
+    const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [openBenefits, setOpenBenefits] = useState<{ [key: number]: boolean }>({ 0: true }); // First one open by default
+
+    const toggleFaq = (index: number) => {
+        setOpenFaqs((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
+
+    const toggleBenefit = (index: number) => {
+        setOpenBenefits((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
+
+    return (
+        <div className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+                <div className="container-custom relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-10 lg:gap-16 items-center">
+                        {/* Left Column - Content */}
+                        <div className="relative z-10">
+                            <h2 className="text-2xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2025
+                            </h2>
+                            
+                            <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
+                                In 2025, Indian investors have shifted focus to Market Linked Debentures (MLDs) as sophisticated investment tools offering diversification and tax-efficient benefits. Unlike conventional fixed-income investments, MLDs provide participation in capital markets while offering principal protection. MLDs are gaining traction among High Net-Worth Individuals (HNIs) and family offices, with placements linked to Nifty, Sensex, or commodities (silver, gold, etc.).
+                            </p>
+                            
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                            >
+                                I am Interested
+                            </Button>
+                        </div>
+
+                        {/* Right Column - Promotional Content */}
+                        <div className="relative z-10">
+                                {/* Blue Box with MLD Image */}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex-1">
+                                            <img
+                                                src={MLDImage}
+                                                alt="Market Linked Debentures"
+                                                className="w-full h-auto object-contain max-h-120"
+                                            />
+                                        </div>
+                                    </div>
+                                
+
+                           
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* What are Market Linked Debentures Section */}
+            <section className="py-12 md:py-20 bg-primary/10">
+                <div className="container-custom">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        {/* Left Column - Visual Graphic */}
+                        <div className="relative">
+                            <div className="relative rounded-xl overflow-hidden" style={{
+                                background: 'linear-gradient(135deg, #8B4513 0%, #FF8C00 100%)',
+                                minHeight: '400px'
+                            }}>
+                                <div className="absolute inset-0 opacity-20">
+                                    <div className="absolute inset-0" style={{
+                                        backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 0%, transparent 50%)',
+                                    }}></div>
+                                </div>
+                                <div className="relative h-full flex items-center justify-center p-8">
+                                    <img
+                                        src={MLD2Image}
+                                        alt="Market Linked Debentures"
+                                        className="w-full h-auto object-contain max-h-96"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Column - Text Content */}
+                        <div className="space-y-6">
+                            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] leading-tight">
+                                What is Market Linked Debentures?
+                            </h2>
+                            <div className="space-y-4">
+                                <p className="text-base md:text-lg text-[#243062] leading-relaxed">
+                                    Market Linked Debentures (MLDs) are a form of non-convertible debentures (NCDs) where returns are linked to a market index (like Nifty, Sensex) or a commodity (like silver or gold).
+                                </p>
+                                <p className="text-base md:text-lg text-[#243062] leading-relaxed">
+                                    MLDs do not offer periodic payouts; instead, their payout is conditional. For example, if Nifty 50 returns more than 0% in 3 years, investors get a 10% annualized return, but if returns are less than 0%, only the principal is returned.
+                                </p>
+                                <p className="text-base md:text-lg text-[#243062] leading-relaxed">
+                                    MLDs combine the characteristics of bonds with the risk and reward of stocks and commodities. They are attractive due to capital protection at maturity, making them suitable for investors with a moderate risk profile.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Key Features Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="text-center mb-12 md:mb-16">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-4 leading-tight">
+                            Key Features of Market Linked Debentures in India
+                        </h2>
+                        <p className="text-base md:text-lg text-neutral-600 mt-4">
+                            Here are the core characteristics that define Market-Linked Debentures:
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        {[
+                            {
+                                title: 'Index-Linked Returns',
+                                description: 'MLDs derive performance from market indices such as the Nifty 50 or MCX Gold. Popular Nifty Linked Debentures enable investors to benefit from the growth of the Indian equity market.',
+                                icon: (
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                title: 'Capital Protection',
+                                description: 'Even if the underlying index underperforms, the capital invested is returned at maturity. MLDs have inbuilt principal protection protocols that ensure that your capital doesn\'t take a significant hit, even if the market behaves irrationally.',
+                                icon: (
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                title: 'Upside Participation',
+                                description: 'Participation rates often exceed 100%. For instance, if the Nifty rises by 15% and the participation rate is 130%, the investor gains a 19.5% return.',
+                                icon: (
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                title: 'Tailored Payouts',
+                                description: 'From capped returns to uncapped structures, market-linked debentures in India offer customised options based on your financial goals.',
+                                icon: (
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                title: 'Tax Efficiency',
+                                description: 'With strategic planning, the market-linked debentures taxation landscape in India allows investors to optimise post-tax returns by leveraging lower-income family PANs.',
+                                icon: (
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-5m-6 5h6a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                    </svg>
+                                ),
+                            },
+                        ].map((feature, index) => (
+                            <div
+                                key={index}
+                                className="bg-white rounded-xl p-6 border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300"
+                            >
+                                <div className="mb-4">
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-lg md:text-xl font-bold text-[#243062] mb-3">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Why MLDs are the Go-To Option Section */}
+            <section className="py-12 md:py-20 relative overflow-hidden bg-[#243062]" >
+                <div className="container-custom relative z-10">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 text-center leading-tight">
+                            Why MLDs are the Go-To Option in 2025?
+                        </h2>
+                        <p className="text-base md:text-lg text-gray-200 mb-8 text-center leading-relaxed">
+                            As regional inflationary pressures rise and global markets undergo persistent volatility, market-linked debentures in India offer a remarkable combination of safety, growth potential, and tax considerations.
+                        </p>
+                        <div className="space-y-4">
+                            {[
+                                {
+                                    title: 'Increased Potential Returns',
+                                    description: 'With MLDs gaining popularity, especially during bullish phases with Nifty Linked Debentures, their return projections significantly exceed the set yield from FDs and other traditional bonds. Market-linked debentures in India (MLDs) are known to outperform mutual funds and specific equities with the capital protection clause. MLDs that participate actively in the capital markets tend to offer much better results than most mutual funds or even some equities, with a lot of capital protection offered.',
+                                },
+                                {
+                                    title: 'Customisation and Diversification',
+                                    description: 'MLDs offer flexible structures that can be customized to meet specific investment goals and risk profiles. Investors can diversify their portfolios by choosing MLDs linked to different indices, commodities, or market benchmarks, providing exposure to various asset classes while maintaining capital protection.',
+                                },
+                                {
+                                    title: 'Protection of Capital',
+                                    description: 'Principal-protected MLDs ensure that investors receive their capital back at maturity, even if the underlying market performs poorly. This capital protection feature provides downside protection while still allowing participation in market upside, making MLDs an attractive option for risk-averse investors seeking growth.',
+                                },
+                                {
+                                    title: 'Efficiency in Taxes',
+                                    description: 'Market-linked debentures offer tax-efficient investment options. According to the 2023 amendment, MLDs are taxed according to individual tax slabs, not the LTCG rate. With strategic planning, investors can optimize post-tax returns by leveraging lower-income family PANs and other tax planning strategies.',
+                                },
+                            ].map((benefit, index) => (
+                                <div
+                                    key={index}
+                                    className={`rounded-xl overflow-hidden transition-all duration-300 ${
+                                        openBenefits[index] 
+                                            ? 'bg-primary shadow-lg' 
+                                            : 'bg-primary/10 shadow-md'
+                                    }`}
+                                >
+                                    <button
+                                        onClick={() => toggleBenefit(index)}
+                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-primary border-none outline-none cursor-pointer hover:bg-primary/10 transition-colors duration-200"
+                                    >
+                                        <h3 className="text-lg md:text-xl font-bold text-white pr-4">
+                                            {benefit.title}
+                                        </h3>
+                                        <svg
+                                            className={`w-5 h-5 text-white flex-shrink-0 transition-transform duration-300 ${
+                                                openBenefits[index] ? 'rotate-180' : ''
+                                            }`}
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {openBenefits[index] && (
+                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                            <p className="text-sm md:text-base text-gray-200 leading-relaxed">
+                                                {benefit.description}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Benefits Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Benefits of Market Linked Debentures
+                        </h2>
+                        <div className="space-y-6">
+                            {[
+                                {
+                                    title: 'Market Participation',
+                                    description: 'Investors can participate in market movements and potentially earn higher returns compared to traditional fixed-income instruments.',
+                                },
+                                {
+                                    title: 'Portfolio Diversification',
+                                    description: 'MLDs can serve as stabilizers in investment portfolios, providing balance in different market conditions.',
+                                },
+                                {
+                                    title: 'Downside Protection',
+                                    description: 'Principal protected MLDs offer downside protection, preventing losses in declining markets while allowing participation in rising markets.',
+                                },
+                                {
+                                    title: 'Flexible Structures',
+                                    description: 'Various MLD structures are available to suit different risk profiles, from conservative to aggressive investors.',
+                                },
+                            ].map((benefit, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-xl p-6 border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300"
+                                >
+                                    <h3 className="text-lg md:text-xl font-bold text-[#243062] mb-3">
+                                        {benefit.title}
+                                    </h3>
+                                    <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                        {benefit.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Taxation of Market Linked Debentures Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 leading-tight">
+                            Taxation of Market Linked Debentures in India
+                        </h2>
+                        <div className="space-y-6">
+                            <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-6">
+                                    Understanding the tax implications of market-linked debentures (MLDs) in India is crucial for optimizing net profits. As of 2023, all proceeds from MLDs will be taxed as short-term capital gains or business income under the slab rate, which eliminates the previous 10% Long Term Capital Gains (LTCG) tax benefit.
+                                </p>
+                                
+                                <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                    How to Optimize Legally:
+                                </h3>
+                                <ul className="space-y-3 list-disc list-inside text-base md:text-lg text-neutral-700 mb-6">
+                                    <li>Through lower-taxed family members.</li>
+                                    <li>Use in conjunction with other tax-sheltered vehicles.</li>
+                                    <li>Work with a tax specialist for tailored advice.</li>
+                                </ul>
+                                
+                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                    Even with slab rate taxation, effective planning around MLD taxation in India may enhance post-tax yields compared to other debt instruments.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Who Should Invest in Market Linked Debentures Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 leading-tight">
+                            Who Should Invest in Market Linked Debentures?
+                        </h2>
+                        <div className="space-y-6">
+                            <div className="bg-white rounded-xl p-6 md:p-8 border border-neutral-200">
+                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-6">
+                                    Market-linked debentures in India are best customized around specific types of investors.
+                                </p>
+                                
+                                <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                    Target Investor Profiles:
+                                </h3>
+                                <ul className="space-y-3 list-disc list-inside text-base md:text-lg text-neutral-700">
+                                    <li>High-Net-Worth Individuals (HNIs) and Non-Resident Indians (NRIs) as sophisticated wealth management clients.</li>
+                                    <li>Family offices looking for access to hybrid debt with growth potential.</li>
+                                    <li>Clients with a relevant knowledge of market-linked debentures who need capital preservation.</li>
+                                    <li>Those looking for self-managed investment options rather than mutual funds or term deposits.</li>
+                                    <li>Individuals seeking optimal tax planning with investments under the existing market-linked debentures taxation guidelines in India.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+
+            {/* Frequently Asked Questions Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
+                            Frequently Asked Questions (FAQs)
+                        </h2>
+                        <div className="space-y-4 md:space-y-5">
+                            {[
+                                {
+                                    question: 'What are market-linked debentures, and how are they different from bonds?',
+                                    answer: 'They are NCDs where returns are linked to market indices. Unlike bonds with fixed interest, MLDs offer market-based returns with capital protection.',
+                                },
+                                {
+                                    question: 'Are Nifty-linked debentures a better investment option than equity mutual funds?',
+                                    answer: 'Yes, in many cases. They offer equity-linked returns with principal protection, a feature that mutual funds often lack.',
+                                },
+                                {
+                                    question: 'How does market linked debentures taxation India work?',
+                                    answer: 'According to the 2023 amendment, MLDs are taxed according to individual tax slabs, not the LTCG rate. Strategic planning can reduce liability.',
+                                },
+                                {
+                                    question: 'Can I invest in market-linked debentures in India with 5 lakhs?',
+                                    answer: 'Yes. The minimum investment typically starts from 5 lakhs.',
+                                },
+                                {
+                                    question: 'Is market-linked debentures taxation in India safe?',
+                                    answer: 'Principal-protected MLDs offer safety with potential returns. Always read the offer document to understand the specific terms and conditions.',
+                                },
+                            ].map((faq, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
+                                >
+                                    <button
+                                        onClick={() => toggleFaq(index)}
+                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                                    >
+                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                            {faq.question}
+                                        </h5>
+                                        <svg
+                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                openFaqs[index] ? 'rotate-180' : ''
+                                            }`}
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {openFaqs[index] && (
+                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Call to Action Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 md:p-12 border-2 border-primary/20 text-center">
+                            <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                                Ready to Explore MLD Opportunities?
+                            </h2>
+                            <p className="text-base md:text-lg text-neutral-700 mb-8 leading-relaxed">
+                                Connect with our investment experts to learn more about Market Linked Debentures and how they can fit into your investment strategy.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold"
+                                >
+                                    Get Started
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    onClick={() => window.open('https://nivesh.com/en/products', '_blank')}
+                                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
+                                >
+                                    Learn More
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default MarketLinkedDebentures;
+

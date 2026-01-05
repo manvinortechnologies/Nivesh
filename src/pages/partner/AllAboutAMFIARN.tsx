@@ -1,0 +1,628 @@
+import React, { useEffect, useState } from 'react';
+
+const AllAboutAMFIARN: React.FC = () => {
+    const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        mobile: '',
+        holderType: 'arnHolder',
+        getInfo: true,
+    });
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const toggleFaq = (index: number) => {
+        setOpenFaqs((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
+
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Handle form submission here
+        console.log('Form submitted:', formData);
+        // Reset form or show success message
+    };
+
+    return (
+        <div className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <section className="relative bg-white py-12 md:py-20 overflow-hidden">
+                <div className="container-custom">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
+                        {/* Left Column - Content */}
+                        <div className="space-y-6">
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#243062] leading-tight">
+                                All about AMFI Registration Number (ARN)
+                            </h1>
+                            
+                            <div className="space-y-4 text-sm md:text-base text-neutral-600 leading-relaxed">
+                                <p>
+                                    Mutual fund distributors with an AMFI Registration Number (ARN) are eligible to sell mutual funds. To become an ARN Holder, a distributor must qualify for the NISM Series V-A: Mutual Fund Distributors Certification Examination.
+                                </p>
+                                
+                                <p>
+                                    A distributor should not hold more than one ARN card/Letter of Registration. The ARN has a validity period of 3 years. Renewal is required online if the validity period is over. The renewal depends on two factors:
+                                </p>
+                                
+                                <ul className="list-disc list-inside space-y-2 ml-2">
+                                    <li>ARN validity is about to expire</li>
+                                    <li>ARN validity has expired</li>
+                                </ul>
+                                
+                                <p>
+                                    You can check the AMFI ARN status section for renewal information.
+                                </p>
+                                
+                                <p>
+                                    The online AMFI ARN registration process for new distributors is straightforward. It ensures compliance with AMFI regulations and helps distributors maintain their registration status. EUIN registration and renewal are also important aspects of the process.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Right Column - Form */}
+                        <div className="lg:sticky lg:top-24">
+                            <form 
+                                onSubmit={handleFormSubmit}
+                                className="bg-white border-2 border-green-200 rounded-lg p-6 md:p-8 shadow-sm"
+                            >
+                                <h2 className="text-xl md:text-2xl font-bold text-neutral-800 mb-6">
+                                    Fill the Form to Know More!
+                                </h2>
+                                
+                                <div className="space-y-4">
+                                    {/* Input Fields */}
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Full Name"
+                                        value={formData.fullName}
+                                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                        required
+                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:border-primary text-sm"
+                                    />
+                                    
+                                    <input
+                                        type="email"
+                                        placeholder="Enter Email ID"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        required
+                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:border-primary text-sm"
+                                    />
+                                    
+                                    <input
+                                        type="tel"
+                                        placeholder="Enter Mobile Number"
+                                        value={formData.mobile}
+                                        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                                        required
+                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:border-primary text-sm"
+                                    />
+                                    
+                                    {/* Radio Buttons */}
+                                    <div className="pt-2">
+                                        <div className="text-center mb-3">
+                                            <p className="text-sm font-bold text-neutral-800">
+                                                Currently, you are an
+                                            </p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="flex items-center gap-2 cursor-pointer">
+                                                <input
+                                                    type="radio"
+                                                    name="holderType"
+                                                    value="arnHolder"
+                                                    checked={formData.holderType === 'arnHolder'}
+                                                    onChange={(e) => setFormData({ ...formData, holderType: e.target.value })}
+                                                    className="w-4 h-4 text-primary focus:ring-primary"
+                                                />
+                                                <span className="text-sm text-neutral-700">ARN Holder</span>
+                                            </label>
+                                            <label className="flex items-center gap-2 cursor-pointer">
+                                                <input
+                                                    type="radio"
+                                                    name="holderType"
+                                                    value="nonArnHolder"
+                                                    checked={formData.holderType === 'nonArnHolder'}
+                                                    onChange={(e) => setFormData({ ...formData, holderType: e.target.value })}
+                                                    className="w-4 h-4 text-primary focus:ring-primary"
+                                                />
+                                                <span className="text-sm text-neutral-700">Non ARN Holder</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Checkbox */}
+                                    <div className="pt-2">
+                                        <label className="flex items-start gap-2 cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                checked={formData.getInfo}
+                                                onChange={(e) => setFormData({ ...formData, getInfo: e.target.checked })}
+                                                className="w-4 h-4 mt-1 text-primary focus:ring-primary"
+                                            />
+                                            <span className="text-xs text-neutral-600 leading-relaxed">
+                                                I would like to get information on products, investment options via WhatsApp, Email, SMS, phone from Nivesh
+                                            </span>
+                                        </label>
+                                    </div>
+                                    
+                                    {/* Submit Button */}
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-[#243062] hover:bg-[#1a2347] text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 mt-4"
+                                    >
+                                        I Would Like To Know More
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Why is the AMFI Registration Number (ARN Code) significant? */}
+            <section className="py-12 md:py-20 bg-red-600">
+                <div className="container-custom">
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10 leading-tight text-center">
+                            Why is the AMFI Registration Number (ARN Code) significant?
+                        </h2>
+                        <div className="space-y-6 text-white">
+                            <p className="text-base md:text-lg leading-relaxed">
+                                The AMFI Registration Number (ARN) is crucial for the ethical and informed distribution of mutual funds in India. It helps SEBI and the Association of Mutual Funds in India (AMFI) regulate the industry by ensuring only experienced professionals act as distributors.
+                            </p>
+                            <p className="text-base md:text-lg leading-relaxed">
+                                While mutual funds carry market risk, professional guidance from an AMFI-registered distributor with an ARN code, who is proficient with NISM certification, helps manage this risk and provides judicious advice to investors.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* How to Get ARN Number? */}
+            <section className="py-12 md:py-20 bg-[#243062]">
+                <div className="container-custom">
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10 leading-tight text-center">
+                            How to Get ARN Number?
+                        </h2>
+                        
+                        <div className="space-y-6 mb-10">
+                            <p className="text-base md:text-lg text-white leading-relaxed text-center max-w-4xl mx-auto">
+                                After clearing the AMFI exam (NISM -VA) and receiving the certificate, one can apply for AMFI ARN registration through offline or online modes. AMFI India has authorized CAMS to complete the registration process and issue the ARN code.
+                            </p>
+                        </div>
+
+                        {/* Two Boxes - Offline and Online */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-10">
+                            {/* Offline Mode Box */}
+                            <div className="bg-white rounded-xl p-6 md:p-8 shadow-lg">
+                                <h3 className="text-2xl md:text-3xl font-bold text-[#243062] mb-4">
+                                    AMFI ARN Registration - Offline Mode
+                                </h3>
+                                <p className="text-sm md:text-base text-neutral-700 mb-6 leading-relaxed">
+                                    For offline registration, documents need to be enclosed and submitted to the nearest CAMS office for biometric completion.
+                                </p>
+                                <div className="space-y-3">
+                                    <h4 className="font-semibold text-[#243062] mb-3">Required Documents:</h4>
+                                    <ul className="space-y-2 text-sm md:text-base text-neutral-700">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>Duly filled fresh Individual registration application form.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>Demand Draft in favor of "ASSOCIATION OF Mutual Funds IN INDIA" payable locally.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>Self-attested copy of the Valid NISM Series V-A Certificate.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>3 Stamp Size Colour Photographs.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>Duly Filled and Signed KYD Individual Application and Photograph should be affixed in the KYD Application Sign across.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-red-600 font-bold mt-1">•</span>
+                                            <span>Self-Attested Copy of Pan Proof, Address Proof, and Bank Proof (Cancelled Cheque Copy/Latest Bank A/c Statement).</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Online Mode Box */}
+                            <div className="bg-white rounded-xl p-6 md:p-8 shadow-lg">
+                                <h3 className="text-2xl md:text-3xl font-bold text-[#243062] mb-4">
+                                    AMFI ARN Registration Process - Online Mode
+                                </h3>
+                                <p className="text-sm md:text-base text-neutral-700 mb-4 leading-relaxed font-semibold">
+                                    Eligibility: Ensure that you have cleared the NISM Series V-A certification exam.
+                                </p>
+                                <div className="space-y-3 mt-6">
+                                    <h4 className="font-semibold text-[#243062] mb-3">Steps for Online Registration:</h4>
+                                    <ul className="space-y-2 text-sm md:text-base text-neutral-700">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-[#243062] font-bold mt-1">1.</span>
+                                            <span><strong>Online Application:</strong> Visit the AMFI ARN registration online portal to start the application process.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-[#243062] font-bold mt-1">2.</span>
+                                            <span><strong>Document Submission:</strong> Upload documents like NISM certificate, PAN card, and address proof.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-[#243062] font-bold mt-1">3.</span>
+                                            <span><strong>Aadhaar Authentication:</strong> Verify using your Aadhaar number for identification via the eKYC process.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-[#243062] font-bold mt-1">4.</span>
+                                            <span><strong>Payment of Fees:</strong> Pay the applicable registration fee for AMFI ARN registration online.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-[#243062] font-bold mt-1">5.</span>
+                                            <span><strong>Confirmation:</strong> Your ARN will be emailed upon successful payment and verification.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Note Section */}
+                        <div className="bg-white/10 rounded-lg p-6 md:p-8 border border-white/20">
+                            <p className="text-white leading-relaxed">
+                                <strong className="font-bold">Note:</strong> Fees vary by entity. It is important to update your details via the AMFI distributor login. Regular renewal is essential for compliance. Please refer to the online renewal sections for guidance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* How to Register for CPE/ ECPE Training? */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-10 leading-tight text-center">
+                            How to Register for CPE/ ECPE Training?
+                        </h2>
+                        
+                        {/* Table Section */}
+                        <div className="overflow-x-auto mb-12">
+                            <table className="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
+                                <thead>
+                                    <tr className="bg-[#243062] text-white">
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold border-r border-white/20">Normal</th>
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold border-r border-white/20">Grandfather by Age Category</th>
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold">Grandfather by Experience Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 border-r border-neutral-200 bg-neutral-50">
+                                            Candidates can attend the CPE Program 6 months prior to the expiry of the said Certificate / ARN Card.
+                                        </td>
+                                        <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 border-r border-neutral-200 bg-white">
+                                            Any associated person, other than Principal, who has completed the age of 50 years as of May 31, 2010, may attend NISM Series V (a): Mutual Fund Distributors CPE Program under the 'Grandfather by Age Category'.
+                                        </td>
+                                        <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 bg-neutral-50">
+                                            Any associated person, other than Principal, having experience of 10 years or more as a distributor, agent or employed or engaged in the sale and/or distribution of Mutual Fund products, as of May 31, 2010, may attend NISM Series V (a): Mutual Fund Distributors CPE Program under the 'Grandfather by Experience Category'.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* What are the Benefits of the ARN Code? */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl md:text-4xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
+                                What are the Benefits of the ARN Code?
+                            </h3>
+                            <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-100">
+                                <ul className="space-y-4">
+                                    {[
+                                        "Serves as a distributor's exclusive ID, facilitating transparent mutual fund transactions.",
+                                        "Facilitates legal mutual fund distribution following AMFI ARN registration online.",
+                                        "Establishes credibility and trust among investors with verified AMFI registration.",
+                                        "Facilitates tracking commissions and trail income seamlessly.",
+                                        "Works towards professional upgrade with AMFI-certified knowledge and ethics.",
+                                        "Must be listed on online investment platforms and portals.",
+                                    ].map((point, index) => (
+                                        <li key={index} className="flex items-start gap-3">
+                                            <div className="w-5 h-5 bg-[#243062] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                            <span className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                {point}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Process of ARN Renewal Online */}
+                        <div>
+                            <h3 className="text-2xl md:text-4xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
+                                Process of ARN Renewal Online
+                            </h3>
+                            <div className="space-y-6">
+                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                    The ARN Number is valid for three years. To complete the AMFI ARN renewal online process, follow these steps based on the validity status:
+                                </p>
+                                
+                                <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-100">
+                                    <div className="space-y-4 mb-6">
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-[#243062] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                                <span className="text-white text-sm font-bold">1</span>
+                                            </div>
+                                            <div>
+                                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                                    <strong>If ARN validity is about to expire:</strong> Book a CPE/ECPE training session.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-[#243062] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                                <span className="text-white text-sm font-bold">2</span>
+                                            </div>
+                                            <div>
+                                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                                    <strong>If ARN validity has expired:</strong> Book the AMFI exam registration for the NISM Certification Exam.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-6 pt-6 border-t border-neutral-200">
+                                        <h4 className="text-lg md:text-xl font-bold text-[#243062] mb-4">
+                                            Requirements for AMFI ARN Renewal (for individuals, senior citizens, and employees):
+                                        </h4>
+                                        <ul className="space-y-3">
+                                            {[
+                                                "Application for renewal of ARN/EUIN.",
+                                                "Copy of the passing certificate of the NISM Mutual Fund Distributors Certification Examination or CPE Certificate",
+                                                "Two stamp-size colour photographs.",
+                                            ].map((point, index) => (
+                                                <li key={index} className="flex items-start gap-3">
+                                                    <div className="w-5 h-5 bg-[#243062] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </div>
+                                                    <span className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                        {point}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className="mt-6 pt-6 border-t border-neutral-200">
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                            It is important to ensure that all documents are legitimate and up-to-date. Staying updated with AMFI Certification is essential for compliance and maintaining your reputation as a professional mutual fund distributor.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Process to Register for CPE/ ECPE Training */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
+                            Process to Register for CPE/ ECPE Training
+                        </h2>
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
+                            {/* Left Column - Paragraph and Button */}
+                            <div className="space-y-6">
+                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                    If your ARN number is about to expire and you want to renew it before the date ends, then you need to get register for the CPE/ ECPE Training. The process of registration is as follows.
+                                </p>
+                                
+                                <div className="flex justify-start">
+                                    <button
+                                        onClick={() => window.open('https://www.nism.ac.in/', '_blank', 'noopener,noreferrer')}
+                                        className="px-8 py-3 bg-primary hover:bg-[#1a2347] text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+                                    >
+                                        Login Now
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Right Column - Steps */}
+                            <div className="space-y-6">
+                                {[
+                                    {
+                                        step: '1',
+                                        description: "Login to your NISM account and select 'Enrolment'.",
+                                    },
+                                    {
+                                        step: '2',
+                                        description: "Choose a dropdown that reflects 'Enroll for CPE/eCPE'.",
+                                    },
+                                    {
+                                        step: '3',
+                                        description: "Select modules (Mutual Funds) and categories such as normal renewal/ grandfathered by age or grandfathered by experience. In most cases, you will have to select normal renewal.",
+                                    },
+                                    {
+                                        step: '4',
+                                        description: "You can select a desired date and time slot and make payment online through the NISM portal.",
+                                    },
+                                    {
+                                        step: '5',
+                                        description: "You will receive login credentials for CPE via email and SMS a day prior to the training date.",
+                                    },
+                                    {
+                                        step: '6',
+                                        description: "Your login credentials will be valid till the time of completion of training.",
+                                    },
+                                ].map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-neutral-50 rounded-xl p-2 md:p-4 border border-neutral-100 shadow-sm hover:shadow-lg transition-all duration-300"
+                                    >
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 text-lg md:text-xl font-bold">
+                                                {item.step}
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Difference Between CPE & E CPE */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight text-center">
+                            Difference Between CPE & E CPE
+                        </h2>
+                        
+                        {/* Table Section */}
+                        <div className="overflow-x-auto mt-8">
+                            <table className="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
+                                <thead>
+                                    <tr className="bg-[#243062] text-white">
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold border-r border-white/20">Category</th>
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold border-r border-white/20">CPE</th>
+                                        <th className="px-4 py-4 md:px-6 md:py-5 text-left text-sm md:text-base font-bold">ECPE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {[
+                                        {
+                                            category: 'Mode',
+                                            cpe: 'Online Mode',
+                                            ecpe: 'Offline Mode',
+                                        },
+                                        {
+                                            category: 'Centre',
+                                            cpe: 'Physical centre. You will have to visit the selected centre on the training day',
+                                            ecpe: 'No need to visit the centre',
+                                        },
+                                        {
+                                            category: 'Prerequisites',
+                                            cpe: 'Id Proofs and admit card',
+                                            ecpe: 'A laptop or desktop with at least 2GB RAM Internet connection with a minimum speed of 2MBPS',
+                                        },
+                                        {
+                                            category: 'Duration',
+                                            cpe: '5-6 hours',
+                                            ecpe: '4-5 hours',
+                                        },
+                                        {
+                                            category: 'Doubt Session',
+                                            cpe: 'One on one questions can be asked',
+                                            ecpe: 'This is session recorded and live doubts are taken into consideration',
+                                        },
+                                    ].map((row, index) => (
+                                        <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-neutral-50'}>
+                                            <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base font-semibold text-[#243062] border-r border-neutral-200">
+                                                {row.category}
+                                            </td>
+                                            <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 border-r border-neutral-200">
+                                                {row.cpe}
+                                            </td>
+                                            <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700">
+                                                {row.ecpe}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Frequently Asked Questions (FAQs) */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
+                            Frequently Asked Questions (FAQs)
+                        </h2>
+                        <div className="space-y-4 md:space-y-5">
+                            {[
+                                {
+                                    question: 'Who Allots ARN Number?',
+                                    answer: 'The Association of Mutual Funds in India allots the AMFI Registration Number to every mutual fund distributor for helping their customers invest in the mutual fund schemes.',
+                                },
+                                {
+                                    question: 'How do I Renew my ARN Number Online?',
+                                    answer: 'The renewal of the ARN number can only be done by visiting the official portal of the Association of Mutual Funds in India. To complete the process, the prospect needs to submit the PAN card mobile number. Also, the copy proving that you have cleared the NISM examination needs to get submitted. Without legitimate documents, the ARN number cannot get renewed.',
+                                },
+                                {
+                                    question: 'Is it Possible to register for the ARN Number Online?',
+                                    answer: 'Yes, after qualifying for the NISM-V-A mutual fund distribution certificate examination, a person can apply for the ARN number online by visiting the official website of AMFI (Association of Mutual Funds in India)',
+                                },
+                                {
+                                    question: 'How do I download an AMFI Certificate?',
+                                    answer: 'To download the ARN certificate/ ARN card, you need to visit the official website of the Association of Mutual Funds in India',
+                                },
+                            ].map((faq, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
+                                >
+                                    <button
+                                        onClick={() => toggleFaq(index)}
+                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                                    >
+                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                            {faq.question}
+                                        </h5>
+                                        <svg
+                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                openFaqs[index] ? 'rotate-180' : ''
+                                            }`}
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    {openFaqs[index] && (
+                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default AllAboutAMFIARN;
+

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation: React.FC = () => {
     const BASE_URL = 'https://nivesh.com';
     const LANGUAGE_PREFIX = '/en';
+    const navigate = useNavigate();
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -74,8 +76,77 @@ const Navigation: React.FC = () => {
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
+        } else if (path === '/about' || path === '/about-us') {
+            // Handle About page - use React Router navigation
+            navigate('/about');
+        } else if (path === '/nivesh-teams') {
+            // Handle Nivesh Teams page - use React Router navigation
+            navigate('/nivesh-teams');
+        } else if (path === '/partner') {
+            // Handle Partner page - use React Router navigation
+            navigate('/partner');
+        } else if (path === '/partner/all-about-amfi-arn-code') {
+            // Handle All About AMFI ARN Code page - use React Router navigation
+            navigate('/partner/all-about-amfi-arn-code');
+        } else if (path === '/partner/become-mutual-fund-distributors') {
+            // Handle Become Mutual Fund Distributors page - use React Router navigation
+            navigate('/partner/become-mutual-fund-distributors');
+        } else if (path === '/partner/grow-your-mutual-fund') {
+            // Handle Grow Your Mutual Fund page - use React Router navigation
+            navigate('/partner/grow-your-mutual-fund');
+        } else if (path === '/products/specialized-investment-fund' || path === '/specialized-investment-fund') {
+            // Handle Specialized Investment Fund page - use React Router navigation
+            navigate('/products/specialized-investment-fund');
+        } else if (path === '/market-linked-debentures') {
+            // Handle Market Linked Debentures page - use React Router navigation
+            navigate('/market-linked-debentures');
+        } else if (path === '/pre-owned-policies') {
+            // Handle Pre-Owned Policies page - use React Router navigation
+            navigate('/pre-owned-policies');
+        } else if (path === '/nism-certification-exam') {
+            // Handle NISM Certification Exam page - use React Router navigation
+            navigate('/nism-certification-exam');
+        } else if (path === '/plan-for-retirement') {
+            // Handle Plan for Retirement page - use React Router navigation
+            navigate('/plan-for-retirement');
+        } else if (path === '/save-for-children') {
+            // Handle Save for Children page - use React Router navigation
+            navigate('/save-for-children');
+        } else if (path === '/save-tax') {
+            // Handle Save Tax page - use React Router navigation
+            navigate('/save-tax');
+        } else if (path === '/build-long-term-wealth') {
+            // Handle Build Long Term Wealth page - use React Router navigation
+            navigate('/build-long-term-wealth');
+        } else if (path === '/gift-city') {
+            // Handle Gift City page - use React Router navigation
+            navigate('/gift-city');
+        } else if (path === '/unlisted-shares') {
+            // Handle Unlisted Shares page - use React Router navigation
+            navigate('/unlisted-shares');
+        } else if (path === '/fixed-deposit') {
+            // Handle Fixed Deposit page - use React Router navigation
+            navigate('/fixed-deposit');
+        } else if (path === '/alternative-investment-fund') {
+            // Handle Alternative Investment Fund page - use React Router navigation
+            navigate('/alternative-investment-fund');
+        } else if (path === '/national-pension-scheme') {
+            // Handle National Pension Scheme page - use React Router navigation
+            navigate('/national-pension-scheme');
+        } else if (path === '/bond') {
+            // Handle Bond page - use React Router navigation
+            navigate('/bond');
+        } else if (path === '/loans/loan-against-securities') {
+            // Handle Loan Against Securities page - use React Router navigation
+            navigate('/loans/loan-against-securities');
+        } else if (path === '/pms') {
+            // Handle PMS page - use React Router navigation
+            navigate('/pms');
+        } else if (path === '/') {
+            // Handle Home page - use React Router navigation
+            navigate('/');
         } else {
-            // Handle regular navigation with base URL
+            // Handle regular navigation with base URL (external)
             const fullUrl = buildUrl(path);
             window.location.href = fullUrl;
         }
@@ -83,14 +154,14 @@ const Navigation: React.FC = () => {
 
     const menuItems = [
         { name: 'Home', path: '/', external: false },
-        { name: 'About Us', path: '/about-us', external: false },
+        { name: 'About Us', path: '/about', external: false },
         {
             name: 'Products',
             path: '/products',
             external: false,
             dropdown: [
                 { name: 'Mutual Funds', path: '/mutual-funds', external: false },
-                { name: 'Specialized Investment Fund (SIF)', path: '/specialized-investment-fund', external: false },
+                { name: 'Specialized Investment Fund (SIF)', path: '/products/specialized-investment-fund', external: false },
                 { name: 'Market Linked Debentures (MLD)', path: '/market-linked-debentures', external: false },
                 { name: 'Pre-owned Policies', path: '/pre-owned-policies', external: false },
                 { name: 'Gift City', path: '/gift-city', external: false },
@@ -108,7 +179,7 @@ const Navigation: React.FC = () => {
             path: '/partner',
             external: false,
             dropdown: [
-                { name: 'Partner', path: '/partner', external: false },
+                { name: 'Be A Nivesh Partner', path: '/partner', external: false },
                 { name: 'Become Mutual Fund Distributors', path: '/partner/become-mutual-fund-distributors', external: false },
                 { name: 'Grow Your Mutual Fund', path: '/partner/grow-your-mutual-fund', external: false },
                 { name: 'All About AMFI ARN Code', path: '/partner/all-about-amfi-arn-code', external: false },
@@ -121,8 +192,8 @@ const Navigation: React.FC = () => {
             external: false,
             dropdown: [
                 { name: 'For HR - Nivesh Teams', path: '/nivesh-teams', external: false },
-                { name: 'Data Security', path: '/data-security', external: false },
-                { name: 'Specialized Investment Fund', path: '/specialized-investment-fund', external: false },
+                // { name: 'Data Security', path: '/data-security', external: false },
+                // { name: 'Specialized Investment Fund', path: '/specialized-investment-fund', external: false },
             ],
         },
     ];
@@ -137,16 +208,12 @@ const Navigation: React.FC = () => {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <div className="flex items-center">
-                        <a 
-                            href={buildUrl('/')}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleNavigate('/');
-                            }}
-                            className="cursor-pointer"
+                        <button
+                            onClick={() => handleNavigate('/')}
+                            className="cursor-pointer bg-transparent border-none outline-none p-0"
                         >
-                            <img src="/logo.png" alt="Nivesh" className="h-6 md:h-8" />
-                        </a>
+                        <img src="/logo.png" alt="Nivesh" className="h-6 md:h-8" />
+                        </button>
                     </div>
 
                     {/* Desktop Menu */}
@@ -210,10 +277,10 @@ const Navigation: React.FC = () => {
                         )}
                     </button>
                 </div>
-            </div>
+                </div>
 
             {/* Mobile Menu Overlay & Drawer */}
-            {isMenuOpen && (
+                {isMenuOpen && (
                 <>
                     {/* Backdrop - Full screen with black/20 opacity (left side visible) */}
                     <div
@@ -244,7 +311,7 @@ const Navigation: React.FC = () => {
                             </div>
 
                             {/* Menu Items */}
-                            {menuItems.map((item, index) => (
+                        {menuItems.map((item, index) => (
                                 <div key={index} className="mb-2">
                                     <button
                                         onClick={() => {
@@ -255,9 +322,9 @@ const Navigation: React.FC = () => {
                                             }
                                         }}
                                         className="flex items-center justify-between w-full text-left text-neutral-800 hover:text-primary hover:bg-primary/5 transition-all duration-200 text-sm font-medium py-3 px-3 rounded-lg border border-transparent hover:border-primary/20 bg-transparent outline-none"
-                                    >
+                                >
                                         <span className="font-semibold">{item.name}</span>
-                                        {item.dropdown && (
+                                {item.dropdown && (
                                             <svg
                                                 className={`w-4 h-4 transition-transform duration-200 text-primary ${openDropdowns[index] ? 'rotate-180' : ''}`}
                                                 fill="none"
@@ -270,19 +337,19 @@ const Navigation: React.FC = () => {
                                     </button>
                                     {item.dropdown && openDropdowns[index] && (
                                         <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg my-2 py-2 border border-primary/20 shadow-sm">
-                                            {item.dropdown.map((subItem, subIndex) => (
+                                        {item.dropdown.map((subItem, subIndex) => (
                                                 <button
-                                                    key={subIndex}
+                                                key={subIndex}
                                                     onClick={() => handleNavigate(subItem.path, subItem.external)}
                                                     className="block w-full text-left px-4 py-2.5 text-sm text-neutral-700 hover:text-primary hover:bg-white/50 rounded-md transition-all duration-200 font-medium bg-transparent border-none outline-none"
-                                                >
+                                            >
                                                     {subItem.name}
                                                 </button>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                             
                             {/* Login/Register Button - Mobile */}
                             <a
@@ -297,7 +364,7 @@ const Navigation: React.FC = () => {
                         </div>
                     </div>
                 </>
-            )}
+                )}
         </nav>
     );
 };
