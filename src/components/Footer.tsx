@@ -35,8 +35,9 @@ const Footer: React.FC = () => {
                         <p className="text-neutral-400 text-xs leading-relaxed mb-3 md:mb-4">
                             Digital First Wealth Platform
                         </p>
-                        <div className="space-y-1 text-xs text-neutral-400">
+                        <div className="space-y-2 text-xs text-neutral-400">
                             <p><span className="font-semibold">Registered Office Address:</span> Private No-S-203, 20, ABC Complex, Veer Savarkar Block, Shakarpur, Shahdara, Delhi-110092</p>
+                            <p>Providential Platforms Private Limited</p>
                         </div>
                     </div>
 
@@ -50,9 +51,9 @@ const Footer: React.FC = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="http://blog.nivesh.com/" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/blog" className="text-neutral-400 hover:text-primary transition-colors">
                                     Blog
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <Link to="/calculators" className="text-neutral-400 hover:text-primary transition-colors">
@@ -74,6 +75,21 @@ const Footer: React.FC = () => {
                                 <Link to="/data-security" className="text-neutral-400 hover:text-primary transition-colors">
                                     Data Security
                                 </Link>
+                            </li>
+                            <li>
+                                <Link to="/nfos" className="text-neutral-400 hover:text-primary transition-colors">
+                                    NFOs
+                                </Link>
+                            </li>
+                            <li>
+                                <a 
+                                    href="https://www.amfiindia.com/otherdata/scheme-details" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-block px-1 py-1 hover:border-primary-dark hover:text-primary text-neutral-400 border border-primary rounded-lg text-xs"
+                                >
+                                    Scheme Details
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -170,8 +186,14 @@ const Footer: React.FC = () => {
                                 </Link>
                             </li>
                             <li>
+                                <Link to="/for-mfds" className="text-neutral-400 hover:text-primary transition-colors">
+                                Transform Your Distribution Business
+                                </Link>
+                            </li>
+                            
+                            <li>
                                 <Link to="/partner/grow-your-mutual-fund" className="text-neutral-400 hover:text-primary transition-colors">
-                                    Grow Your Mutual Fund
+                                    Grow Your Mutual Fund Business
                                 </Link>
                             </li>
                             <li>
@@ -322,6 +344,32 @@ const Footer: React.FC = () => {
                             <p className="text-sm font-semibold text-white">
                                 APRN Code: APRN02811
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Company Registration & AMFI Info */}
+            <div className="border-t border-neutral-800 bg-neutral-900">
+                <div className="container-custom py-6 md:py-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 text-center">
+                        <div className="flex flex-col items-center sm:items-start lg:items-center">
+                            <p className="text-xs text-neutral-400 mb-1">CIN</p>
+                            <p className="text-xs md:text-sm text-white font-semibold">U74999DL2016PTC303830</p>
+                        </div>
+                        <div className="flex flex-col items-center sm:items-start lg:items-center">
+                            <p className="text-xs text-neutral-400 mb-1">Status</p>
+                            <p className="text-xs text-white font-semibold" style={{ fontSize: '12px' }}>
+                                AMFI-Registered Mutual Fund Distributor & SIF Distributor
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center sm:items-start lg:items-center">
+                            <p className="text-xs text-neutral-400 mb-1">Date of Initial Registration</p>
+                            <p className="text-xs md:text-sm text-white font-semibold">20 September, 2016</p>
+                        </div>
+                        <div className="flex flex-col items-center sm:items-start lg:items-center">
+                            <p className="text-xs text-neutral-400 mb-1">Current validity of ARN</p>
+                            <p className="text-xs md:text-sm text-white font-semibold">19 September, 2028</p>
                         </div>
                     </div>
                 </div>

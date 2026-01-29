@@ -2,12 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 import PFRImage from '../../../assets/PFR.png';
+import { fetchFAQs, type FAQ } from '../../../services/api';
 
 const PlanForRetirement: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "plan-for-retirement"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'plan-for-retirement' || 
+                           category === 'plan for retirement' ||
+                           category.includes('plan-for-retirement');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
     }, []);
 
     const toggleFaq = (index: number) => {
@@ -267,53 +295,53 @@ const PlanForRetirement: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'How much do I need for retirement?',
-                                    answer: 'This answer is different for everyone as it depends on the post-retirement expenses and lifestyle of the retiree. However, many financial experts suggest that the simplest way of deciding financial requirements post-retirement is to list down your monthly expenses and calculate the present value of that amount. Then take the inflation rate and calculate the current amount compounded at the inflation rate for the period till you retire. However, most of the time your financial advisor will help you determine this figure.',
-                                },
-                                {
-                                    question: 'How do retirement mutual funds work?',
-                                    answer: 'Retirement mutual funds invest in a mix of securities comprising equity instruments and fixed-income instruments. Generally, there is a lock-in period of 3-5 years. Most of the schemes levy an exit load on redemption before the retirement age and offer a Systematic Withdrawal Plan (SWP) which allows you to withdraw a predetermined amount from your investment every month.',
-                                },
-                                {
-                                    question: 'How are retirement mutual funds better than traditional pension plans?',
-                                    answer: 'To meet the post-requirement expenses, you can opt for a Systematic Withdrawal Plan in your retirement scheme. There is no need to buy an annuity as in the case of the National Pension Scheme or any other pension plan offered by insurance companies. Some of the retirement plans have a 100% exposure to equities whereas NPS restricts equity exposure to 50%. Mutual Funds\' Pension Plans offer greater liquidity as you can withdraw your corpus anytime after the lock-in period.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

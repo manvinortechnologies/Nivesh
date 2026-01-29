@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const AllAboutAMFIARN: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -12,6 +16,31 @@ const AllAboutAMFIARN: React.FC = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "all-about-amfi-arn"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'all-about-amfi-arn' || 
+                           category === 'all about amfi arn' ||
+                           category.includes('all-about-amfi-arn');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
     }, []);
 
     const toggleFaq = (index: number) => {
@@ -31,14 +60,23 @@ const AllAboutAMFIARN: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative bg-white py-12 md:py-20 overflow-hidden">
+            <section className="relative pt-20 md:pt-24 pb-12 md:pb-20 bg-white overflow-hidden">
                 <div className="container-custom">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-4">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">All About AMFI ARN</span>
+                    </nav>
+                    
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div className="space-y-6">
-                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#243062] leading-tight">
+                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#243062] leading-tight">
                                 All about AMFI Registration Number (ARN)
-                            </h1>
+                            </h2>
                             
                             <div className="space-y-4 text-sm md:text-base text-neutral-600 leading-relaxed">
                                 <p>
@@ -174,10 +212,10 @@ const AllAboutAMFIARN: React.FC = () => {
                         </h2>
                         <div className="space-y-6 text-white">
                             <p className="text-base md:text-lg leading-relaxed">
-                                The AMFI Registration Number (ARN) is crucial for the ethical and informed distribution of mutual funds in India. It helps SEBI and the Association of Mutual Funds in India (AMFI) regulate the industry by ensuring only experienced professionals act as distributors.
+                            AMFI Registration Number (ARN) is an essential factor facilitating the ethical and informed distribution of mutual funds throughout India. The process of AMFI registration helps both SEBI and the Association of Mutual Funds in India (AMFI) control the industry by only allowing experienced professionals to act as mutual fund distributors.
                             </p>
                             <p className="text-base md:text-lg leading-relaxed">
-                                While mutual funds carry market risk, professional guidance from an AMFI-registered distributor with an ARN code, who is proficient with NISM certification, helps manage this risk and provides judicious advice to investors.
+                            Whenever you hear Mutual Funds are subject to market risk, it is a word of caution that while risk cannot be eliminated, it can be managed more efficiently with professional guidance. It is here that an AMFI-registered distributor with an ARN code plays its part. When the distributor registers online with the AMFI ARN, he proves proficient with the NISM certification and qualified enough to guide investors with goal specific recommendations.
                             </p>
                         </div>
                     </div>
@@ -566,57 +604,53 @@ const AllAboutAMFIARN: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'Who Allots ARN Number?',
-                                    answer: 'The Association of Mutual Funds in India allots the AMFI Registration Number to every mutual fund distributor for helping their customers invest in the mutual fund schemes.',
-                                },
-                                {
-                                    question: 'How do I Renew my ARN Number Online?',
-                                    answer: 'The renewal of the ARN number can only be done by visiting the official portal of the Association of Mutual Funds in India. To complete the process, the prospect needs to submit the PAN card mobile number. Also, the copy proving that you have cleared the NISM examination needs to get submitted. Without legitimate documents, the ARN number cannot get renewed.',
-                                },
-                                {
-                                    question: 'Is it Possible to register for the ARN Number Online?',
-                                    answer: 'Yes, after qualifying for the NISM-V-A mutual fund distribution certificate examination, a person can apply for the ARN number online by visiting the official website of AMFI (Association of Mutual Funds in India)',
-                                },
-                                {
-                                    question: 'How do I download an AMFI Certificate?',
-                                    answer: 'To download the ARN certificate/ ARN card, you need to visit the official website of the Association of Mutual Funds in India',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

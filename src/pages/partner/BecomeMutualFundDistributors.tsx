@@ -1,224 +1,205 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
-import Favicon from '../../assets/Favicon.png';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const BecomeMutualFundDistributors: React.FC = () => {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        mobile: '',
-        holderType: 'arnHolder',
-        getInfo: true,
-    });
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    },[]);
+    }, []);
 
-    const handleFormSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
-        // Reset form or show success message
-    };
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "become-mfds"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'become-mfds' || 
+                           category === 'become mfds' ||
+                           category.includes('become-mfds');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section - Become an MFD with Nivesh */}
             <section className="relative py-16 md:py-24 overflow-hidden bg-neutral-50">
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                        {/* Left Column - Content */}
-                        <div className="relative z-10 text-center lg:text-left">
-                            <p className="text-sm md:text-base text-primary font-semibold mb-3 uppercase tracking-wide">
-                                Become Mutual Fund Distributor
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-10">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Become Mutual Fund Distributor</span>
+                    </nav>
+                    
+                    {/* Centered Content */}
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
+                            Start your wealth journey — become a Mutual Fund Distributor with{' '}
+                            <span className="text-primary">Nivesh</span>
+                        </h1>
+                        
+                        <div className="space-y-4 mb-10 md:mb-12">
+                            <p className="text-base md:text-lg text-neutral-700 leading-relaxed max-w-3xl mx-auto">
+                                We help you get AMFI certified, set up your business, and serve clients digitally — with tools, training, and a ready-to-use platform.
                             </p>
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 leading-tight">
-                                Start your wealth journey — become a Mutual Fund Distributor with{' '}
-                                <span className="text-primary">Nivesh</span>
-                            </h1>
-                            
-                            <p className="text-base md:text-lg text-neutral-700 mb-6 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                                Start your journey into financial entrepreneurship — backed by India's most trusted wealth platform.
+                            <p className="text-base md:text-lg text-neutral-700 leading-relaxed max-w-3xl mx-auto">
+                                Build a rewarding career helping people invest and grow wealth.
                             </p>
-                            
-                            <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                                We help you get AMFI certified, set up your business, and serve clients digitally — with tools, training, and a ready-to-use platform. Build a rewarding career helping people invest and grow wealth.
-                            </p>
-                            
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
-                                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-                                >
-                                    Get Started Now
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    onClick={() => {
-                                        const element = document.getElementById('how-it-works');
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: 'smooth' });
-                                        }
-                                    }}
-                                    className="border-2 border-[#243062] text-[#243062] hover:bg-[#243062] hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
-                                >
-                                    How It Works
-                                </Button>
-                            </div>
-
-                            {/* Stats or Features */}
-                            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
-                                <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">1000+</div>
-                                    <div className="text-sm text-neutral-600">Active MFDs</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">24/7</div>
-                                    <div className="text-sm text-neutral-600">Support</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">100%</div>
-                                    <div className="text-sm text-neutral-600">Digital</div>
-                                </div>
-                            </div>
+                        </div>
+                        
+                        {/* CTA Buttons */}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                            >
+                                Get Started Now
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                onClick={() => {
+                                    const element = document.getElementById('how-it-works');
+                                    if (element) {
+                                        element.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                }}
+                                className="!border-2 !border-[#243062] !text-[#243062] hover:!bg-[#243062] hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
+                            >
+                                How It Works
+                            </Button>
                         </div>
 
-                        {/* Right Column - Form Card */}
-                        <div className="relative z-10">
-                            <div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6 border border-neutral-200">
-                                <form onSubmit={handleFormSubmit} className="space-y-5">
-                                    {/* Logo and Title */}
-                                    <div className="text-center mb-6">
-                                        <div className="flex justify-center mb-4">
-                                            <img src={Favicon} alt="Nivesh" className="w-10 h-10" />
-                                        </div>
-                                        <h2 className="text-lg md:text-xl font-bold text-[#243062] mb-1">
-                                            It's a Great Opportunity
-                                        </h2>
-                                        <h2 className="text-xl md:text-2xl font-bold text-[#243062]">
-                                            Let's Connect!
-                                        </h2>
-                                    </div>
-                                    
-                                    {/* Input Fields */}
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Full Name"
-                                        value={formData.fullName}
-                                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                        required
-                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                                    />
-                                    
-                                    <input
-                                        type="email"
-                                        placeholder="Enter Email-ID"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        required
-                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                                    />
-                                    
-                                    <input
-                                        type="tel"
-                                        placeholder="Enter Mobile Number"
-                                        value={formData.mobile}
-                                        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                                        required
-                                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                                    />
-                                    
-                                    {/* Radio Buttons */}
-                                    <div className="space-y-3 pt-2">
-                                        <p className="text-sm font-medium text-neutral-700 text-center">Currently, you are an</p>
-                                        <div className="flex gap-6 justify-center">
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="holderType"
-                                                    value="arnHolder"
-                                                    checked={formData.holderType === 'arnHolder'}
-                                                    onChange={(e) => setFormData({ ...formData, holderType: e.target.value })}
-                                                    className="w-4 h-4 text-primary focus:ring-primary"
-                                                />
-                                                <span className="text-sm text-neutral-700">ARN Holder</span>
-                                            </label>
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="holderType"
-                                                    value="nonArnHolder"
-                                                    checked={formData.holderType === 'nonArnHolder'}
-                                                    onChange={(e) => setFormData({ ...formData, holderType: e.target.value })}
-                                                    className="w-4 h-4 text-primary focus:ring-primary"
-                                                />
-                                                <span className="text-sm text-neutral-700">Non ARN Holder</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Checkbox */}
-                                    <label className="flex items-start gap-3 cursor-pointer pt-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={formData.getInfo}
-                                            onChange={(e) => setFormData({ ...formData, getInfo: e.target.checked })}
-                                            className="mt-1 w-4 h-4 text-primary focus:ring-primary rounded"
-                                        />
-                                        <span className="text-xs text-neutral-600 leading-relaxed">
-                                            I would like to get information on products, investment options via WhatsApp, Email, SMS, phone from Nivesh
-                                        </span>
-                                    </label>
-                                    
-                                    {/* Submit Button */}
-                                    <button
-                                        type="submit"
-                                        className="w-full py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors duration-200 text-base shadow-md hover:shadow-lg"
-                                    >
-                                        Submit
-                                    </button>
-                                </form>
+                        {/* Visual Elements - Icons representing learning, certification, and clients */}
+                        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mt-12">
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <span className="text-sm font-medium text-neutral-700">Learning</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                    </svg>
+                                </div>
+                                <span className="text-sm font-medium text-neutral-700">Certification</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </div>
+                                <span className="text-sm font-medium text-neutral-700">Clients</span>
                             </div>
                         </div>
                     </div>
                     
                     {/* Wavy Lines at Bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 z-0">
+                    {/* <div className="absolute bottom-0 left-0 right-0 z-0">
                         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-20 md:h-24">
                             <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
                         </svg>
-                    </div>
+                    </div> */}
                 </div>
             </section>
 
             {/* Why Become an MFD? (Opportunity Section) */}
-            <section className="py-12 md:py-20 bg-white">
-                <div className="container-custom">
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
-                            A career with purpose, income, and independence.
-                        </h2>
-                        <div className="space-y-6">
-                            <p className="text-base md:text-lg text-neutral-700 leading-relaxed text-center">
+            <section className="py-12 md:py-20 bg-gradient-to-b from-white to-neutral-50 relative overflow-hidden">
+                {/* Background decorative elements */}
+                <div className="absolute top-0 left-0 w-full h-full opacity-5">
+                    <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
+                </div>
+                
+                <div className="container-custom relative z-10">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-12 md:mb-16">
+                            <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight animate-fade-in">
+                                A career with purpose, income, and independence.
+                            </h2>
+                            <p className="text-base md:text-lg text-neutral-700 leading-relaxed max-w-2xl mx-auto animate-fade-in animation-delay-200">
                                 India's financial awareness is growing — but millions still need guidance.
                             </p>
-                            <div className="space-y-4">
-                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                    As an MFD, you help clients save, invest, and reach life goals.
-                                </p>
-                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                    You earn commissions on every investment and build a long-term, recurring income.
-                                </p>
-                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                    You decide your own pace, clients, and future.
-                                </p>
+                        </div>
+                        
+                        {/* Benefits Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                            <div className="bg-white rounded-xl p-6 border-2 border-primary/20 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all duration-300 animate-slide-in-right animation-delay-300 group">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium">
+                                            As an MFD, you help clients save, invest, and reach life goals.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p className="text-xl md:text-2xl font-bold text-[#243062] text-center italic mt-8">
+                            
+                            <div className="bg-white rounded-xl p-6 border-2 border-primary/20 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all duration-300 animate-slide-in-right animation-delay-400 group">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium">
+                                            You earn commissions on every investment and build a long-term, recurring income.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white rounded-xl p-6 border-2 border-primary/20 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all duration-300 animate-slide-in-right animation-delay-500 group">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium">
+                                            You decide your own pace, clients, and future.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Quote Box */}
+                        <div className="bg-primary/10 border-l-4 border-primary p-6 md:p-8 rounded-r-xl max-w-3xl mx-auto animate-fade-in animation-delay-600">
+                            <p className="text-xl md:text-2xl font-bold text-[#243062] text-center italic">
                                 It's not just a job — it's your own wealth business.
                             </p>
                         </div>
@@ -290,25 +271,52 @@ const BecomeMutualFundDistributors: React.FC = () => {
                             Become AMFI-certified the smart way.
                         </h2>
                         <div className="space-y-6">
-                            <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
-                                <ul className="space-y-4 text-base md:text-lg text-neutral-700">
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-primary mt-1 font-bold">•</span>
-                                        <span>Free learning modules and test prep resources.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-primary mt-1 font-bold">•</span>
-                                        <span>Mentor sessions to clarify rules, regulations, and client-handling.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-primary mt-1 font-bold">•</span>
-                                        <span>Practice questions & guidance from industry experts.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <span className="text-primary mt-1 font-bold">•</span>
-                                        <span>Direct help with ARN registration once you clear the exam.</span>
-                                    </li>
-                                </ul>
+                            <div className="bg-white rounded-xl p-6 md:p-8 border-2 border-primary/20 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all duration-300">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                    <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-primary/5 transition-all duration-300 animate-fade-in animation-delay-200 group">
+                                        <div className="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium pt-2">
+                                            Free learning modules and test prep resources.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-primary/5 transition-all duration-300 animate-fade-in animation-delay-300 group">
+                                        <div className="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium pt-2">
+                                            Mentor sessions to clarify rules, regulations, and client-handling.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-primary/5 transition-all duration-300 animate-fade-in animation-delay-400 group">
+                                        <div className="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium pt-2">
+                                            Practice questions & guidance from industry experts.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-primary/5 transition-all duration-300 animate-fade-in animation-delay-500 group">
+                                        <div className="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed font-medium pt-2">
+                                            Direct help with ARN registration once you clear the exam.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             <div className="bg-primary/10 rounded-xl p-6 md:p-8 border-2 border-primary/20">
                                 <p className="text-lg md:text-xl font-semibold text-[#243062] italic text-center">
@@ -383,7 +391,7 @@ const BecomeMutualFundDistributors: React.FC = () => {
                                             element.scrollIntoView({ behavior: 'smooth' });
                                         }
                                     }}
-                                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
+                                    className="!border-2 !border-primary !text-primary hover:!bg-primary hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Learn About AMFI Certification
                                 </Button>
@@ -400,65 +408,57 @@ const BecomeMutualFundDistributors: React.FC = () => {
                         <h2 className="text-2xl md:text-4xl font-bold text-[#243062] mb-10 md:mb-12 text-center leading-tight">
                             FAQs on Becoming an MFD with Nivesh
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'What is the eligibility to become an MFD?',
-                                    answer: 'To become a Mutual Fund Distributor (MFD), you need to be at least 18 years old, have passed 10+2 or equivalent, and obtain an AMFI ARN (Advisory Registration Number) by clearing the NISM Series V-A exam. No prior financial background is required.',
-                                },
-                                {
-                                    question: 'What is the AMFI certification process?',
-                                    answer: 'The AMFI certification process involves: 1) Registering for the NISM Series V-A exam, 2) Preparing with study materials and mock tests, 3) Clearing the exam, 4) Applying for AMFI ARN registration, 5) Getting empaneled with an AMC or distributor platform like Nivesh.',
-                                },
-                                {
-                                    question: 'How long does it take to start earning as an MFD?',
-                                    answer: 'Typically, it takes 2-3 months to complete certification and onboarding. Once you start serving clients, you can begin earning commissions immediately. Your income grows as you build your client base.',
-                                },
-                                {
-                                    question: 'Is there a registration or setup fee?',
-                                    answer: 'With Nivesh, there is no setup fee or infrastructure cost. You can start with zero investment. The only costs are the NISM exam fee (around ₹1,500) and AMFI ARN registration fee (around ₹1,000).',
-                                },
-                                {
-                                    question: 'Can I work part-time as an MFD?',
-                                    answer: 'Yes, absolutely! Being an MFD offers complete flexibility. You can work part-time, full-time, or even as a side business. Many successful MFDs start part-time and gradually transition to full-time as their client base grows.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => {
-                                            const newOpenFaqs = { ...openFaqs };
-                                            newOpenFaqs[index] = !newOpenFaqs[index];
-                                            setOpenFaqs(newOpenFaqs);
-                                        }}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => {
+                                                const newOpenFaqs = { ...openFaqs };
+                                                newOpenFaqs[index] = !newOpenFaqs[index];
+                                                setOpenFaqs(newOpenFaqs);
+                                            }}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

@@ -8,6 +8,10 @@ export const API_ENDPOINTS = {
     CAREERS: 'dashboard/api/careers/',
     TESTIMONIALS: 'dashboard/api/testimonials/',
     FAQS: 'dashboard/api/faqs/',
+    BLOGS: 'dashboard/api/blogs/',
+    BLOG_CATEGORIES: 'dashboard/api/blog-categories/',
+    NFOS: 'dashboard/api/nfos/',
+    FUND_CATEGORIES: 'fund/api/category-choices/',
 };
 
 // Helper function to build full API URL

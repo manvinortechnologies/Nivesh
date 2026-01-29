@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
     return (
-        <section className="relative bg-neutral-100 py-16 md:py-24 overflow-hidden">
+        <section className="relative bg-neutral-100 py-16 md:py-20 overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -12,6 +13,15 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="container-custom relative z-10">
+                {/* Breadcrumbs */}
+                <nav className="flex items-center space-x-2 text-sm mb-10">
+                    <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                        Home
+                    </Link>
+                    <span className="text-neutral-400">/</span>
+                    <span className="text-neutral-500">About</span>
+                </nav>
+                
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Main Heading */}
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-6 leading-tight">

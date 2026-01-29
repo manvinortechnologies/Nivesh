@@ -113,7 +113,11 @@ const VideoTestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimon
     );
 };
 
-const Testimonials: React.FC = () => {
+interface TestimonialsProps {
+    variant?: 'home' | 'default';
+}
+
+const Testimonials: React.FC<TestimonialsProps> = ({ variant = 'home' }) => {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -140,15 +144,29 @@ const Testimonials: React.FC = () => {
     const videoTestimonials = testimonials.filter(t => t.testimonial_type === 'video' && t.youtube_video_url);
     const textTestimonials = testimonials.filter(t => t.testimonial_type === 'text' && t.testimonial);
 
+    const renderHeader = () => {
+        if (variant === 'home') {
+            return (
+                <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
+                    Distributors Across India Are <br />
+                    <span className="text-primary">Scaling Faster With Nivesh.</span>
+                </h2>
+            );
+        } else {
+            return (
+                <h2 className="text-2xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                    Testimonials
+                </h2>
+            );
+        }
+    };
+
     if (loading) {
         return (
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-3xl mx-auto text-center mb-16">
-                        <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                            Advisors Across India Are <br />
-                            <span className="text-primary">Scaling Faster With Nivesh.</span>
-                        </h2>
+                        {renderHeader()}
                     </div>
                     <div className="text-center py-12">
                         <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -164,10 +182,7 @@ const Testimonials: React.FC = () => {
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-3xl mx-auto text-center mb-16">
-                        <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                            Advisors Across India Are <br />
-                            <span className="text-primary">Scaling Faster With Nivesh.</span>
-                        </h2>
+                        {renderHeader()}
                     </div>
                     <div className="text-center py-12">
                         <p className="text-red-600 mb-4">{error}</p>
@@ -188,10 +203,7 @@ const Testimonials: React.FC = () => {
             <div className="container-custom">
                 {/* Section Header */}
                 <div className="max-w-3xl mx-auto text-center mb-16">
-                    <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                        Advisors Across India Are <br />
-                        <span className="text-primary">Scaling Faster With Nivesh.</span>
-                    </h2>
+                    {renderHeader()}
                 </div>
 
                 {/* Video Testimonials Row */}

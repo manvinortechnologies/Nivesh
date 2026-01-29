@@ -3,6 +3,7 @@ import Button from '../components/ui/Button';
 import Favicon from '../assets/Favicon.png';
 import PersonImage from '../assets/Person.webp';
 import GraphImage from '../assets/graph.webp';
+import { fetchFAQs, type FAQ } from '../services/api';
 
 const testimonialsData = [
     {
@@ -59,6 +60,8 @@ const Partner: React.FC = () => {
     });
     const [expandedTestimonials, setExpandedTestimonials] = useState<{ [key: number]: boolean }>({});
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -95,6 +98,28 @@ const Partner: React.FC = () => {
         }, 5000); // Auto-scroll every 5 seconds
 
         return () => clearInterval(interval);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "partner"
+                const partnerFaqs = allFaqs.filter(faq => 
+                    faq.category?.toLowerCase() === 'partner'
+                );
+                setFaqs(partnerFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
     }, []);
 
     const products = [
@@ -1095,123 +1120,47 @@ const Partner: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'How can I Become a Nivesh Partner?',
-                                    answer: 'You will have to be a Nivesh partner with an AMFI-registered Mutual Fund Distributor Registration Number (ARN) if you want to become a Nivesh Partner. For ARN holders, you can begin immediately via simple empanelment',
-                                    link: true,
-                                },
-                                {
-                                    question: 'What are the Charges for Becoming a Nivesh Partner?',
-                                    answer: 'The price varies whether you have an ARN or not:',
-                                    list: [
-                                        'ARN Holders – No charges. Free',
-                                        'Non-ARN Holders – ₹2950 for NISM training (if opted). Alternatively, you can study and pass the NISM exam on your own to get your ARN without this charge.',
-                                    ],
-                                    link: true,
-                                },
-                                {
-                                    question: 'Does Nivesh Charge any Renewal Fees?',
-                                    answer: 'No. There is no renewal charge for Nivesh. Getting associated with Nivesh is free every year.',
-                                    link: true,
-                                },
-                                {
-                                    question: 'What are the Products Which a Nivesh Partner can Access?',
-                                    answer: 'As a licensed partner, you\'ll be able to provide:',
-                                    list: [
-                                        'Mutual Funds',
-                                        'Fixed Deposits',
-                                        'Peer-to-Peer (P2P) Lending',
-                                        'AIF (Alternative Investment Funds)',
-                                        'Portfolio Management Services (PMS)',
-                                        'NPS (National Pension System)',
-                                        'Corporate Bonds',
-                                    ],
-                                    additionalText: 'Here Comes Nivesh one of the Best Mutual Fund Distributor Platforms in India, which enables you to address every single client with varying financial requisites.',
-                                    link: true,
-                                },
-                                {
-                                    question: 'Do I Have to Pay for Additional Services Offered by Nivesh?',
-                                    answer: 'No. All Nivesh Partners\' use of platform services, including Signatory Partner Desk and Client Desk access, is provided free of charge.',
-                                    link: true,
-                                },
-                                {
-                                    question: 'How do I register on Nivesh Mutual Fund software?',
-                                    answer: 'Simply, login to https://nivesh.com/en/partner and complete the registration form. After you apply, someone from Team Nivesh will reach out to you and assist you in the onboarding.',
-                                    link: true,
-                                },
-                                {
-                                    question: 'What are the feaures provided by Nivesh Mutual Fund Software?',
-                                    answer: 'There are multiple benefits available with Nivesh Mutual Fund Software like:',
-                                    list: [
-                                        'Nivesh Mutual Fund Software is loaded with Powerful features and everything you need as an AMFI-registered Mutual Fund Distributor to grow your business with ease.',
-                                        'All financial products on one digital platform',
-                                        '100% paperless transactions',
-                                        'No hidden charges',
-                                        'Auto-generated reports: portfolio, capital gains, cash flow',
-                                        'Business tools: calculators, planners, model portfolios',
-                                        'Digital content for client engagement via WhatsApp, Facebook & more',
-                                    ],
-                                    link: true,
-                                },
-                                {
-                                    question: 'What are benefits of using Nivesh Mutual Fund Software?',
-                                    answer: '',
-                                    list: [
-                                        '24*7 available portal',
-                                        'Dedicated relationship managers to manage path for success',
-                                        'Portfolio reviews and restructuring as per client\'s requirements',
-                                        'Paperless experience for both distributors and clients',
-                                        'Transform offline office to virtual office',
-                                    ],
-                                    link: true,
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-neutral-50 rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-white transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-neutral-50 rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-white transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            {faq.answer && (
-                                                <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-3">
-                                                    {faq.answer}
-                                                </p>
-                                            )}
-                                            {faq.list && (
-                                                <ul className="list-disc list-inside space-y-2 mb-3">
-                                                    {faq.list.map((item, idx) => (
-                                                        <li key={idx} className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                            {item}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                            {faq.additionalText && (
-                                                <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-3">
-                                                    {faq.additionalText}
-                                                </p>
-                                            )}
-                                            {faq.link && (
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed mb-3 whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
                                                 <a
                                                     href="https://nivesh.com/en/partner"
                                                     target="_blank"
@@ -1220,12 +1169,12 @@ const Partner: React.FC = () => {
                                                 >
                                                     Click here to join Nivesh
                                                 </a>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

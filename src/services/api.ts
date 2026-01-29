@@ -131,3 +131,407 @@ export const convertYouTubeUrlToEmbed = (url: string | null): string | null => {
     return null;
 };
 
+// Blog interface matching API response
+export interface Blog {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string | null;
+    content: string;
+    image: string | null;
+    image_url: string | null;
+    category: string;
+    category_name: string | null;
+    category_slug: string | null;
+    author: string | null;
+    published_date: string | null;
+    conclusion: string | null;
+    is_active: boolean;
+    is_featured: boolean;
+    views_count: number;
+    created_at: string;
+    updated_at: string;
+}
+
+// Blog Category interface matching API response
+export interface BlogCategory {
+    id: string;
+    name: string;
+    slug: string;
+    parent: string | null;
+    description: string;
+    is_active: boolean;
+    order: number;
+    blogs_count: number;
+    subcategories: BlogCategory[];
+    created_at: string;
+    updated_at: string;
+}
+
+// Fetch blogs from API
+export const fetchBlogs = async (page: number = 1, category?: string, search?: string): Promise<{ blogs: Blog[]; count: number; next: string | null; previous: string | null }> => {
+    try {
+        let url = buildApiUrl(API_ENDPOINTS.BLOGS);
+        const params = new URLSearchParams();
+        params.append('page', page.toString());
+        if (category) params.append('category', category);
+        if (search) params.append('search', search);
+        if (params.toString()) url += `?${params.toString()}`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch blogs: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle paginated response (Django REST framework format)
+        if (data.results && Array.isArray(data.results)) {
+            return {
+                blogs: data.results.filter((blog: Blog) => blog.is_active !== false),
+                count: data.count || data.results.length,
+                next: data.next || null,
+                previous: data.previous || null,
+            };
+        }
+        
+        // Handle non-paginated response (simple array)
+        if (Array.isArray(data)) {
+            return {
+                blogs: data.filter((blog: Blog) => blog.is_active !== false),
+                count: data.length,
+                next: null,
+                previous: null,
+            };
+        }
+        
+        // Handle unexpected format
+        console.warn('Unexpected blogs response format:', data);
+        return { blogs: [], count: 0, next: null, previous: null };
+    } catch (error) {
+        console.error('Error fetching blogs:', error);
+        return { blogs: [], count: 0, next: null, previous: null };
+    }
+};
+
+// Fetch single blog by ID
+export const fetchBlogById = async (id: string): Promise<Blog | null> => {
+    try {
+        // Construct URL: dashboard/api/blogs/{id}/
+        const endpoint = `${API_ENDPOINTS.BLOGS}${id}/`;
+        const url = buildApiUrl(endpoint);
+        
+        console.log('Fetching blog from URL:', url); // Debug log
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API Error Response:', errorText);
+            throw new Error(`Failed to fetch blog: ${response.status} ${response.statusText}`);
+        }
+        
+        const data: Blog = await response.json();
+        
+        if (data.is_active === false) {
+            return null;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Error fetching blog by ID:', error);
+        return null;
+    }
+};
+
+// Fetch blog categories from API
+export const fetchBlogCategories = async (): Promise<BlogCategory[]> => {
+    try {
+        const url = buildApiUrl(API_ENDPOINTS.BLOG_CATEGORIES);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch blog categories: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle both array and paginated response formats
+        let categories: BlogCategory[] = [];
+        if (Array.isArray(data)) {
+            categories = data;
+        } else if (data.results && Array.isArray(data.results)) {
+            categories = data.results;
+        } else {
+            console.warn('Unexpected blog categories response format:', data);
+            return [];
+        }
+        
+        // Filter only active categories (parent categories with no parent)
+        // and sort by blogs_count (descending), then by order
+        return categories
+            .filter((category: BlogCategory) => category.is_active !== false && category.parent === null)
+            .sort((a: BlogCategory, b: BlogCategory) => {
+                // First sort by blogs_count (descending)
+                if (b.blogs_count !== a.blogs_count) {
+                    return (b.blogs_count || 0) - (a.blogs_count || 0);
+                }
+                // Then by order (ascending)
+                return (a.order || 0) - (b.order || 0);
+            });
+    } catch (error) {
+        console.error('Error fetching blog categories:', error);
+        // Return empty array on error to prevent breaking the UI
+        return [];
+    }
+};
+
+// NFO interface matching API response
+export interface NFO {
+    id: string;
+    title: string;
+    slug: string;
+    image: string | null;
+    image_url: string | null;
+    content: string | null;
+    category: string | null;
+    category_name: string | null;
+    category_slug: string | null;
+    nfo_period_start: string | null;
+    nfo_period_end: string | null;
+    is_active: boolean;
+    is_featured: boolean;
+    views_count: number;
+    created_at: string;
+    updated_at: string;
+}
+
+// Fetch NFOs from API
+export const fetchNFOs = async (page: number = 1, category?: string, search?: string): Promise<{ nfos: NFO[]; count: number; next: string | null; previous: string | null }> => {
+    try {
+        let url = buildApiUrl(API_ENDPOINTS.NFOS);
+        const params = new URLSearchParams();
+        params.append('page', page.toString());
+        if (category) params.append('category', category);
+        if (search) params.append('search', search);
+        if (params.toString()) url += `?${params.toString()}`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch NFOs: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle paginated response (Django REST framework format)
+        if (data.results && Array.isArray(data.results)) {
+            return {
+                nfos: data.results.filter((nfo: NFO) => nfo.is_active !== false),
+                count: data.count || data.results.length,
+                next: data.next || null,
+                previous: data.previous || null,
+            };
+        }
+        
+        // Handle non-paginated response (simple array)
+        if (Array.isArray(data)) {
+            return {
+                nfos: data.filter((nfo: NFO) => nfo.is_active !== false),
+                count: data.length,
+                next: null,
+                previous: null,
+            };
+        }
+        
+        // Handle unexpected format
+        console.warn('Unexpected NFOs response format:', data);
+        return { nfos: [], count: 0, next: null, previous: null };
+    } catch (error) {
+        console.error('Error fetching NFOs:', error);
+        return { nfos: [], count: 0, next: null, previous: null };
+    }
+};
+
+// Fetch single NFO by ID
+export const fetchNFOById = async (id: string): Promise<NFO | null> => {
+    try {
+        const url = buildApiUrl(`${API_ENDPOINTS.NFOS}${id}/`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch NFO: ${response.statusText}`);
+        }
+        
+        const data: NFO = await response.json();
+        
+        if (data.is_active === false) {
+            return null;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Error fetching NFO by ID:', error);
+        return null;
+    }
+};
+
+// Fund Category interface matching API response
+export interface FundCategory {
+    id: string;
+    main_category: string;
+    sub_category: string;
+    sebi_category_id: string | null;
+    sebi_sub_category_id: string | null;
+}
+
+// Scheme Data interface for funds
+export interface SchemeData {
+    Product_category_id: number;
+    UniqueNo: string;
+    SchemeCode: string;
+    RTASchemeCode: string;
+    AMCSchemeCode: string;
+    ISIN: string;
+    AMCCode: string;
+    SchemeType: string;
+    SchemePlan: string;
+    SchemeName: string;
+    PurchaseAllowed: string;
+    OneYearReturn: number;
+    TwoYearReturn: number;
+    ThreeYearReturn: number;
+    FiveYearReturn: number;
+    InvestURL: string;
+    [key: string]: any;
+}
+
+// Fund Response interface
+export interface FundResponse {
+    response: {
+        status_code: number;
+        status: string;
+        message: string;
+    };
+    Message: string | null;
+    ObjectResponse: {
+        SchemeDataList: SchemeData[];
+        productCategoryList: any[];
+        TitleResponse: Array<{
+            Title: string;
+            TitleDescription: string | null;
+            MetaKeyword: string | null;
+            MetaDescription: string | null;
+            MetaTitle: string | null;
+            MetaKeywords: string | null;
+        }>;
+    };
+    DataObject: any | null;
+}
+
+// Fund Category Detail interface matching API response
+export interface FundCategoryDetail {
+    id: string;
+    main_category: string;
+    sub_category: string;
+    is_active: boolean;
+    order: number;
+    page_content: {
+        id: string;
+        page_title: string;
+        description: string;
+        hero_image: string;
+        is_active: boolean;
+    } | null;
+    funds: FundResponse[];
+    features: Array<{
+        id: string;
+        title: string;
+        description: string;
+        icon: string | null;
+        is_active: boolean;
+        order: number;
+    }>;
+    benefits: Array<{
+        id: string;
+        title: string;
+        description: string;
+        is_active: boolean;
+        order: number;
+    }>;
+    suitability: {
+        id: string;
+        title: string;
+        description: string;
+        is_active: boolean;
+    } | null;
+    faqs: Array<{
+        question: string;
+        answer: string;
+    }>;
+}
+
+// Fetch fund categories from API
+export const fetchFundCategories = async (): Promise<FundCategory[]> => {
+    try {
+        const url = buildApiUrl(API_ENDPOINTS.FUND_CATEGORIES);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch fund categories: ${response.statusText}`);
+        }
+        
+        const data: FundCategory[] = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching fund categories:', error);
+        // Return empty array on error to prevent breaking the UI
+        return [];
+    }
+};
+
+// Fetch fund category detail by UUID id
+export const fetchFundCategoryDetailById = async (
+    categoryId: string
+): Promise<FundCategoryDetail | null> => {
+    try {
+        const url = buildApiUrl(`fund/api/category/${categoryId}/`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch fund category detail: ${response.statusText}`);
+        }
+        
+        const data: FundCategoryDetail = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching fund category detail by ID:', error);
+        return null;
+    }
+};
+
+// Fetch fund category detail by sebi_category_id and sebi_sub_category_id
+export const fetchFundCategoryDetail = async (
+    sebiCategoryId: string,
+    sebiSubCategoryId: string
+): Promise<FundCategoryDetail | null> => {
+    try {
+        // Build URL with query parameters (without /id/ in path)
+        const baseUrl = buildApiUrl('fund/api/category/');
+        const url = `${baseUrl}?sebi_category_id=${encodeURIComponent(sebiCategoryId)}&sebi_sub_category_id=${encodeURIComponent(sebiSubCategoryId)}`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch fund category detail: ${response.statusText}`);
+        }
+        
+        const data: FundCategoryDetail = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching fund category detail:', error);
+        return null;
+    }
+};
+

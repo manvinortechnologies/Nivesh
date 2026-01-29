@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import Hero2 from '../../assets/FD.jpeg';
 import OurPartners from '../../components/about/OurPartners';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const FixedDeposit: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [activeTab, setActiveTab] = useState<'features' | 'suitability' | 'taxation'>('features');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [calculatorData, setCalculatorData] = useState({
         investmentAmount: 100000,
         rateOfInterest: 7,
@@ -22,6 +27,31 @@ const FixedDeposit: React.FC = () => {
     useEffect(() => {
         calculateMaturity();
     }, [calculatorData]);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "fixed-deposit"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'fixed-deposit' || 
+                           category === 'fixed deposit' ||
+                           category.includes('fixed-deposit');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -53,8 +83,8 @@ const FixedDeposit: React.FC = () => {
         },
         {
             name: 'Gokul Prasad Yadav',
-            role: 'I\'m a 62-year-old Financial Advisor, working in the Mutual Funds Industry for the past 20 years. In 2017, I started working from home. With a huge cus...Read More',
-            quote: '',
+            role: 'Financial Advisor',
+            quote: 'I\'m a 62-year-old Financial Advisor, working in the Mutual Funds Industry for the past 20 years. In 2017, I started working from home. With a huge cus...Read More',
         },
         {
             name: 'Apruv Sarvesh Pandey',
@@ -111,25 +141,26 @@ const FixedDeposit: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
                     {/* Breadcrumbs */}
-                    <div className="mb-6">
-                        <nav className="flex items-center space-x-2 text-sm">
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
                             <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
                                 Home
                             </Link>
                             <span className="text-neutral-400">/</span>
                             <span className="text-neutral-500">Fixed Deposit</span>
                         </nav>
-                    </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div className='mt-6'>
-                            <h2 className="text-2xl md:text-5xl lg:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 Invest in the Best Corporate Fixed Deposit Online with Nivesh
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                Invest in the Best Corporate Fixed Deposit Online with Nivesh
+                            </h1>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-8">
                                 Corporate Fixed Deposits are a good alternative to Bank Fixed Deposits as they offer better returns. Corporate Fixed Deposits are just like Bank Fixed Deposits. These companies' Fixed Deposits are known as 'Corporate Fixed Deposits' or 'Company Fixed Deposits'. The investor gets the interest on the basis of the Corporate Fixed Deposits plan that they choose.
                             </p>
@@ -137,7 +168,7 @@ const FixedDeposit: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => setIsModalOpen(true)}
                                     className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                 >
                                     I am Interested
@@ -146,14 +177,12 @@ const FixedDeposit: React.FC = () => {
                         </div>
 
                         {/* Right Column - Image */}
-                        <div className="relative w-full">
-                            <div className="overflow-hidden rounded-2xl shadow-2xl w-full">
-                                <img
-                                    src={Hero2}
-                                    alt="Fixed Deposit"
-                                    className="w-full h-[350px] md:h-[450px] lg:h-[500px] object-contain"
-                                />
-                            </div>
+                        <div className="relative z-10">
+                            <img
+                                src={Hero2}
+                                alt="Fixed Deposit"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -166,74 +195,57 @@ const FixedDeposit: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Why Nivesh
                         </h2>
-                        <div className="space-y-8">
-                            {/* Top Row - 3 items */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 mb-4 flex items-center justify-center relative">
-                                        {/* Unlocked padlock with radiating lines */}
-                                        <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                                        </svg>
-                                        {/* Radiating lines */}
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="w-20 h-20 border-2 border-[#243062] rounded-full opacity-20"></div>
-                                            <div className="absolute w-24 h-24 border border-[#243062] rounded-full opacity-10"></div>
-                                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-20 h-20 mb-4 flex items-center justify-center relative">
+                                    {/* Unlocked padlock with radiating lines */}
+                                    <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+                                    {/* Radiating lines */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-20 h-20 border-2 border-[#243062] rounded-full opacity-20"></div>
+                                        <div className="absolute w-24 h-24 border border-[#243062] rounded-full opacity-10"></div>
                                     </div>
-                                    <p className="text-base text-neutral-600 leading-relaxed">
-                                        Provides easy access to an array of Fixed Deposit options
-                                    </p>
                                 </div>
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 mb-4 flex items-center justify-center">
-                                        {/* Money bag with Rupee symbol */}
-                                        <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            <path d="M8 10h8M8 14h8" strokeWidth={1.5} />
-                                        </svg>
-                                    </div>
-                                    <p className="text-base text-neutral-600 leading-relaxed">
-                                        Perfect opportunity to earn higher returns
-                                    </p>
-                                </div>
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 mb-4 flex items-center justify-center">
-                                        {/* CRISIL logo */}
-                                        <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                                            <span className="text-white font-bold text-xs">CRISIL</span>
-                                        </div>
-                                    </div>
-                                    <p className="text-base text-neutral-600 leading-relaxed">
-                                        FAAA rating from CRISIL
-                                    </p>
-                                </div>
+                                <p className="text-base text-neutral-600 leading-relaxed">
+                                    Provides easy access to an array of Fixed Deposit options
+                                </p>
                             </div>
-                            {/* Bottom Row - 2 items */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 mb-4 flex items-center justify-center">
-                                        {/* Hand holding Rupee coin */}
-                                        <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            <path d="M9 12l2 2 4-4" strokeWidth={1.5} />
-                                        </svg>
-                                    </div>
-                                    <p className="text-base text-neutral-600 leading-relaxed">
-                                        High rate of interest
-                                    </p>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-20 h-20 mb-4 flex items-center justify-center">
+                                    {/* Money bag with Rupee symbol */}
+                                    <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <path d="M8 10h8M8 14h8" strokeWidth={1.5} />
+                                    </svg>
                                 </div>
-                                <div className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 mb-4 flex items-center justify-center">
-                                        {/* Dashboard/grid icon */}
-                                        <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-base text-neutral-600 leading-relaxed">
-                                        Smart interface and dashboard that enables easy tracking of investments
-                                    </p>
+                                <p className="text-base text-neutral-600 leading-relaxed">
+                                    Perfect opportunity to earn better returns
+                                </p>
+                            </div>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-20 h-20 mb-4 flex items-center justify-center">
+                                    {/* Hand holding Rupee coin */}
+                                    <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <path d="M9 12l2 2 4-4" strokeWidth={1.5} />
+                                    </svg>
                                 </div>
+                                <p className="text-base text-neutral-600 leading-relaxed">
+                                    High rate of interest
+                                </p>
+                            </div>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-20 h-20 mb-4 flex items-center justify-center">
+                                    {/* Dashboard/grid icon */}
+                                    <svg className="w-16 h-16 text-[#243062]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                                    </svg>
+                                </div>
+                                <p className="text-base text-neutral-600 leading-relaxed">
+                                    Smart interface and dashboard that enables easy tracking of investments
+                                </p>
                             </div>
                         </div>
                         {/* Invest Now Button */}
@@ -355,7 +367,7 @@ const FixedDeposit: React.FC = () => {
                                     <div>
                                         <h3 className="text-xl font-semibold text-[#243062] mb-3">Period of penalty:</h3>
                                         <p className="text-base text-neutral-700 leading-relaxed">
-                                            The penalty period in case of early withdrawal in Corporate Fixed Deposits is lower. According to the RBI rules if one withdraws a Corporate Fixed Deposits within a minimum tenure of three months then, the individual is liable to bear the penalty. The charges for penalty and tenure vary depending upon the financial institution and their Fixed Deposits schemes.
+                                            The penalty period in case of early withdrawal in Corporate Fixed Deposits is lower. According to the RBI rules if one withdraws a Corporate Fixed Deposits within a minimum tenure of three months then, the individual is liable to bear the penalty. The charges for penalty and tenure vary depending upon the Corporate Fixed Deposits schemes.
                                         </p>
                                     </div>
                                     <div>
@@ -401,7 +413,7 @@ const FixedDeposit: React.FC = () => {
                                     <div>
                                         <h3 className="text-xl font-semibold text-[#243062] mb-3">TDS Deduction:</h3>
                                         <p className="text-base text-neutral-700 leading-relaxed">
-                                            The bank or financial institution will deduct a TDS at the rate of 10% on the interest earned from the Corporate Fixed Deposits. An additional 30% TDS is surcharged for NRI investors.
+                                        A TDS at the rate of 10% will be deducted on the interest earned from the Corporate Fixed Deposits. An additional 30% TDS is surcharged for NRI investors.
                                         </p>
                                     </div>
                                     <div>
@@ -545,82 +557,60 @@ const FixedDeposit: React.FC = () => {
                         <h2 className="text-2xl md:text-4xl font-bold text-[#243062] mb-10 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: '1. What is Corporate Fixed Deposit?',
-                                    answer: 'Corporate Fixed Deposits in India are term deposits that can be held for a fixed tenure at a fixed rate of interest. Corporate Fixed Deposits offer a high rate of interest as compared to bank FDs. Investing in the best Corporate FD schemes can achieve and recoup great benefits on your investment.',
-                                },
-                                {
-                                    question: '2. Is it Safe to Invest in Corporate Fixed Deposits?',
-                                    answer: 'Yes, it is safe to invest in Corporate Fixed Deposits. However, it is important to do research and associate with a reputed and reliable banking or non-banking financial institution for the best Fixed Deposits plans.',
-                                },
-                                {
-                                    question: '3. What is the Interest Rate for a Corporate Fixed Deposit?',
-                                    answer: 'The Corporate FD rates vary depending upon the financial institution. The best rates on Corporate Fixed Deposits in India can be as low as 6% to as high as 8% p.a.',
-                                },
-                                {
-                                    question: '4. Is Corporate FD Taxable?',
-                                    answer: 'Yes, Corporate Fixed Deposits are taxable only if the income from interest exceeds Rs. 5,000. If the interest received is above Rs. 5,000 then the TDS rate is 10% (in case PAN details are provided) If PAN details are not provided , TDS deduction on FD interest is chargeable at 20%.',
-                                },
-                                {
-                                    question: '5. What is the Difference Between a Bank FD and a Corporate FD?',
-                                    answer: 'Corporate FD has a low penalty on early period withdrawal as compared to bank FDs. Most importantly, the interest rate on a Corporate FD is higher than the bank FD.',
-                                },
-                                {
-                                    question: '6. What are the Different Interest Payment Options of Corporate FDs?',
-                                    answer: 'The interest payout options on Corporate FD are available in cumulative and non-cumulative formats. Under the cumulative option, Corporate FD interest is recieved at the end of the FD tenure. While, under non-cumulative FD interest one can opt for monthly, quarterly, half-yearly, or annual interest payouts.',
-                                },
-                                {
-                                    question: '7. What is the Minimum Tenure for a Corporate FD?',
-                                    answer: 'The minimum tenure for a Corporate FD in India as per the RBI guidelines is 3 months.',
-                                },
-                                {
-                                    question: '8. How to Open a Corpoate Fixed Deposit Online with Nivesh?',
-                                    answer: 'Corporate FD rates or Corporate Fixed Deposit rates vary from scheme to scheme. Any investor can invest in Corporate FD online through Nivesh and can get better returns than Bank FD: Create an account in Nivesh by providing your basic details. (If you already have an account then just login into your account) On your portfolio page click on the Buy New tab at the right top corner of the screen. Select the Corporate Fixed Deposits scheme you want to purchase. Your request will be generated and a relationship manager will get in touch with you for getting the investment done.',
-                                },
-                                {
-                                    question: '9. What all Factors to Keep in Mind While Choosing a Financial Institution for Investing in Corporate Fixed Deposits?',
-                                    answer: 'Here are some factors that one must consider before selecting a company for creating a Fixed Deposits: Regulatory Requirements: The NBFC must have a legitimate license for Corporate Fixed Deposits approval from RBI. Mere registration as an NBFC does not give one the right to offer a Corporate Fixed Deposits plan. Check for the license and approval on the official website of the company. Credibility or Credit Rating: Make sure to associate with a leading and trustworthy NBFC for making investments. Check the ratings of the NBFC. Institutes like CRISIL and ICRA provide credit ratings to these companies. Credit ratings are given on the basis of their performance and creditworthiness. The financial health of the company and record of timely interest payments are some of the major drivers of credit ratings along with the strength of its assets Tenure: The minimum tenure for Corporate Fixed Deposits is 12 Months whereas, the maximum tenure is 5 years or 60 Months. One must ask the executives about the penalty for early withdrawal and their charges before making the final decision. Service and Support: Invest your earnings at a reliable company with good customer service. The optimum customer support and assistance are one of the primary criteria. Talk to the executives, raise concerns, clear your doubts and notice their approach towards your queries. Interest Types: There are two types of interest rate systems: Under the Cumulative interest rate, the payout is made at the time of maturity. Whereas, under a non-cumulative interest rate system, the interest payout can be monthly, quarterly, half-yearly, or annually. It is always advisable to have a clear understanding of the interest rate system by the company while investing in Corporate Fixed Deposits.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
 
-            
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

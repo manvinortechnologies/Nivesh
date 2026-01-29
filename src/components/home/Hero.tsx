@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
     "Smart tech, proactive research, and a premium client experience that puts you ahead of every competitor.",
     "Smart Decisions: Advanced analytics guide your investments using real-time trends.",
     "Seamless Experience: Technology ensures secure and hassle-free investing.",
-    "Expert Guidance: Personalized advice to match your financial goals.",
+    "Expert Guidance: Goal based recommendations.",
     "Trusted Partner: Complete transparency and robust security for your investments.",
   ];
 
@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
             </span>
 
             <span className="block text-4xl sm:text-3xl md:text-6xl text-primary lowercase md:capitalize">
-              smarter advisors
+              smarter MFDs
             </span>
 
             {/* Rotating headline */}
@@ -107,7 +107,7 @@ const Hero: React.FC = () => {
               variant="outline"
               size="lg"
               className="border-neutral-900 text-neutral-900 hover:bg-neutral-200 flex items-center gap-2"
-              onClick={() => window.location.href = 'https://nivesh.com/en/partner/become-mutual-fund-distributors'}
+              onClick={() => navigate('/partner/become-mutual-fund-distributors')}
             >
               Become an MFD
               <svg
@@ -139,7 +139,7 @@ const Hero: React.FC = () => {
             <span>
               Trusted by{" "}
               <span className="font-bold text-neutral-900">10,000+</span>{" "}
-              advisors
+              partners
             </span>
             <span>|</span>
             <span>

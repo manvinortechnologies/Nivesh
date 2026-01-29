@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import POPImage from '../../assets/POP.webp';
 
 const PreOwnedPolicies: React.FC = () => {
     const [openBenefits, setOpenBenefits] = useState<{ [key: number]: boolean }>({ 0: true }); // First one open by default
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -19,48 +22,50 @@ const PreOwnedPolicies: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Pre-Owned Policies</span>
+                    </nav>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div className="relative z-10">
-                            <h2 className="text-2xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 Pre-Owned Policies: Unlock Value from Existing Insurance Policies
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                Pre-Owned Policies: Unlock Value from Existing Insurance Policies
+                            </h1>
                             
                             <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
                                 Pre-owned policies offer a unique opportunity to unlock value from existing life insurance policies. Whether you're looking to sell your policy or invest in a pre-owned policy, Nivesh provides expert guidance and seamless transactions to help you maximize returns and optimize your financial portfolio.
                             </p>
                             
-                            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
-                                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                                    onClick={() => setIsModalOpen(true)}
+                                    className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                 >
-                                    Explore Options
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    onClick={() => window.open('https://nivesh.com/en/products', '_blank')}
-                                    className="border-2 border-[#243062] text-[#243062] hover:bg-[#243062] hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
-                                >
-                                    Learn More
+                                    I am Interested
                                 </Button>
                             </div>
                         </div>
 
                         {/* Right Column - POP Image */}
                         <div className="relative z-10">
-                            <div className="rounded-2xl overflow-hidden shadow-2xl">
-                                <img
-                                    src={POPImage}
-                                    alt="Pre-Owned Policies"
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
+                            <img
+                                src={POPImage}
+                                alt="Pre-Owned Policies"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -114,8 +119,8 @@ const PreOwnedPolicies: React.FC = () => {
                                     description: 'Investing in the secondary market for life insurance policies provides access to discounted policies and unique investment opportunities not available in primary markets.',
                                 },
                             ].map((benefit, index) => (
-                                <div
-                                    key={index}
+                            <div
+                                key={index}
                                     className="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden"
                                 >
                                     <button
@@ -337,18 +342,18 @@ const PreOwnedPolicies: React.FC = () => {
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 leading-tight">
                             Trusted by The Policy Exchange
-                        </h2>
+                            </h2>
                         <div className="space-y-6">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
                                 We bring you these opportunities in partnership with The Policy Exchange—a pioneer in facilitating transparent, verified, and investor-friendly pre-owned policy transfers. With their expertise, you get access to thoroughly vetted policies, making your investment journey safe and rewarding.
                             </p>
                         </div>
                     </div>
-                </div>
+                            </div>
             </section>
 
             {/* Promotional Banner Section */}
-            <section className="py-12 md:py-16 bg-primary/10">
+            <section className="py-12 md:py-20 bg-primary/10">
                 <div className="container-custom">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center">
@@ -360,9 +365,8 @@ const PreOwnedPolicies: React.FC = () => {
                 </div>
             </section>
 
-            
-
-           
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

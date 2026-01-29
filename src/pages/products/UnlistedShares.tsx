@@ -1,13 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import Hero2 from '../../assets/Unlisted_Share.jpeg';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const UnlistedShares: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "unlisted-shares"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'unlisted-shares' || 
+                           category === 'unlisted shares' ||
+                           category.includes('unlisted-shares');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
     }, []);
 
     const toggleFaq = (index: number) => {
@@ -20,25 +50,26 @@ const UnlistedShares: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
                     {/* Breadcrumbs */}
-                    <div className="mb-6">
-                        <nav className="flex items-center space-x-2 text-sm">
-                            <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
-                                Home
-                            </Link>
-                            <span className="text-neutral-400">/</span>
-                            <span className="text-neutral-500">Unlisted Shares</span>
-                        </nav>
-                    </div>
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Unlisted Shares</span>
+                    </nav>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div>
-                            <h2 className="text-2xl md:text-5xl lg:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 How to Buy Unlisted Shares in India | Best Guide by Nivesh
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                How to Buy Unlisted Shares in India | Best Guide by Nivesh
+                            </h1>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-8">
                                 Looking to tap into high-growth opportunities before companies hit the stock exchange? Discover how to buy unlisted shares in India smartly, safely, and profitably with this complete guide. Understanding the legal guidelines on the tax on unlisted shares in India, selecting the best platform to buy unlisted shares in India, and navigating a secure unlisted shares buying platform are all key steps in this process. On this website, we will provide you with a clear and straightforward understanding of unlisted stocks, without any complex terms, simply and concisely, to guide your decisions. Those stocks are available on the market from brokers, private income, or online platforms. However, medications must be approached with the correct information, challenge, and the appropriate equipment.
                             </p>
@@ -46,7 +77,7 @@ const UnlistedShares: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => setIsModalOpen(true)}
                                     className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                 >
                                     I am Interested
@@ -55,14 +86,12 @@ const UnlistedShares: React.FC = () => {
                         </div>
 
                         {/* Right Column - Image */}
-                        <div className="relative">
-                            <div className="overflow-hidden">
-                                <img
-                                    src={Hero2}
-                                    alt="Unlisted Shares"
-                                    className="w-full h-[400px] md:h-[500px] lg:h-[590px] object-cover"
-                                />
-                            </div>
+                        <div className="relative z-10">
+                            <img
+                                src={Hero2}
+                                alt="Unlisted Shares"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -226,63 +255,59 @@ const UnlistedShares: React.FC = () => {
                         <h2 className="text-2xl md:text-4xl font-bold text-[#243062] mb-10 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'Q1. How to shop for unlisted stocks in India quite simply?',
-                                    answer: 'Use a safe, unlisted stocks buying website or a SEBI-accepted dealer.',
-                                },
-                                {
-                                    question: 'Q2. Which app is nice for buying unlisted shares in India?',
-                                    answer: 'Use apps like Nivesh that are easy, cozy, and offer hazard-free services.',
-                                },
-                                {
-                                    question: 'Q3. Is it safe to buy unlisted shares?',
-                                    answer: 'Sure, if sold through appropriate platforms and after proper research.',
-                                },
-                                {
-                                    question: 'Q4. Can I preserve unlisted shares in my demat account?',
-                                    answer: 'Yes, you can maintain unlisted shares in your regular demat account.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
 
             {/* Final CTA Section */}
-            <section className="relative py-12 md:py-16 bg-gradient-to-r from-primary to-primary-dark">
+            <section className="relative py-12 md:py-20 bg-gradient-to-r from-primary to-primary-dark">
                 <div className="container-custom relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -294,7 +319,7 @@ const UnlistedShares: React.FC = () => {
                         <Button
                             variant="secondary"
                             size="lg"
-                            onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                            onClick={() => setIsModalOpen(true)}
                             className="bg-white hover:bg-neutral-100 text-primary px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                         >
                             I am Interested
@@ -302,6 +327,9 @@ const UnlistedShares: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

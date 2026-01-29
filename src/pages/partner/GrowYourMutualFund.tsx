@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import Favicon from '../../assets/Favicon.png';
+import Testimonials from '../../components/home/Testimonials';
+import { fetchFAQs, convertYouTubeUrlToEmbed, type FAQ } from '../../services/api';
 
 const GrowYourMutualFund: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -10,10 +13,60 @@ const GrowYourMutualFund: React.FC = () => {
         holderType: 'arnHolder',
         getInfo: true,
     });
+    const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    },[]);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "grow-your-mf"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'grow-your-mf' || 
+                           category === 'grow your mf' ||
+                           category.includes('grow-your-mf');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
+
+    const toggleFaq = (index: number) => {
+        setOpenFaqs((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
+
+    const scrollToHero = () => {
+        const heroSection = document.getElementById('hero-section');
+        if (heroSection) {
+            const offset = 80; // Account for fixed navigation bar
+            const elementPosition = heroSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,26 +78,35 @@ const GrowYourMutualFund: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-neutral-50">
+            <section id="hero-section" className="relative pt-20 md:pt-24 pb-12 md:pb-20 overflow-hidden bg-neutral-50">
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-xs sm:text-sm px-4 sm:px-0">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Grow Your Mutual Fund</span>
+                    </nav>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                         {/* Left Column - Content */}
-                        <div className="relative z-10 text-center lg:text-left">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-6 leading-tight">
+                        <div className="relative z-10 text-center lg:text-left mt-6 sm:mt-8 lg:mt-10">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#243062] mb-4 sm:mb-5 md:mb-6 leading-tight px-2 sm:px-0">
                                 Grow Your Mutual Fund{' '}
                                 <span className="text-primary">Business</span>
                             </h1>
                             
-                            <p className="text-lg md:text-xl text-neutral-700 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                            <p className="text-base sm:text-lg md:text-xl text-neutral-700 mb-6 sm:mb-7 md:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-6 lg:px-0">
                                 Transform your mutual fund distribution business with Nivesh's comprehensive platform. Scale your operations, enhance client relationships, and accelerate your growth with cutting-edge technology and dedicated support.
                             </p>
                             
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-7 md:mb-8 px-4 sm:px-0">
                                 <Button
                                     variant="primary"
                                     size="lg"
                                     onClick={() => window.open('https://app.nivesh.com', '_blank')}
-                                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                                    className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
                                 >
                                     Start Growing Today
                                 </Button>
@@ -52,32 +114,32 @@ const GrowYourMutualFund: React.FC = () => {
                                     variant="outline"
                                     size="lg"
                                     onClick={() => window.open('https://nivesh.com/en/partner', '_blank')}
-                                    className="border-2 border-[#243062] text-[#243062] hover:bg-[#243062] hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
+                                    className="border-2 border-[#243062] text-[#243062] hover:bg-[#243062] hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold w-full sm:w-auto"
                                 >
                                     Learn More
                                 </Button>
                             </div>
 
                             {/* Stats */}
-                            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
+                            <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 max-w-md mx-auto lg:mx-0 px-4 sm:px-0">
                                 <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">5000+</div>
-                                    <div className="text-sm text-neutral-600">Active Clients</div>
+                                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#243062]">5000+</div>
+                                    <div className="text-xs sm:text-sm text-neutral-600">Active Clients</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">₹1000Cr+</div>
-                                    <div className="text-sm text-neutral-600">AUM Managed</div>
+                                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#243062]">₹1000Cr+</div>
+                                    <div className="text-xs sm:text-sm text-neutral-600">AUM Managed</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-2xl md:text-3xl font-bold text-[#243062]">99%</div>
-                                    <div className="text-sm text-neutral-600">Satisfaction</div>
+                                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#243062]">99%</div>
+                                    <div className="text-xs sm:text-sm text-neutral-600">Satisfaction</div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Right Column - Form Card */}
-                        <div className="relative z-10">
-                            <div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6 border border-neutral-200">
+                        <div className="relative z-10 mt-8 lg:mt-0">
+                            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 border border-neutral-200 mx-4 sm:mx-0">
                                 <form onSubmit={handleFormSubmit} className="space-y-5">
                                     <div className="text-center mb-6">
                                         <div className="flex justify-center mb-4">
@@ -171,8 +233,283 @@ const GrowYourMutualFund: React.FC = () => {
                 </div>
             </section>
 
-            {/* Why MFDs Need a Platform Now Section */}
+            {/* Building Your Mutual Fund Distribution Business Section */}
+            <section className="py-12 md:py-20 bg-[#F87171]">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-tight">
+                            Building Your Mutual Fund Distribution Business with a Simple But Powerful Formula
+                        </h2>
+                        <p className="text-base md:text-lg lg:text-xl text-white mb-6 leading-relaxed">
+                            With the rapidly evolving mutual fund industry of today, growing your mutual fund distribution business is as uncomplicated as a straightforward but extremely efficient recipe:
+                        </p>
+                        <div className="border border-white backdrop-blur-sm rounded-lg p-4 md:p-6 mb-6">
+                            <p className="text-lg md:text-xl lg:text-xl font-semibold text-white">
+                                More AUM = Number of Clients × Amount Invested per Client × Clients' Retention Rate
+                            </p>
+                        </div>
+                        <p className="text-base md:text-lg lg:text-xl text-white leading-relaxed">
+                            This proven technique is central to successful distributors growing their mutual fund businesses. But during 2025, there is one critical ingredient that has been identified as an absolute necessity: digital enablement.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Get Your AMFI Registration Number Section */}
             <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Get Your AMFI Registration Number
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200 mb-8">
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>You can generate leads from social media platforms like Facebook and WhatsApp by sharing personalized and branded content.</li>
+                                <li>We help you build social media presence with Google business listings and your own website.</li>
+                                <li>We also help you organize Investor Awareness Programs in your area.</li>
+                                <li>You can generate more business remotely by sharing App Referral Link.</li>
+                            </ul>
+                        </div>
+                        <div className="text-center">
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                onClick={scrollToHero}
+                                className="bg-[#243062] hover:bg-[#1a2447] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+                            >
+                                Join Us
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Increasing Investment Per Customer Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Increasing Investment Per Customer
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Nivesh's goal-based investment plans help you to suggest the right asset allocation and funds for the customers, thereby increasing their confidence in you.</li>
+                                <li>Cross-sell and up-sell opportunities are identified and suggested by the platform. You can accordingly approach customers with new product ideas.</li>
+                                <li>Customers can also use the Nivesh app. The transparency helps in generating more business from existing customers.</li>
+                                <li>Our data shows that more and more existing customers do repeat business after using the platform.</li>
+                                <li>Multiple product bouquet also helps in mobilizing business as per needs of the customers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Increasing Customer Retention Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Increasing Customer Retention
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200 mb-8">
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Your ability to service customers in real-time with the help of the online platform will result in lower customer churn and much higher customer retention.</li>
+                                <li>You can share engaging content provided by Nivesh's content team with your existing customers.</li>
+                                <li>Right kind of suggestions during market volatility also helps in customer retention.</li>
+                            </ul>
+                        </div>
+                        <div className="text-center">
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                onClick={scrollToHero}
+                                className="bg-[#243062] hover:bg-[#1a2447] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+                            >
+                                Join Us
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Understand Your Clients' Needs to Build Trust Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Understand Your Clients' Needs to Build Trust
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                                The foundation of any successful mutual fund distribution business lies in understanding your clients' goals. Whether they aim to save for retirement, build an emergency fund, or achieve short-term goals, providing personalized recommendation fosters trust and loyalty.
+                            </p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                Key Steps to Build Client Trust:
+                            </h3>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Conduct in-depth consultations to understand financial goals.</li>
+                                <li>Educate clients about various mutual fund schemes, including SIPs and tax-saving funds.</li>
+                                <li>Maintain regular communication to update clients about portfolio performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Offer Seamless Digital Solutions Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Offer Seamless Digital Solutions
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                                In today's tech-driven world, integrating digital tools into your mutual fund distribution business is essential. Clients expect seamless processes for onboarding, investment tracking, and reporting.
+                            </p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                How Digital Tools Can Help Grow Your Business:
+                            </h3>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Simplify KYC processes for faster client onboarding.</li>
+                                <li>Use portfolio management platforms to provide real-time updates.</li>
+                                <li>Maintain regular communication to update clients about portfolio performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Focus on SIPs to Ensure Steady Growth Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Focus on SIPs to Ensure Steady Growth
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                                Promoting Systematic Investment Plans (SIPs) is a proven way to grow your mutual fund distribution business. SIPs encourage clients to invest regularly, ensuring a steady inflow of funds for both the client and distributor.
+                            </p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                Benefits of Focusing on SIPs:
+                            </h3>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Builds a long-term relationship with clients.</li>
+                                <li>Ensures consistent Mutual Fund Distributor commissions for distributors.</li>
+                                <li>SIPs are easy to explain and help clients understand the power of compounding.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Diversify Your Offerings Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Diversify Your Offerings
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                                Clients appreciate distributors who provide comprehensive solutions. By offering multiple investment options like tax-saving funds, debt funds, and diversified equity funds, you can maximize your Mutual Fund Distributor income.
+                            </p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
+                                Suggestions to Diversify Portfolios:
+                            </h3>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Recommend ELSS funds for clients looking to save taxes while earning market-linked returns.</li>
+                                <li>Offer debt funds for conservative investors seeking stable returns.</li>
+                                <li>Promote hybrid funds for balanced risk and reward.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Build Strong Relationships with Clients Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Build Strong Relationships with Clients
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                            Long-term growth in the mutual fund distribution business relies on client retention. Offering exceptional service and goal specific recommendations ensures client loyalty.
+                            </p>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Communicate regularly about market updates and portfolio performance.</li>
+                                <li>Resolve client queries promptly and professionally.</li>
+                                <li>Celebrate milestones such as achieving financial goals or long-term investment anniversaries.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Stay Updated with Industry Trends Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Stay Updated with Industry Trends
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                            The mutual fund industry is constantly evolving. To stay ahead, keep yourself informed about market trends, new mutual fund launches, and regulatory updates. This knowledge positions you as a trusted mutual fund distributor in the eyes of your clients.                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Leverage Technology Like Nivesh Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Leverage Technology Like Nivesh
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
+                                Using a platform like Nivesh can significantly enhance the growth of your mutual fund distribution business by providing:
+                            </p>
+                            <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
+                                <li>Instant client onboarding.</li>
+                                <li>Automated KYC processes.</li>
+                                <li>Real-time portfolio tracking and reporting.</li>
+                                <li>Tools to manage multiple clients efficiently.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Scale Your Mutual Fund Distribution Business Strategically With NIVESH Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
+                            Scale Your Mutual Fund Distribution Business Strategically With NIVESH
+                        </h2>
+                        <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200 space-y-4">
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                Growing your mutual fund distribution business requires a combination of personalized service, smart marketing, and effective use of technology. By focusing on client satisfaction, offering value-added services, and leveraging digital tools, you can position yourself as a leading AMFI Mutual Fund Distributor and achieve long-term success.
+                            </p>
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                Start implementing these growth strategies today to expand your client base, increase your Mutual Fund Distributor income, and build a thriving business!
+                            </p>
+                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                Take the first step to growing your business today with platforms like Nivesh, and position yourself as a leader in the mutual fund distribution industry!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Why MFDs Need a Platform Now Section */}
+            {/* <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
@@ -220,44 +557,114 @@ const GrowYourMutualFund: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
-            {/* What Changes with Nivesh Section */}
-            <section className="py-12 md:py-20 bg-neutral-50">
+            
+            
+
+            {/* Grow Digitally with Nivesh: Paperless Solutions Section */}
+            <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
-                            What Changes with Nivesh
-                        </h2>
-                        <div className="space-y-6">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-12 md:mb-16">
+                            <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
+                                Grow Digitally with Nivesh: Paperless Solutions for Mutual Fund Distributors
+                            </h2>
+                            <p className="text-base md:text-lg text-neutral-700 max-w-3xl mx-auto leading-relaxed">
+                                Nivesh provides your mutual fund distribution industry with a 100% digital, paperless platform that is perfectly suited for efficiency, compliance, and customer happiness. Here's how:
+                            </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                             {[
                                 {
-                                    title: 'From Manual to Digital',
-                                    description: 'Transform your entire workflow from paper-based processes to a fully digital platform. No more physical forms, manual calculations, or time-consuming paperwork.',
+                                    number: '1',
+                                    title: 'Unlock the Power of Paperless Investment',
+                                    description: 'Transform your investment processes with a fully digital platform for fast, eco-friendly decisions without physical documents.',
                                 },
                                 {
-                                    title: 'From Reactive to Proactive',
-                                    description: 'Move from reactive client management to proactive advisory. Get real-time insights, automated alerts, and data-driven recommendations to serve clients better.',
+                                    number: '2',
+                                    title: 'Efficient Digital Fund Management',
+                                    description: 'Control client mutual fund investments through a digital-first system, offering real-time updates and smooth management.',
                                 },
                                 {
-                                    title: 'From Limited to Unlimited',
-                                    description: 'Break free from geographical and operational limitations. Serve clients anywhere, anytime, with a platform that scales with your business growth.',
+                                    number: '3',
+                                    title: 'Simplified Paperless Client Onboarding',
+                                    description: 'Smooth onboarding with fully digital KYC and registration, eliminating paperwork and delays.',
                                 },
                                 {
-                                    title: 'From Individual to Ecosystem',
-                                    description: 'Join a thriving ecosystem of MFDs, benefit from shared resources, best practices, and collective growth opportunities.',
+                                    number: '4',
+                                    title: 'No Paperwork, Just Results',
+                                    description: 'A paperless business model from onboarding to transactions, streamlining processes to reduce human error and improve operational efficiency.',
                                 },
-                            ].map((change, index) => (
+                                {
+                                    number: '5',
+                                    title: 'Quick, Digital KYC Process',
+                                    description: 'Fast and secure KYC completion via the digital platform, avoiding delays and ensuring secure, eco-friendly digital storage of client data.',
+                                },
+                                {
+                                    number: '6',
+                                    title: 'Track Investments Anytime, Anywhere',
+                                    description: 'Access and manage client portfolios on the go, with paperless statements and real-time access to mutual fund statements and portfolio progress from any device.',
+                                },
+                                {
+                                    number: '7',
+                                    title: 'Go Paperless, Go Green',
+                                    description: 'Business sustainability through paperless transactions and reduced waste, helping clients invest smarter and supporting a green environment.',
+                                },
+                                {
+                                    number: '8',
+                                    title: 'Real-Time Paperless Reporting',
+                                    description: 'Instant access to investment summaries, performance reports, and consolidated mutual fund statements without physical reports.',
+                                },
+                                {
+                                    number: '9',
+                                    title: 'Seamless Digital Communication',
+                                    description: 'Effective client and partner engagement through paperless digital communication, facilitating quick sharing of reports and investment advice.',
+                                },
+                                {
+                                    number: '10',
+                                    title: 'Transform Your Business with Paperless Transactions',
+                                    description: 'Switch to paperless transactions to streamline the entire business model, from distribution to client transactions, for smooth operation without paper clutter.',
+                                },
+                                {
+                                    number: '11',
+                                    title: 'Secure, Paperless Documentation',
+                                    description: 'Secure digital storage of all client and transaction documents, eliminating the risk of loss and making everything easily accessible for efficient organization.',
+                                },
+                                {
+                                    number: '12',
+                                    title: 'Reduce Operational Costs with Paperless Solutions',
+                                    description: 'Digital operations cut costs associated with printing, paperwork, and mailing, allowing resource allocation for business growth and customer satisfaction.',
+                                },
+                                {
+                                    number: '13',
+                                    title: 'Real-Time Digital Fund Tracking',
+                                    description: 'Monitor mutual fund investments and performance with real-time, paperless portfolio tracking.',
+                                },
+                                {
+                                    number: '14',
+                                    title: 'Seamless Digital Transactions',
+                                    description: 'Make quick and secure mutual fund transactions using the paperless platform.',
+                                },
+                            ].map((item, index) => (
                                 <div
                                     key={index}
-                                    className="bg-white rounded-xl p-6 md:p-8 border border-neutral-200 shadow-sm"
+                                    className="bg-neutral-50 rounded-xl p-6 border border-neutral-200 hover:shadow-lg transition-all duration-300"
                                 >
-                                    <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
-                                        {change.title}
-                                    </h3>
-                                    <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                        {change.description}
-                                    </p>
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 w-10 h-10 bg-[#243062] text-white rounded-lg flex items-center justify-center font-bold text-lg">
+                                            {item.number}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-lg md:text-xl font-bold text-[#243062] mb-3 leading-tight">
+                                                {item.title}
+                                            </h3>
+                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -443,7 +850,7 @@ const GrowYourMutualFund: React.FC = () => {
             </section>
 
             {/* Why MFDs Choose Nivesh Section */}
-            <section className="py-12 md:py-20 bg-neutral-50">
+            {/* <section className="py-12 md:py-20 bg-neutral-50">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
@@ -491,41 +898,94 @@ const GrowYourMutualFund: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
-            {/* Ready to Begin? Section */}
+            {/* Partner Success Story Video Section */}
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 md:p-12 border-2 border-primary/20 text-center">
-                            <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
-                                Ready to Grow Your Business?
-                            </h2>
-                            <p className="text-base md:text-lg text-neutral-700 mb-8 leading-relaxed">
-                                Join Nivesh today and transform your mutual fund distribution business. Start scaling, start growing, start succeeding.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
-                                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold"
-                                >
-                                    Get Started Now
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    onClick={() => window.open('https://nivesh.com/en/partner', '_blank')}
-                                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
-                                >
-                                    Learn More
-                                </Button>
+                    <div className="max-w-5xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            Esteemed Partner Mr. Yuktarth Shrivastava Shares His Growth Journey with Nivesh
+                        </h2>
+                        <div className="bg-white rounded-2xl p-4 md:p-6 shadow-lg border border-neutral-100 overflow-hidden">
+                            <div className="aspect-video rounded-xl overflow-hidden bg-neutral-100">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={convertYouTubeUrlToEmbed('https://www.youtube.com/watch?v=aYFjr7EvtQc') || ''}
+                                    title="Partner Success Story: How Mr. Yuktarth Shrivastava Grew His Business"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="w-full h-full"
+                                ></iframe>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {/* Frequently Asked Questions Section */}
+            <section className="py-12 md:py-20 bg-neutral-50">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
+                            Frequently Asked Questions (FAQs)
+                        </h2>
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
+                                    >
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                                        >
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </section>
+
+            <Testimonials variant="default" />
+
+            
         </div>
     );
 };

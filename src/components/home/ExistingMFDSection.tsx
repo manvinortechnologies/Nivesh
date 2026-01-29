@@ -56,7 +56,7 @@ const ExistingMFDSection: React.FC = () => {
 
             <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-r-xl mb-8">
               <p className="text-base md:text-lg font-medium text-neutral-800 italic">
-                “Platforms don’t replace advisors...they evolve them.”
+                “Platforms don’t replace distributors...they evolve them.”
               </p>
             </div>
 

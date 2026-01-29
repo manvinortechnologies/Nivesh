@@ -94,6 +94,9 @@ const Navigation: React.FC = () => {
         } else if (path === '/partner/grow-your-mutual-fund') {
             // Handle Grow Your Mutual Fund page - use React Router navigation
             navigate('/partner/grow-your-mutual-fund');
+        } else if (path === '/for-mfds') {
+            // Handle Transform Your Distribution Business (For MFDs) page - use React Router navigation
+            navigate('/for-mfds');
         } else if (path === '/products/specialized-investment-fund' || path === '/specialized-investment-fund') {
             // Handle Specialized Investment Fund page - use React Router navigation
             navigate('/products/specialized-investment-fund');
@@ -142,6 +145,9 @@ const Navigation: React.FC = () => {
         } else if (path === '/pms') {
             // Handle PMS page - use React Router navigation
             navigate('/pms');
+        } else if (path === '/mutual-funds') {
+            // Handle Mutual Funds page - use React Router navigation
+            navigate('/mutual-funds');
         } else if (path === '/') {
             // Handle Home page - use React Router navigation
             navigate('/');
@@ -181,7 +187,8 @@ const Navigation: React.FC = () => {
             dropdown: [
                 { name: 'Be A Nivesh Partner', path: '/partner', external: false },
                 { name: 'Become Mutual Fund Distributors', path: '/partner/become-mutual-fund-distributors', external: false },
-                { name: 'Grow Your Mutual Fund', path: '/partner/grow-your-mutual-fund', external: false },
+                { name: 'Transform Your Distribution Business', path: '/for-mfds', external: false },
+                { name: 'Grow Your Mutual Fund Business', path: '/partner/grow-your-mutual-fund', external: false },
                 { name: 'All About AMFI ARN Code', path: '/partner/all-about-amfi-arn-code', external: false },
                 { name: 'NISM Certification Exam', path: '/nism-certification-exam', external: false },
             ],
@@ -202,7 +209,7 @@ const Navigation: React.FC = () => {
         <nav
             className={`fixed w-full z-50 transition-all duration-300 transform 
             ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-            ${scrolled ? 'bg-neutral-100 shadow-lg py-4' : 'bg-neutral-100 lg:bg-transparent py-4 lg:py-6'}`}
+            ${scrolled ? 'bg-neutral-100 shadow-lg py-2 lg:py-4' : 'bg-neutral-100 lg:bg-transparent py-2 lg:py-6'}`}
         >
             <div className="container-custom">
                 <div className="flex items-center justify-between">
@@ -212,7 +219,7 @@ const Navigation: React.FC = () => {
                             onClick={() => handleNavigate('/')}
                             className="cursor-pointer bg-transparent border-none outline-none p-0"
                         >
-                        <img src="/logo.png" alt="Nivesh" className="h-6 md:h-8" />
+                        <img src="/logo.png" alt="Nivesh" className="h-5 sm:h-6 md:h-8" />
                         </button>
                     </div>
 

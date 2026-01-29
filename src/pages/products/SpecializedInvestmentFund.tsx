@@ -1,9 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import Hero2 from '../../assets/Hero2.jpeg';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const SpecializedInvestmentFund: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "specialized-investment-fund"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'specialized-investment-fund' || 
+                           category === 'specialized investment fund' ||
+                           category.includes('specialized-investment-fund');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -15,38 +50,50 @@ const SpecializedInvestmentFund: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Specialized Investment Fund</span>
+                    </nav>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 Specialized Investment Fund: Global Diversification Guide
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                Specialized Investment Fund: Global Diversification Guide
+                            </h1>
                             
-                            <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
+                            <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-8">
                                 India's investment landscape is evolving, with a growing demand for sophisticated investment options. Specialized Investment Funds (SIFs) are SEBI-regulated investment vehicles that offer sophisticated investors access to alternative investment strategies. SIFs provide opportunities to access new markets and achieve global diversification, offering possibilities without boundaries to manage risk and optimize returns.
                             </p>
                             
+                            <div className="flex justify-start">
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => setIsModalOpen(true)}
                                 className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                             >
                                 I am Interested
                             </Button>
+                            </div>
                         </div>
 
                         {/* Right Column - Hero2 Image */}
                         <div className="relative z-10">
-                            <div className="rounded-2xl overflow-hidden shadow-2xl">
-                                <img
-                                    src={Hero2}
-                                    alt="Specialized Investment Fund"
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
+                            <img
+                                src={Hero2}
+                                alt="Specialized Investment Fund"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -233,12 +280,12 @@ const SpecializedInvestmentFund: React.FC = () => {
                                     description: 'Investing in SEBI Specialized Investment Fund offers a proposition that allows traders to diversify across domestic and international investments, thereby reducing concentration risk and fostering a stable, long-term investment growth.',
                                 },
                                 {
-                                    title: 'Ability to Create More Return with Managed Risk',
-                                    description: 'SIFs offer an actively managed approach to create additional returns versus risk, and the possibility of outperforming traditional investment vehicles.',
+                                    title: 'Ability to Create Better Return with Managed Risk',
+                                    description: 'SIFs offer an actively managed approach to create additional returns versus risk, and the ability to generate better Risk Adjusted Return.',
                                 },
                                 {
                                     title: 'New Opportunities in New Fields Like REITs and InvITs',
-                                    description: 'SIFs provide access to new investment alternatives, including areas such as real estate investment trusts (REITs) and infrastructure investment trusts (InvITs), in which investors can participate in high-growth return possibilities with controlled established risk.',
+                                    description: 'SIFs provide access to new investment alternatives, including areas such as real estate investment trusts (REITs) and infrastructure investment trusts (InvITs), investors can participate in these high-growth sectors with controlled established risk.',
                                 },
                             ].map((benefit, index) => (
                                 <div
@@ -265,65 +312,53 @@ const SpecializedInvestmentFund: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'What represents a specialized investment fund (SIF)?',
-                                    answer: 'A SIF is a SEBI-regulated fund that can provide experienced internet-savvy traders with sophisticated and diverse techniques.',
-                                },
-                                {
-                                    question: 'Who are the eligible investors for the SIF Fund?',
-                                    answer: 'SIF Fund can be open to high-net-worth individuals (HNI) and accredited buyers, who in the long run have a minimum investment of ₹10 lakh.',
-                                },
-                                {
-                                    question: 'How does specialized investment fund work?',
-                                    answer: 'SEBI Specialized Investment Fund permits extra leeway in funding styles and slightly greater tolerance compared to traditional mutual fund and custom management, including PMS.',
-                                },
-                                {
-                                    question: 'Can SIFs invest outside of India?',
-                                    answer: 'Yes, SIFs pose a threat to Indian investors who want to invest in foreign assets with increased geographic diversification.',
-                                },
-                                {
-                                    question: 'What are the SIF risk disclosures?',
-                                    answer: 'SEBI requires open threat categorization and clear disclosures to enable investors to understand potential risks before investing.',
-                                },
-                                {
-                                    question: 'Does SEBI regulate SIFs?',
-                                    answer: 'Indeed, SEBI Specialized Investment Fund is to protect investors, ensure transparency, and enforce strict operating practices.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -361,6 +396,9 @@ const SpecializedInvestmentFund: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

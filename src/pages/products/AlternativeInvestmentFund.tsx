@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import AIFImage from '../../assets/AIF.png';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const AlternativeInvestmentFund: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [activeTab, setActiveTab] = useState<'how-it-works' | 'who-should-invest' | 'taxability'>('how-it-works');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [calculatorData, setCalculatorData] = useState({
         investmentAmount: 10000000, // 1 Crore default
         rateOfInterest: 12,
@@ -20,6 +25,31 @@ const AlternativeInvestmentFund: React.FC = () => {
     useEffect(() => {
         calculateFutureValue();
     }, [calculatorData]);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "alternative-investment-fund"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'alternative-investment-fund' || 
+                           category === 'alternative investment fund' ||
+                           category.includes('alternative-investment-fund');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -129,51 +159,27 @@ const AlternativeInvestmentFund: React.FC = () => {
         },
     ];
 
-    const faqs = [
-        {
-            question: 'How Does an Alternative Investment Fund (AIF) Work?',
-            answer: 'Alternative Investment Funds are a privately pooled investment vehicles that collect funds from sophisticated investors, whether Indian or foreign, investing in non-traditional asset classes such as angel funds, private equity, hedge funds, venture capital, managed futures, etc.',
-        },
-        {
-            question: 'How do I Start Investing in an Alternative Investment Fund?',
-            answer: 'Approaching your financial distributor is the best way to start investing in an Alternative Investment Fund.',
-        },
-        {
-            question: 'Who can Invest in an Alternative Investment Fund?',
-            answer: 'Indian residents, non-residents (NRI\'s), and foreign nationals can invest in Alternative Investment Funds.',
-        },
-        {
-            question: 'What is the Enrollment Charge to be Paid for an Alternative Investment Fund?',
-            answer: 'The enrollment charge to be paid for an Alternative fund depends on its type. All three categories have an application fee of Rs. 1 lakh. Registration fees are Rs. 5 lakh, Rs. 10 lakhs, and Rs.15 lakh for Category I, II, III respectively.',
-        },
-        {
-            question: 'What is the Upper Limit for Investors Under Alternative Investment Fund (AIF)?',
-            answer: 'There is no upper limit for investors under Alternative Investment Funds. Minimum limits are Rs. 1 Cr depending on the type of the fund. Also, no fund must have more than 1,000 investors.',
-        },
-    ];
-
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
+            <section className="pt-20 md:pt-24 pb-12 md:pb-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
                 <div className="container-custom">
                     <div className="max-w-7xl mx-auto">
                         {/* Breadcrumbs */}
-                        <nav className="mb-6">
-                            <ol className="flex items-center space-x-2 text-sm text-neutral-600">
-                                <li>
-                                    <Link to="/" className="hover:text-primary transition-colors">
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>/</li>
-                                <li className="text-neutral-900 font-medium">Alternative Investment Fund</li>
-                            </ol>
+                        <nav className="flex items-center space-x-2 text-sm mb-6">
+                            <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                                Home
+                            </Link>
+                            <span className="text-neutral-400">/</span>
+                            <span className="text-neutral-500">Alternative Investment Fund</span>
                         </nav>
 
-                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-center">
+                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-start">
                             <div className="lg:pr-6">
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
+                                    Invest in Alternative Investment Funds with Nivesh
+                                </h2>
+                                <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
                                     Invest in Alternative Investment Funds with Nivesh
                                 </h1>
                                 <p className="text-base md:text-lg text-neutral-700 mb-6 md:mb-8 leading-relaxed">
@@ -183,21 +189,19 @@ const AlternativeInvestmentFund: React.FC = () => {
                                     <Button
                                         variant="primary"
                                         size="lg"
-                                        onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                        onClick={() => setIsModalOpen(true)}
                                         className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                     >
                                         I am Interested
                                     </Button>
                                 </div>
                             </div>
-                            <div className="lg:pl-6 lg:p-6">
-                                <div className="w-full h-[300px] md:h-[500px] lg:h-[550px] mr-2 overflow-hidden rounded-2xl shadow-2xl">
-                                    <img
-                                        src={AIFImage}
-                                        alt="Alternative Investment Funds"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
+                            <div className="relative z-10">
+                                <img
+                                    src={AIFImage}
+                                    alt="Alternative Investment Funds"
+                                    className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                                />
                             </div>
                         </div>
                     </div>
@@ -623,41 +627,57 @@ const AlternativeInvestmentFund: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4">
-                            {faqs.map((faq, index) => (
-                                <div key={index} className="bg-neutral-50 rounded-lg border border-neutral-200 overflow-hidden">
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
-                                    >
-                                        <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
-                                        <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
-                                            <svg
-                                                className="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 9l-7 7-7-7"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-6 py-4 border-t border-neutral-200">
-                                            <p className="text-base text-neutral-700 leading-relaxed">{faq.answer}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {faqs.map((faq, index) => (
+                                    <div key={faq.id} className="bg-neutral-50 rounded-lg border border-neutral-200 overflow-hidden">
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
+                                        >
+                                            <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
+                                            <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M19 9l-7 7-7-7"
+                                                    />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-6 py-4 border-t border-neutral-200">
+                                                {faq.answer && (
+                                                    <div className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">{faq.answer}</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

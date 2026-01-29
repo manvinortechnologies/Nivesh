@@ -280,7 +280,7 @@ const NiveshTeams: React.FC = () => {
                             <ul className="space-y-2 md:space-y-2 mb-4 md:mb-6">
                                 {[
                                     "Develops employees' skills through interactive workshops.",
-                                    'Provides tailored financial advice and planning.',
+                                    'Provides goal specific recommendations.',
                                     'Equips them with smart investment and protection tools.',
                                 ].map((point, index) => (
                                     <li key={index} className="flex items-start gap-3">
@@ -298,7 +298,7 @@ const NiveshTeams: React.FC = () => {
 
                             {/* Descriptive Paragraph */}
                             <p className="text-base md:text-lg text-neutral-700 mb-6 md:mb-8 leading-relaxed">
-                                This is more than financial guidance - it is an integrated wellness platform that enables your employees to proactively manage their finances while providing your business with a solid Return On Investment.
+                            This goes beyond basic financial education — it is an integrated wellness platform that enables employees to build financial awareness and make informed decisions, while delivering tangible organisational benefits.     
                             </p>
 
                             {/* Call to Action Button */}
@@ -401,7 +401,7 @@ const NiveshTeams: React.FC = () => {
                                 Companies who invest in their employees' Financial Fitness in India are reaping the benefits of <strong className="text-[#243062] font-bold">loyalty, performance, and engagement.</strong>
                             </p>
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                This is exactly where <strong className="text-[#243062] font-bold">Nivesh Teams offers value</strong>, by combining employees' money concerns with education, consultation, and action through one integrated platform.
+                            This is where  <strong className="text-[#243062] font-bold">Nivesh Teams</strong>, creates impact by supporting employees with financial education, informational assistance, and practical tools, delivered through an integrated platform.
                             </p>
                         </div>
                     </div>
@@ -501,8 +501,7 @@ const NiveshTeams: React.FC = () => {
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-2xl md:text-4xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
-                            Financial Fitness Needs More Than Just Advice
-                        </h2>
+                        Financial Fitness Necessities                        </h2>
                         <p className="text-base md:text-lg text-neutral-700 mb-8 md:mb-10 text-center leading-relaxed">
                             Here's why most financial programs fail:
                         </p>
@@ -601,18 +600,18 @@ const NiveshTeams: React.FC = () => {
                             {[
                                 {
                                     title: 'Financial Literacy Workshops',
-                                    description: 'Forget standard boring presentations. Employees gain real knowledge through actual participation in life workshops that teach:',
+                                    description: 'Move beyond standard presentations. Employees build practical financial awareness through interactive, participation-driven workshops focused on real-life scenarios, covering:',
                                     bullets: [
-                                        '1-on-1 with SEBI-registered experts.',
-                                        'Planning for goals like buying a house, child\'s education, or retirement.',
-                                        'Advice tailored to salary levels, financial commitments, and goals.',
+                                        ' Interactive sessions with qualified professionals, focused on financial concepts and best practices.',
+                                        ' Understanding goal planning frameworks for life events such as home ownership, children’s education, and retirement.',
+                                        'General financial planning approaches explained across different income ranges and life stages, helping employees better understand budgeting, saving, and long-term planning considerations.',
                                     ],
                                 },
-                                {
-                                    title: 'Personalized Financial Consultations',
-                                    description: 'One-on-one consultations with certified financial advisors to create personalized financial roadmaps for each employee.',
-                                    bullets: [],
-                                },
+                                // {
+                                //     title: 'Personalized Financial Consultations',
+                                //     description: 'One-on-one consultations with certified financial advisors to create personalized financial roadmaps for each employee.',
+                                //     bullets: [],
+                                // },
                                 {
                                     title: 'Customized Investment Planning in India',
                                     description: 'Tailored investment solutions aligned with Indian market conditions and employee financial goals.',

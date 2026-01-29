@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import About from './pages/About';
 import NiveshTeams from './pages/NiveshTeams';
@@ -38,11 +39,17 @@ import Careers from './pages/footer/quicklinks/Careers';
 import Calculators from './pages/footer/quicklinks/Calculators';
 import TheNiveshPlatform from './pages/TheNiveshPlatform';
 import ForMFDs from './pages/ForMFDs';
+import MutualFunds from './pages/products/MutualFunds';
+import BlogCategory from './pages/blog/BlogCategory';
+import BlogDetail from './pages/blog/BlogDetail';
+import NFOs from './pages/nfo/NFOs';
+import NFOsDetail from './pages/nfo/NFOsDetail';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-    <Layout>
+      <ScrollToTop />
+      <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -81,6 +88,11 @@ const App: React.FC = () => {
           <Route path="/calculators" element={<Calculators />} />
           <Route path="/the-nivesh-platform" element={<TheNiveshPlatform />} />
           <Route path="/for-mfds" element={<ForMFDs />} />
+          <Route path="/mutual-funds" element={<MutualFunds />} />
+          <Route path="/blog" element={<BlogCategory />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/nfos" element={<NFOs />} />
+          <Route path="/nfo/:id" element={<NFOsDetail />} />
         </Routes>
     </Layout>
     </BrowserRouter>

@@ -71,58 +71,60 @@ const OurPartners: React.FC = () => {
                 </div>
 
                 {/* Partners Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    {partners.map((partner, index) => (
-                        <div
-                            key={index}
-                            className="bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl border border-neutral-100 hover:border-primary/20 transition-all duration-300 group hover:-translate-y-1"
-                        >
-                            {/* Logo Container */}
-                            <div className="mb-4 flex items-center justify-center h-28 md:h-36  rounded-xl p-2 group-hover:from-primary/10 group-hover:to-primary/5 transition-all duration-300">
-                                {partner.logo ? (
-                                    <img
-                                        src={partner.logo}
-                                        alt={partner.name}
-                                        className="max-h-full max-w-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                    />
-                                ) : (
-                                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
-                                        <span className="text-2xl font-bold text-primary">
-                                            {partner.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Company Name */}
-                            <h3 className="text-lg md:text-xl font-bold text-neutral-900 mb-3 leading-tight group-hover:text-primary transition-colors duration-300">
-                                {partner.name}
-                            </h3>
-
-                            {/* Description */}
-                            <p className="text-sm md:text-base text-neutral-600 mb-6 leading-relaxed min-h-[3rem]">
-                                {partner.description}
-                            </p>
-
-                            {/* More Button */}
-                            <Button
-                                variant="primary"
-                                size="sm"
-                                onClick={() => {
-                                    if (partner.link) {
-                                        if (partner.link.startsWith('http')) {
-                                            window.open(partner.link, '_blank', 'noopener,noreferrer');
-                                        } else {
-                                            navigate(partner.link);
-                                        }
-                                    }
-                                }}
-                                className="w-full group-hover:scale-105 transition-transform duration-300"
+                <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {partners.map((partner, index) => (
+                            <div
+                                key={index}
+                                className="bg-white rounded-xl p-4 md:p-5 shadow-sm hover:shadow-xl border border-neutral-100 hover:border-primary/20 transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full"
                             >
-                                More
-                            </Button>
-                        </div>
-                    ))}
+                                {/* Logo Container */}
+                                <div className="mb-3 md:mb-4 flex items-center justify-center h-20 md:h-24 rounded-xl p-2 group-hover:from-primary/10 group-hover:to-primary/5 transition-all duration-300">
+                                    {partner.logo ? (
+                                        <img
+                                            src={partner.logo}
+                                            alt={partner.name}
+                                            className="max-h-full max-w-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                        />
+                                    ) : (
+                                        <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                                            <span className="text-lg md:text-xl font-bold text-primary">
+                                                {partner.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Company Name */}
+                                <h3 className="text-base md:text-lg font-bold text-neutral-900 mb-2 md:mb-3 leading-tight group-hover:text-primary transition-colors duration-300">
+                                    {partner.name}
+                                </h3>
+
+                                {/* Description */}
+                                <p className="text-xs md:text-sm text-neutral-600 mb-4 md:mb-6 leading-relaxed min-h-[2.5rem] flex-grow">
+                                    {partner.description}
+                                </p>
+
+                                {/* More Button - Fixed at bottom */}
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    onClick={() => {
+                                        if (partner.link) {
+                                            if (partner.link.startsWith('http')) {
+                                                window.open(partner.link, '_blank', 'noopener,noreferrer');
+                                            } else {
+                                                navigate(partner.link);
+                                            }
+                                        }
+                                    }}
+                                    className="w-full group-hover:scale-105 transition-transform duration-300 mt-auto"
+                                >
+                                    More
+                                </Button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

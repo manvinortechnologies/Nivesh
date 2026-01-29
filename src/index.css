@@ -108,17 +108,102 @@ h3 {
   animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Blog Content Styles */
+.blog-content h2 {
+    color: #1e2a5e;
+    font-weight: 500;
+    line-height: 44px;
+    margin: 32px 0 16px 0;
+    font-size: 36px;
+    padding: 0;
+}
+
+.blog-content h3 {
+    color: #1e2a5e;
+    font-weight: 500;
+    margin: 24px 0 12px 0;
+    font-size: 28px;
+}
+
+.blog-content p {
+    margin-block: 0 0.9rem;
+    line-height: 1.6;
+}
+
+.blog-content ol,
+.blog-content ul {
+    margin: 16px 0;
+    padding-left: 24px;
+}
+
+.blog-content li {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.blog-content strong {
+    font-weight: bolder;
+}
+
+.blog-content a {
+    color: #E63946;
+    text-decoration: underline;
+}
+
+.blog-content a:hover {
+    color: #D62828;
+}
+
 @keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
+    from {
+        transform: translateX(100%);
+    opacity: 0;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
 .animate-slide-in-right {
-  animation: slide-in-right 0.3s ease-out;
+  animation: slide-in-right 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
 }
 
 @keyframes scroll-horizontal {

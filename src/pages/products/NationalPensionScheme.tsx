@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import NPSImage from '../../assets/NPS.png';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const NationalPensionScheme: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [activeTab, setActiveTab] = useState<'types-of-accounts' | 'investment-choices' | 'tax-benefits'>('types-of-accounts');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [calculatorData, setCalculatorData] = useState({
         investmentAmount: 5000,
         rateOfInterest: 10,
@@ -20,6 +25,31 @@ const NationalPensionScheme: React.FC = () => {
     useEffect(() => {
         calculateFutureValue();
     }, [calculatorData]);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "national-pension-scheme"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'national-pension-scheme' || 
+                           category === 'national pension scheme' ||
+                           category.includes('national-pension-scheme');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -167,51 +197,27 @@ const NationalPensionScheme: React.FC = () => {
         },
     ];
 
-    const faqs = [
-        {
-            question: 'How do I Choose an NPS Scheme?',
-            answer: 'There are various choices available under the best NPS scheme in India. NPS schemes can automatically invest money based on the age of the subscriber. This is known as Auto choice. However, the individual also has the flexibility to choose various asset classes for investment under the Active choice; including stocks, government securities, and fixed income instruments other than government securities.',
-        },
-        {
-            question: 'What is the Current NPS Interest Rate?',
-            answer: 'The Interest rates for the NPS schemes range between 9% to 12% depending on the type of scheme.',
-        },
-        {
-            question: 'How is NPS Calculated?',
-            answer: 'NPS is calculated based on your current age when you start investing and when you wish to retire. The amount that will be invested per month, returns expected, investment period, the percentage of return throughout the period of investment you receive, all of this will be a factor in how you can calculate your NPS amounts.',
-        },
-        {
-            question: 'How Much Pension will I get From NPS?',
-            answer: 'This depends on the amount invested and the rate of return given by the fund over the period of investment.',
-        },
-        {
-            question: 'How Withdrawal of NPS Funds happens?',
-            answer: 'Reaching the age of 60: Out of the total accumulated NPS funds, at least 40% needs to be used for the purchase of an annuity for providing a monthly pension. Balance is paid as a lump sum to the individual. If the total amount is less than INR 2 Lakhs, the individual can withdraw 100% of the corpus. Before reaching the age of 60: Funds in the National Pension Scheme investment can be withdrawn before the age of 60, only if the individual has completed 10 years in NPS. Individuals will have to pay at least 80% of the accumulated pension to purchase the annuity for monthly income. Death of the individual: Upon the death of the individual, the registered nominee can withdraw 100% of the NPS funds. If the nominee wishes, the NPS account can be continued provided the KYC procedure is followed.',
-        },
-    ];
-
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
+            <section className="pt-20 md:pt-24 pb-12 md:pb-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
                 <div className="container-custom">
                     <div className="max-w-7xl mx-auto">
                         {/* Breadcrumbs */}
-                        <nav className="mb-6">
-                            <ol className="flex items-center space-x-2 text-sm text-neutral-600">
-                                <li>
-                                    <Link to="/" className="hover:text-primary transition-colors">
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>/</li>
-                                <li className="text-neutral-900 font-medium">National Pension Scheme</li>
-                            </ol>
+                        <nav className="flex items-center space-x-2 text-sm mb-6">
+                            <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                                Home
+                            </Link>
+                            <span className="text-neutral-400">/</span>
+                            <span className="text-neutral-500">National Pension Scheme</span>
                         </nav>
 
-                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-center">
+                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-start">
                             <div className="lg:pr-6">
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
+                                    Best National Pension Scheme to Invest
+                                </h2>
+                                <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
                                     Best National Pension Scheme to Invest
                                 </h1>
                                 <p className="text-base md:text-lg text-neutral-700 mb-6 md:mb-8 leading-relaxed">
@@ -221,21 +227,19 @@ const NationalPensionScheme: React.FC = () => {
                                     <Button
                                         variant="primary"
                                         size="lg"
-                                        onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                        onClick={() => setIsModalOpen(true)}
                                         className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                     >
-                                        Invest Now
+                                        I am Interested
                                     </Button>
                                 </div>
                             </div>
-                            <div className="lg:pl-6 lg:p-6">
-                                <div className="w-full h-[300px] md:h-[500px] lg:h-[550px] mr-2 overflow-hidden rounded-2xl shadow-2xl">
-                                    <img
-                                        src={NPSImage}
-                                        alt="National Pension Scheme"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
+                            <div className="relative z-10">
+                                <img
+                                    src={NPSImage}
+                                    alt="National Pension Scheme"
+                                    className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                                />
                             </div>
                         </div>
                     </div>
@@ -689,41 +693,57 @@ const NationalPensionScheme: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4">
-                            {faqs.map((faq, index) => (
-                                <div key={index} className="bg-neutral-50 rounded-lg border border-neutral-200 overflow-hidden">
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
-                                    >
-                                        <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
-                                        <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
-                                            <svg
-                                                className="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 9l-7 7-7-7"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-6 py-4 border-t border-neutral-200">
-                                            <p className="text-base text-neutral-700 leading-relaxed">{faq.answer}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {faqs.map((faq, index) => (
+                                    <div key={faq.id} className="bg-neutral-50 rounded-lg border border-neutral-200 overflow-hidden">
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
+                                        >
+                                            <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
+                                            <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M19 9l-7 7-7-7"
+                                                    />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-6 py-4 border-t border-neutral-200">
+                                                {faq.answer && (
+                                                    <div className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">{faq.answer}</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

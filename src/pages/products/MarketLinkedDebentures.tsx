@@ -1,11 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import MLDImage from '../../assets/MLD.jpeg';
 import MLD2Image from '../../assets/MLD2.webp';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const MarketLinkedDebentures: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [openBenefits, setOpenBenefits] = useState<{ [key: number]: boolean }>({ 0: true }); // First one open by default
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "market-linked-debentures"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'market-linked-debentures' || 
+                           category === 'market linked debentures' ||
+                           category.includes('market-linked-debentures');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -24,14 +59,26 @@ const MarketLinkedDebentures: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-10 lg:gap-16 items-center">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Market Linked Debentures</span>
+                    </nav>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div className="relative z-10">
-                            <h2 className="text-2xl md:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2025
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2025
+                            </h1>
                             
                             <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
                                 In 2025, Indian investors have shifted focus to Market Linked Debentures (MLDs) as sophisticated investment tools offering diversification and tax-efficient benefits. Unlike conventional fixed-income investments, MLDs provide participation in capital markets while offering principal protection. MLDs are gaining traction among High Net-Worth Individuals (HNIs) and family offices, with placements linked to Nifty, Sensex, or commodities (silver, gold, etc.).
@@ -40,28 +87,20 @@ const MarketLinkedDebentures: React.FC = () => {
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                onClick={() => setIsModalOpen(true)}
                                 className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                             >
                                 I am Interested
                             </Button>
                         </div>
 
-                        {/* Right Column - Promotional Content */}
+                        {/* Right Column - Image */}
                         <div className="relative z-10">
-                                {/* Blue Box with MLD Image */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex-1">
-                                            <img
-                                                src={MLDImage}
-                                                alt="Market Linked Debentures"
-                                                className="w-full h-auto object-contain max-h-120"
-                                            />
-                                        </div>
-                                    </div>
-                                
-
-                           
+                            <img
+                                src={MLDImage}
+                                alt="Market Linked Debentures"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -372,61 +411,53 @@ const MarketLinkedDebentures: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'What are market-linked debentures, and how are they different from bonds?',
-                                    answer: 'They are NCDs where returns are linked to market indices. Unlike bonds with fixed interest, MLDs offer market-based returns with capital protection.',
-                                },
-                                {
-                                    question: 'Are Nifty-linked debentures a better investment option than equity mutual funds?',
-                                    answer: 'Yes, in many cases. They offer equity-linked returns with principal protection, a feature that mutual funds often lack.',
-                                },
-                                {
-                                    question: 'How does market linked debentures taxation India work?',
-                                    answer: 'According to the 2023 amendment, MLDs are taxed according to individual tax slabs, not the LTCG rate. Strategic planning can reduce liability.',
-                                },
-                                {
-                                    question: 'Can I invest in market-linked debentures in India with 5 lakhs?',
-                                    answer: 'Yes. The minimum investment typically starts from 5 lakhs.',
-                                },
-                                {
-                                    question: 'Is market-linked debentures taxation in India safe?',
-                                    answer: 'Principal-protected MLDs offer safety with potential returns. Always read the offer document to understand the specific terms and conditions.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -451,19 +482,14 @@ const MarketLinkedDebentures: React.FC = () => {
                                 >
                                     Get Started
                                 </Button>
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    onClick={() => window.open('https://nivesh.com/en/products', '_blank')}
-                                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold"
-                                >
-                                    Learn More
-                                </Button>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

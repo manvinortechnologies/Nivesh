@@ -16,7 +16,7 @@ const AspiringMFDSection: React.FC = () => {
                         Start Your Wealth Journey With Nivesh.
                     </h2>
                     <p className="text-base md:text-lg text-neutral-600">
-                        We help you become a Mutual Fund Distributor ... from AMFI certification to your first client.
+                        We help you become a MFDs ... from AMFI certification to your first client.
                     </p>
                 </div>
 

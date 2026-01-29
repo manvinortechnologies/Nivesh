@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchFAQs, type FAQ } from '../services/api';
 
 const NISMCertificationExam: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -9,6 +13,35 @@ const NISMCertificationExam: React.FC = () => {
         holderType: 'arnHolder',
         getInfo: true,
     });
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "nism-certification-exam"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'nism-certification-exam' || 
+                           category === 'nism certification exam' ||
+                           category.includes('nism-certification-exam');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -27,12 +60,24 @@ const NISMCertificationExam: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section - All About NISM Certificates Exam */}
-            <section className="relative bg-white py-12 md:py-24 overflow-hidden">
+            <section className="relative bg-white pt-20 md:pt-24 pb-12 md:pb-20 overflow-hidden">
                 <div className="container-custom">
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">NISM Certification Exam</span>
+                    </nav>
+                    
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-8 items-start">
                         {/* Left Column - Content */}
                         <div className="space-y-6">
-                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#243062] leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] leading-tight">
+                                All About NISM Certificates Exam
+                            </h2>
+                            <h1 className="hidden md:block text-3xl md:text-5xl lg:text-6xl font-bold text-[#243062] leading-tight">
                                 All About NISM Certificates Exam
                             </h1>
                             
@@ -240,14 +285,33 @@ const NISMCertificationExam: React.FC = () => {
                         <div className="space-y-6">
                             <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                                 <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                    To appear for the NISM-Series-V-A: Mutual Fund Distributors Certification Examination, candidates must meet the following eligibility criteria:
+                                    According to the guidelines given by The National Institute of Securities Market (NISM):
                                 </p>
                                 <ul className="space-y-3 list-disc list-inside text-sm md:text-base text-neutral-700">
-                                    <li>Minimum age of 18 years</li>
-                                    <li>Minimum educational qualification: 10+2 (12th standard) or equivalent</li>
-                                    <li>No prior experience in mutual fund distribution is required</li>
-                                    <li>Candidates can be fresh graduates or working professionals</li>
-                                    <li>No maximum age limit</li>
+                                    <li>Anyone who is 18 years and above can participate in the NISM Exam and become a mutual fund distributor.</li>
+                                    <li>There is no educational qualification listed as per the Association of Mutual Fund (AMFI) website.</li>
+                                    <li>If you are looking to enter the mutual fund distribution business, you need to clear the NISM certification exam and obtain the NISM certificate examination to get started.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* How to Get NISM Certification? Section */}
+            <section className="py-12 md:py-20 bg-white">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
+                            How to Get NISM Certification?
+                        </h2>
+                        <div className="space-y-6">
+                            <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                                <ul className="space-y-3 list-disc list-inside text-sm md:text-base text-neutral-700">
+                                    <li>Register for the NISM exam by visiting the official website.</li>
+                                    <li>Complete the NISM registration process and proceed with the NISM login to schedule your exam.</li>
+                                    <li>Choose the NISM certificate course that matches your requirements.</li>
+                                    <li>After passing the mutual fund distributor exam, you will receive the NISM mutual fund certification.</li>
                                 </ul>
                             </div>
                         </div>
@@ -256,22 +320,23 @@ const NISMCertificationExam: React.FC = () => {
             </section>
 
             {/* Why is NISM Certification Important? Section */}
-            <section className="py-12 md:py-20 bg-[#243062] text-white">
+            <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-8 md:mb-12 text-center leading-tight">
+                        <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Why is NISM Certification Important?
                         </h2>
                         <div className="space-y-6">
-                            <p className="text-base md:text-lg leading-relaxed">
-                                NISM certification is crucial for anyone looking to build a career in mutual fund distribution. It serves as a gateway to becoming a registered mutual fund distributor in India.
-                            </p>
-                            <p className="text-base md:text-lg leading-relaxed">
-                                The certification ensures that distributors have the necessary knowledge and understanding of mutual fund products, regulatory requirements, and ethical practices. This helps in building trust with investors and maintaining high standards in the financial services industry.
-                            </p>
-                            <p className="text-base md:text-lg leading-relaxed">
-                                Additionally, NISM certification is mandatory for obtaining an AMFI Registration Number (ARN), which is required by SEBI regulations for all mutual fund distributors. Without a valid ARN, it is illegal to sell mutual funds in India.
-                            </p>
+                            <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
+                                <ul className="space-y-3 list-disc list-inside text-sm md:text-base text-[#243062] mb-4">
+                                    <li>It is a mandatory requirement for those who want to become mutual fund distributors.</li>
+                                    <li>The AMFI certification ensures compliance with industry regulations.</li>
+                                    <li>Helps in building credibility and trust among clients.</li>
+                                </ul>
+                                <p className="text-base md:text-lg text-[#243062] leading-relaxed">
+                                This certification allows a person to become a certified mutual fund distributor.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,7 +402,7 @@ const NISMCertificationExam: React.FC = () => {
                         {/* Additional Information */}
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                If you are wondering what is NISM certification, it is a mandatory qualification to become a certified mutual fund advisor. The AMFI certification ensures compliance with industry standards. For those asking how to get NISM certificate, the process involves NISM register, choosing the exam mode, and successfully passing the test.
+                            If you are wondering what is NISM certification, it is a mandatory qualification to become a certified mutual fund distributor.
                             </p>
                         </div>
                     </div>
@@ -740,61 +805,53 @@ const NISMCertificationExam: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-12 md:mb-16 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'What is the Regulation Over Using Electrical Items Like a Calculator in the NISM Examination?',
-                                    answer: 'Using the calculator or any other electronic item in the NISM examination hall is strictly prohibited.',
-                                },
-                                {
-                                    question: 'What if a Candidate Fails in the NISM examination? Is there any Refund Policy?',
-                                    answer: 'No, there is no procedure for fee refund. But yes, if the exam gets cancelled by the NISM, then a refund will be given to the candidate.',
-                                },
-                                {
-                                    question: 'How can the fees for nism certification for mutual fund distributors be paid?',
-                                    answer: 'The NISM exam exam fees can easily be paid through online mode by using a debit card, net banking. Exam NISM certification fees fees can also be submitted through offline mode by using the demand Drafts.',
-                                },
-                                {
-                                    question: 'Is it Possible to Give the NISM Exam in the Hindi language?',
-                                    answer: 'Yes, a prospect can give the examination in the Hindi language. However, the exam will be conducted in offline mode only in case of Hindi.',
-                                },
-                                {
-                                    question: 'What is the Scope of the NISM certificate?',
-                                    answer: 'NISM certificate is essential for the mutual fund distributors to get the ARN number.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

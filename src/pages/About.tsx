@@ -4,6 +4,7 @@ import OurStory from '../components/about/OurStory';
 import OurTeam from '../components/about/OurTeam';
 import Investors from '../components/about/Investors';
 import OurPartners from '../components/about/OurPartners';
+import Statistics from '../components/about/Statistics';
 import Testimonials from '../components/home/Testimonials';
 
 const About: React.FC = () => {
@@ -14,7 +15,8 @@ const About: React.FC = () => {
             <OurTeam />
             <Investors />
             <OurPartners />
-            <Testimonials />
+            <Statistics />
+            <Testimonials variant="default" />
         </>
     );
 };

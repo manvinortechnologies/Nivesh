@@ -13,17 +13,16 @@ const MFDRevolution: React.FC = () => {
                             The MFD Revolution
                         </div>
                         <h2 className="text-2xl md:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
-                            The Business Of Distribution Is Changing. <br />
+                            The Business Of MFDs Is Changing. <br />
                             <span className="text-primary">Don't Get Left Behind.</span>
                         </h2>
                         <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
-                            Clients today expect goal-based, tech-enabled, multi-product advice.
-                            With Nivesh, MFDs evolve into wealth managers...combining personal trust with digital scale.
+                        Clients today expect goal-based,teach-enabled, multi-product solutions. With Nivesh, MFDs evolve into trusted individuals combining personal trust with digital scale.
                         </p>
 
                         <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-r-xl">
                             <p className="text-base md:text-lg font-medium text-neutral-800 italic">
-                                "The future belongs to advisors who put clients at the center...and tech at their fingertips."
+                                "The future belongs to Mutual Fund Distributors who put clients at the center...and tech at their fingertips."
                             </p>
                         </div>
                     </div>

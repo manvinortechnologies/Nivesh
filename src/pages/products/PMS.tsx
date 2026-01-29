@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import PMSImage from '../../assets/PMS.png';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const PMS: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
     const [activeTab, setActiveTab] = useState<'why' | 'who' | 'taxability'>('why');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [calculatorData, setCalculatorData] = useState({
         investmentAmount: 5000000, // 50 Lakhs default
         rateOfInterest: 12,
@@ -20,6 +25,29 @@ const PMS: React.FC = () => {
     useEffect(() => {
         calculateFutureValue();
     }, [calculatorData]);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "pms"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'pms' || category.includes('pms');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
+    }, []);
 
     const toggleFaq = (index: number) => {
         setOpenFaqs((prev) => ({
@@ -112,51 +140,27 @@ const PMS: React.FC = () => {
         { name: 'ASK Group' },
     ];
 
-    const faqs = [
-        {
-            question: 'Is it Worth Investing in PMS?',
-            answer: 'For most retail investors, PMS are not a viable option, given the high starting amount. Portfolio management services are aimed at HNIs who wish to invest in a multitude of investing options. However, when it comes to retail investors PMS services can be a deterrent considering the high amount required to start with.',
-        },
-        {
-            question: 'What is the Minimum Amount of PMS in India?',
-            answer: 'According to SEBI guidelines, the minimum investment amount is INR 50 Lakhs.',
-        },
-        {
-            question: 'What is the Difference Between AIF and PMS?',
-            answer: 'Alternate Investment Funds gives the investor the flexibility to invest in derivatives, hedge funds, listed & unlisted shares and also have a certain amount of lock-in period. PMS services monitor and create a personalized portfolio for investors to lower the risk and maximize the returns. Portfolio Management Service funds, typically are liquid and do not have any lock in periods. However, both products tend to have high risk and high reward stances.',
-        },
-        {
-            question: 'How can I Invest in top pms in india?',
-            answer: 'Before investing in a PMS account, you will first need to establish a separate bank Demat account. Once the account is opened you will need to give a power of attorney to your portfolio manager over this bank account and Demat account. You will have the right to access these accounts and your portfolio manager will have to share a performance review of your investment once every six months.',
-        },
-        {
-            question: 'Can an NRI Avail the Portfolio Management Service?',
-            answer: 'As per RBI guidelines, NRIs can invest in a PMS account by opening a Portfolio Investment Scheme account. This has to be done through banks and other financial distributors.',
-        },
-    ];
-
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
+            <section className="pt-20 md:pt-24 pb-12 md:pb-20 bg-gradient-to-br from-primary/10 via-white to-primary/5">
                 <div className="container-custom">
                     <div className="max-w-7xl mx-auto">
                         {/* Breadcrumbs */}
-                        <nav className="mb-6">
-                            <ol className="flex items-center space-x-2 text-sm text-neutral-600">
-                                <li>
-                                    <Link to="/" className="hover:text-primary transition-colors">
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>/</li>
-                                <li className="text-neutral-900 font-medium">Portfolio Management Services</li>
-                            </ol>
+                        <nav className="flex items-center space-x-2 text-sm mb-6">
+                            <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                                Home
+                            </Link>
+                            <span className="text-neutral-400">/</span>
+                            <span className="text-neutral-500">Portfolio Management Services</span>
                         </nav>
 
-                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-center">
+                        <div className="grid lg:grid-cols-[40%_60%] gap-6 md:gap-6 items-start">
                             <div className="lg:pr-6">
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
+                                    Portfolio Management Services (PMS)
+                                </h2>
+                                <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
                                     Portfolio Management Services (PMS)
                                 </h1>
                                 <p className="text-base md:text-lg text-neutral-700 mb-6 md:mb-8 leading-relaxed">
@@ -166,21 +170,19 @@ const PMS: React.FC = () => {
                                     <Button
                                         variant="primary"
                                         size="lg"
-                                        onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                        onClick={() => setIsModalOpen(true)}
                                         className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                     >
                                         I am Interested
                                     </Button>
                                 </div>
                             </div>
-                            <div className="lg:pl-6 lg:p-6">
-                                <div className="w-full h-[300px] md:h-[500px] lg:h-[550px] mr-2 overflow-hidden rounded-2xl shadow-2xl">
-                                    <img
-                                        src={PMSImage}
-                                        alt="Portfolio Management Services"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
+                            <div className="relative z-10">
+                                <img
+                                    src={PMSImage}
+                                    alt="Portfolio Management Services"
+                                    className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                                />
                             </div>
                         </div>
                     </div>
@@ -399,15 +401,15 @@ const PMS: React.FC = () => {
             {/* Our Partners Section */}
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Our Partners
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {partners.map((partner, index) => (
                                 <div key={index} className="bg-white border border-neutral-200 rounded-lg p-6 shadow-sm hover:shadow-lg transition-all">
-                                    <div className="bg-[#243062] px-6 py-4 flex items-center justify-between rounded-t-lg -m-6 mb-4">
-                                        <h4 className="text-lg font-semibold text-white">{partner.name}</h4>
+                                    <div className="bg-[#243062] px-4 py-2 flex items-center justify-between rounded-t-lg -m-6 mb-4">
+                                        <h5 className="text-lg font-semibold text-white">{partner.name}</h5>
                                         <Button
                                             variant="secondary"
                                             size="sm"
@@ -544,41 +546,57 @@ const PMS: React.FC = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions (FAQs)
                         </h2>
-                        <div className="space-y-4">
-                            {faqs.map((faq, index) => (
-                                <div key={index} className="bg-white rounded-lg border border-neutral-200 overflow-hidden">
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
-                                    >
-                                        <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
-                                        <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
-                                            <svg
-                                                className="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 9l-7 7-7-7"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-6 py-4 border-t border-neutral-200">
-                                            <p className="text-base text-neutral-700 leading-relaxed">{faq.answer}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {faqs.map((faq, index) => (
+                                    <div key={faq.id} className="bg-white rounded-lg border border-neutral-200 overflow-hidden">
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-neutral-100 transition-colors"
+                                        >
+                                            <span className="font-semibold text-[#243062] pr-4">{faq.question}</span>
+                                            <span className={`text-primary transition-transform ${openFaqs[index] ? 'rotate-180' : ''}`}>
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M19 9l-7 7-7-7"
+                                                    />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-6 py-4 border-t border-neutral-200">
+                                                {faq.answer && (
+                                                    <div className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">{faq.answer}</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 
 // Import Award Images
@@ -13,6 +14,8 @@ import award5 from '../../assets/award5.webp';
 import award9 from '../../assets/award9.jpeg';
 
 const CallToAction: React.FC = () => {
+    const navigate = useNavigate();
+    
     const awards = [
         { img: award1, title: "Recognized by AMFI for Growth & Inclusion (2025)" },
         { img: award2, title: "BFSI 50 Most Trusted Brands" },
@@ -30,7 +33,7 @@ const CallToAction: React.FC = () => {
                 <div className="max-w-4xl mx-auto text-center mb-20">
                     {/* Heading */}
                     <h2 className="text-3xl md:text-5xl text-gray-300 font-bold mb-8 leading-tight">
-                        Your Journey From Distributor To <br />
+                        Your Journey From MFDs To <br />
                         <span className="text-white">Digital Wealth Brand Starts Here.</span>
                     </h2>
 
@@ -41,7 +44,12 @@ const CallToAction: React.FC = () => {
 
                     {/* CTAs */}
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <Button variant="primary" size="lg" className="bg-black text-primary hover:bg-neutral-800 shadow-lg border-none">
+                        <Button 
+                            variant="primary" 
+                            size="lg" 
+                            className="bg-black text-primary hover:bg-neutral-800 shadow-lg border-none"
+                            onClick={() => navigate('/partner')}
+                        >
                             Join as MFD
                         </Button>
                         <Button

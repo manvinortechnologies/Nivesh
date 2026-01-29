@@ -1,13 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import ContactModal from '../../components/ContactModal';
 import GiftCityImage from '../../assets/gift_city.jpeg';
+import { fetchFAQs, type FAQ } from '../../services/api';
 
 const GiftCity: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
+    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [loadingFaqs, setLoadingFaqs] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+    }, []);
+
+    // Fetch FAQs from API
+    useEffect(() => {
+        const loadFAQs = async () => {
+            try {
+                setLoadingFaqs(true);
+                const allFaqs = await fetchFAQs();
+                // Filter FAQs by category "gift-city"
+                const filteredFaqs = allFaqs.filter(faq => {
+                    const category = faq.category?.toLowerCase() || '';
+                    return category === 'gift-city' || 
+                           category === 'gift city' ||
+                           category.includes('gift-city');
+                });
+                setFaqs(filteredFaqs);
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                setFaqs([]);
+            } finally {
+                setLoadingFaqs(false);
+            }
+        };
+
+        loadFAQs();
     }, []);
 
     const toggleFaq = (index: number) => {
@@ -20,25 +50,26 @@ const GiftCity: React.FC = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-16 md:py-24 overflow-hidden bg-white">
+            <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
                     {/* Breadcrumbs */}
-                    <div className="mb-6">
-                        <nav className="flex items-center space-x-2 text-sm">
-                            <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
-                                Home
-                            </Link>
-                            <span className="text-neutral-400">/</span>
-                            <span className="text-neutral-500">Gift City</span>
-                        </nav>
-                    </div>
+                    <nav className="flex items-center space-x-2 text-sm mb-6">
+                        <Link to="/" className="text-primary hover:text-primary-dark transition-colors">
+                            Home
+                        </Link>
+                        <span className="text-neutral-400">/</span>
+                        <span className="text-neutral-500">Gift City</span>
+                    </nav>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
                         {/* Left Column - Content */}
                         <div>
-                            <h2 className="text-2xl md:text-5xl lg:text-5xl font-bold text-[#243062] mb-6 leading-tight">
+                            <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
                                 Gujarat International Finance Tec-City: Invest Smartly
                             </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
+                                Gujarat International Finance Tec-City: Invest Smartly
+                            </h1>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-8">
                                 The rise of the Indian economic scenario offers unique opportunities to international investors. For Non-resident Indians (NRIs), foreign nationals, and institutional players seeking streamlined access to this vibrant market, Gujarat International Finance Tec-City (GIFT City) emerges as the premier International Financial Services Center (IFSC). This meticulously planned financial hub within India offers a unique blend of regulatory efficiency, cost advantages, and world-class infrastructure, making it the ideal platform for investment in GIFT City, a rising International Financial Service Center.
                             </p>
@@ -46,7 +77,7 @@ const GiftCity: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => setIsModalOpen(true)}
                                     className="bg-[#243062] hover:bg-[#1a2550] text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                                 >
                                     I am Interested
@@ -55,14 +86,12 @@ const GiftCity: React.FC = () => {
                         </div>
 
                         {/* Right Column - Image */}
-                        <div className="relative">
-                            <div className="rounded-2xl overflow-hidden shadow-2xl">
-                                <img
-                                    src={GiftCityImage}
-                                    alt="GIFT City"
-                                    className="w-full h-[400px] md:h-[500px] lg:h-[550px] object-cover"
-                                />
-                            </div>
+                        <div className="relative z-10">
+                            <img
+                                src={GiftCityImage}
+                                alt="GIFT City"
+                                className="w-full h-[300px] md:h-[350px] lg:h-[400px] object-contain"
+                            />
                         </div>
                     </div>
                 </div>
@@ -295,67 +324,59 @@ const GiftCity: React.FC = () => {
                         <h2 className="text-2xl md:text-4xl font-bold text-[#243062] mb-10 md:mb-12 text-center leading-tight">
                             Frequently Asked Questions
                         </h2>
-                        <div className="space-y-4 md:space-y-5">
-                            {[
-                                {
-                                    question: 'Q1. Who can invest in funds within GIFT City?',
-                                    answer: 'Non-Resident Indians (NRIs), Foreign Nationals (Individuals), and Foreign Institutional Investors (FIIs). Resident Indians (NRIs) are explicitly excluded.',
-                                },
-                                {
-                                    question: 'Q2. What are the tax benefits for Non-Resident investors?',
-                                    answer: 'Non-resident investors (NRIs, Foreign Nationals, FIIs) whose only Indian income is from the GIFT City fund are generally not required to obtain an Indian PAN card or file an Indian Income Tax Return.',
-                                },
-                                {
-                                    question: 'Q3. What is the minimum investment amount?',
-                                    answer: 'The minimum initial investment for portfolio management funds is USD 150,000, which must be maintained throughout the investment.',
-                                },
-                                {
-                                    question: 'Q4. How does the investment process work?',
-                                    answer: 'The process involves receiving documents (PPM, Application, Agreement), completing KYC (certified documents required), document review by AMC\'s in IFSC, fund transfer, and onboarding confirmation. Distributors can assist referred investors.',
-                                },
-                                {
-                                    question: 'Q5. Why choose GIFT City over other routes for investing in India?',
-                                    answer: 'streamlined regulation via IFSCA, potential tax efficiencies for non-residents, and trusted access to the GIFT international financial services center.',
-                                },
-                            ].map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(index)}
-                                        className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
+                        {loadingFaqs ? (
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <p className="mt-4 text-neutral-600">Loading FAQs...</p>
+                            </div>
+                        ) : faqs.length === 0 ? (
+                            <div className="text-center py-12">
+                                <p className="text-neutral-600">No FAQs available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4 md:space-y-5">
+                                {faqs.map((faq, index) => (
+                                    <div
+                                        key={faq.id}
+                                        className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300 overflow-hidden"
                                     >
-                                        <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
-                                            {faq.question}
-                                        </h5>
-                                        <svg
-                                            className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
-                                                openFaqs[index] ? 'rotate-180' : ''
-                                            }`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                        <button
+                                            onClick={() => toggleFaq(index)}
+                                            className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-transparent border-none outline-none cursor-pointer hover:bg-neutral-50 transition-colors duration-200"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-                                    {openFaqs[index] && (
-                                        <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
-                                            <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                            <h5 className="text-base md:text-lg font-bold text-[#243062] pr-4">
+                                                {faq.question}
+                                            </h5>
+                                            <svg
+                                                className={`w-5 h-5 text-[#243062] flex-shrink-0 transition-transform duration-300 ${
+                                                    openFaqs[index] ? 'rotate-180' : ''
+                                                }`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+                                        {openFaqs[index] && (
+                                            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0">
+                                                {faq.answer && (
+                                                    <div className="text-sm md:text-base text-neutral-700 leading-relaxed whitespace-pre-line">
+                                                        {faq.answer}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="relative py-12 md:py-16 bg-gradient-to-r from-primary to-primary-dark">
+            <section className="relative py-12 md:py-20 bg-gradient-to-r from-primary to-primary-dark">
                 <div className="container-custom relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -367,7 +388,7 @@ const GiftCity: React.FC = () => {
                         <Button
                             variant="secondary"
                             size="lg"
-                            onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                            onClick={() => setIsModalOpen(true)}
                             className="bg-white hover:bg-neutral-100 text-primary px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                         >
                             I am Interested
@@ -375,6 +396,9 @@ const GiftCity: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
