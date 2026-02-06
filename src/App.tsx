@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import ScrollToTop from './components/ScrollToTop';
+import Layout from '@/components/layout/Layout';
+import ScrollToTop from '@/components/layout/ScrollToTop';
 import Home from './pages/Home';
 import About from './pages/About';
 import NiveshTeams from './pages/NiveshTeams';

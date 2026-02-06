@@ -199,8 +199,6 @@ const Navigation: React.FC = () => {
             external: false,
             dropdown: [
                 { name: 'For HR - Nivesh Teams', path: '/nivesh-teams', external: false },
-                // { name: 'Data Security', path: '/data-security', external: false },
-                // { name: 'Specialized Investment Fund', path: '/specialized-investment-fund', external: false },
             ],
         },
     ];
@@ -213,7 +211,6 @@ const Navigation: React.FC = () => {
         >
             <div className="container-custom">
                 <div className="flex items-center justify-between">
-                    {/* Logo */}
                     <div className="flex items-center">
                         <button
                             onClick={() => handleNavigate('/')}
@@ -223,7 +220,6 @@ const Navigation: React.FC = () => {
                         </button>
                     </div>
 
-                    {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center gap-8">
                         {menuItems.map((item, index) => (
                             <div key={index} className="relative group">
@@ -239,7 +235,6 @@ const Navigation: React.FC = () => {
                                     )}
                                 </button>
 
-                                {/* Dropdown */}
                                 {item.dropdown && (
                                     <div className="absolute top-full left-0 w-56 bg-white rounded-lg shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                                         {item.dropdown.map((subItem, subIndex) => (
@@ -256,7 +251,6 @@ const Navigation: React.FC = () => {
                             </div>
                         ))}
                         
-                        {/* Login/Register Button */}
                         <a
                             href="https://app.nivesh.com/login"
                             target="_blank"
@@ -267,7 +261,6 @@ const Navigation: React.FC = () => {
                         </a>
                     </div>
 
-                    {/* Mobile Menu Button */}
                     <button
                         onClick={toggleMenu}
                         className={`lg:hidden p-2 ${scrolled ? 'text-neutral-900' : 'text-neutral-900'}`}
@@ -286,23 +279,18 @@ const Navigation: React.FC = () => {
                 </div>
                 </div>
 
-            {/* Mobile Menu Overlay & Drawer */}
-                {isMenuOpen && (
+            {isMenuOpen && (
                 <>
-                    {/* Backdrop - Full screen with black/20 opacity (left side visible) */}
                     <div
                         className="fixed inset-0 lg:hidden z-40 bg-black/20"
                         onClick={toggleMenu}
                     />
                     
-                    {/* Mobile Menu Drawer - Right side, full height */}
                     <div className="fixed top-0 right-0 w-2/3 h-screen lg:hidden z-50 bg-gradient-to-b from-white via-neutral-50 to-neutral-100 shadow-2xl overflow-y-auto animate-slide-in-right border-l-2 border-primary/20">
                         <div className="p-6">
-                            {/* Header with gradient */}
                             <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-6 -mx-2">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        
                                         <span className="text-neutral-900 font-bold text-lg">Menu</span>
                                     </div>
                                     <button
@@ -317,7 +305,6 @@ const Navigation: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Menu Items */}
                         {menuItems.map((item, index) => (
                                 <div key={index} className="mb-2">
                                     <button
@@ -358,7 +345,6 @@ const Navigation: React.FC = () => {
                             </div>
                         ))}
                             
-                            {/* Login/Register Button - Mobile */}
                             <a
                                 href="https://app.nivesh.com/login"
                                 target="_blank"

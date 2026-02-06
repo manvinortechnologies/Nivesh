@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import { fetchFAQs, type FAQ } from '../../services/api';
 
 const BecomeMutualFundDistributors: React.FC = () => {
+    const navigate = useNavigate();
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
     const [faqs, setFaqs] = useState<FAQ[]>([]);
     const [loadingFaqs, setLoadingFaqs] = useState(true);
@@ -385,12 +386,7 @@ const BecomeMutualFundDistributors: React.FC = () => {
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    onClick={() => {
-                                        const element = document.getElementById('faqs');
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: 'smooth' });
-                                        }
-                                    }}
+                                    onClick={() => navigate('/partner/all-about-amfi-arn-code')}
                                     className="!border-2 !border-primary !text-primary hover:!bg-primary hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Learn About AMFI Certification

@@ -207,7 +207,6 @@ export const fetchBlogs = async (page: number = 1, category?: string, search?: s
         }
         
         // Handle unexpected format
-        console.warn('Unexpected blogs response format:', data);
         return { blogs: [], count: 0, next: null, previous: null };
     } catch (error) {
         console.error('Error fetching blogs:', error);
@@ -221,9 +220,6 @@ export const fetchBlogById = async (id: string): Promise<Blog | null> => {
         // Construct URL: dashboard/api/blogs/{id}/
         const endpoint = `${API_ENDPOINTS.BLOGS}${id}/`;
         const url = buildApiUrl(endpoint);
-        
-        console.log('Fetching blog from URL:', url); // Debug log
-        
         const response = await fetch(url);
         
         if (!response.ok) {
@@ -346,7 +342,6 @@ export const fetchNFOs = async (page: number = 1, category?: string, search?: st
         }
         
         // Handle unexpected format
-        console.warn('Unexpected NFOs response format:', data);
         return { nfos: [], count: 0, next: null, previous: null };
     } catch (error) {
         console.error('Error fetching NFOs:', error);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import ContactModal from '@/components/modals/ContactModal';
 import NiveshTeamImage from '../assets/nivesh-team.jpeg';
 import { fetchFAQs } from '../services/api';
 import type { FAQ } from '../services/api';
@@ -12,11 +13,6 @@ const NiveshTeams: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
     const [openServices, setOpenServices] = useState<{ [key: number]: boolean }>({ 0: true }); // First service open by default
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        phone: '',
-        updates: 'yes',
-    });
 
     useEffect(() => {
         const loadFAQs = async () => {
@@ -228,15 +224,6 @@ const NiveshTeams: React.FC = () => {
             ...prev,
             [index]: !prev[index],
         }));
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
-        setIsModalOpen(false);
-        // Reset form
-        setFormData({ name: '', phone: '', updates: 'yes' });
     };
 
     return (
@@ -926,108 +913,11 @@ const NiveshTeams: React.FC = () => {
                 </div>
             </section>
 
-            {/* Modal */}
-            {isModalOpen && (
-                <>
-                    {/* Backdrop */}
-                    <div
-                        className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
-                        onClick={() => setIsModalOpen(false)}
-                    >
-                        {/* Modal Content */}
-                        <div
-                            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {/* Modal Header */}
-                            <div className="flex items-center justify-between p-6 border-b border-neutral-200">
-                                <h2 className="text-xl md:text-2xl font-bold text-[#243062]">
-                                    Get in Touch with our Wealth Experts
-                                </h2>
-                                <button
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="p-2 hover:bg-neutral-100 rounded-full transition-colors duration-200"
-                                    aria-label="Close modal"
-                                >
-                                    <svg className="w-6 h-6 text-neutral-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            {/* Modal Body */}
-                            <form onSubmit={handleSubmit} className="p-6">
-                                {/* Name Input */}
-                                <div className="mb-6">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Your Name"
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        required
-                                        className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:outline-none focus:border-primary transition-colors duration-200 text-base"
-                                    />
-                                </div>
-
-                                {/* Phone Input */}
-                                <div className="mb-6">
-                                    <input
-                                        type="tel"
-                                        placeholder="Enter Your 10 digit Phone Number"
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        required
-                                        pattern="[0-9]{10}"
-                                        maxLength={10}
-                                        className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:outline-none focus:border-primary transition-colors duration-200 text-base"
-                                    />
-                                </div>
-
-                                {/* Updates Section */}
-                                <div className="mb-6 p-4 border-2 border-primary/30 rounded-lg">
-                                    <p className="text-sm md:text-base text-neutral-700 mb-4 leading-relaxed">
-                                        We will contact you to give you updated information on investment options via WhatsApp, Email, SMS, phone.
-                                    </p>
-                                    <div className="space-y-3">
-                                        <label className="flex items-center gap-3 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="updates"
-                                                value="yes"
-                                                checked={formData.updates === 'yes'}
-                                                onChange={(e) => setFormData({ ...formData, updates: e.target.value })}
-                                                className="w-5 h-5 text-primary focus:ring-primary"
-                                            />
-                                            <span className="text-sm md:text-base text-neutral-700">Yes, keep me updated</span>
-                                        </label>
-                                        <label className="flex items-center gap-3 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="updates"
-                                                value="no"
-                                                checked={formData.updates === 'no'}
-                                                onChange={(e) => setFormData({ ...formData, updates: e.target.value })}
-                                                className="w-5 h-5 text-primary focus:ring-primary"
-                                            />
-                                            <span className="text-sm md:text-base text-neutral-700">No, I prefer no updates</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                {/* Submit Button */}
-                                <Button
-                                    type="submit"
-                                    variant="primary"
-                                    size="lg"
-                                    className="w-full bg-[#243062] hover:bg-[#1a2347]"
-                                >
-                                    SUBMIT
-                                </Button>
-                            </form>
-                        </div>
-                    </div>
-                </>
-            )}
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                pageSource="Nivesh Teams"
+            />
         </div>
     );
 };

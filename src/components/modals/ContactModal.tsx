@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { API_WEB_ADD_LEAD } from '../config/api';
+import { API_WEB_ADD_LEAD } from '@/config/api';
 
 interface ContactModalProps {
     isOpen: boolean;
@@ -110,8 +110,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pageSource
 
             setFormData({ name: '', phone: '', keepUpdated: 'yes' });
             setShowThankYou(true);
-        } catch (err) {
-            console.error('Contact form submit failed', err);
+        } catch {
             setSubmitError('Something went wrong. Please try again.');
         } finally {
             setSubmitLoading(false);

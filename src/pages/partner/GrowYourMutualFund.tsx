@@ -123,12 +123,9 @@ const GrowYourMutualFund: React.FC = () => {
                 setSubmitSuccess(true);
                 return;
             }
-            const text = await res.text();
             setSubmitError('Something went wrong. Please try again.');
-            console.warn('Lead API error', res.status, text);
-        } catch (err) {
+        } catch {
             setSubmitError('Something went wrong. Please try again.');
-            console.warn('Lead API request failed', err);
         } finally {
             setSubmitLoading(false);
         }

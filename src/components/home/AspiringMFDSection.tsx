@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 
 const AspiringMFDSection: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <section className="py-12 md:py-20 bg-neutral-50 overflow-hidden">
             <div className="container-custom">
@@ -68,7 +70,7 @@ const AspiringMFDSection: React.FC = () => {
                     <Button
                         variant="primary"
                         size="lg"
-                        onClick={() => window.location.href = 'https://nivesh.com/en/partner/become-mutual-fund-distributors'}
+                        onClick={() => navigate('/partner/become-mutual-fund-distributors')}
                     >
                         Become an MFD →
                     </Button>

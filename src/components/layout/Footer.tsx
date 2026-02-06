@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import footer1 from '../assets/footer1.png';
-import footer2 from '../assets/footer2.png';
-import footer3 from '../assets/footer3.jpeg';
+import footer1 from '@/assets/footer1.png';
+import footer2 from '@/assets/footer2.png';
+import footer3 from '@/assets/footer3.jpeg';
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();

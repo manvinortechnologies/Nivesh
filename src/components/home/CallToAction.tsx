@@ -56,7 +56,7 @@ const CallToAction: React.FC = () => {
                             variant="outline"
                             size="lg"
                             className="border-white text-white hover:bg-white/10"
-                            onClick={() => window.location.href = 'https://nivesh.com/en/partner/become-mutual-fund-distributors'}
+                            onClick={() => navigate('/partner/become-mutual-fund-distributors')}
                         >
                             Become an MFD →
                         </Button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
-import ContactModal from '../../components/ContactModal';
+import ContactModal from '@/components/modals/ContactModal';
 import MutualFundsImage from '../../assets/MutualFunds.jpeg';
 import { fetchFundCategories, fetchFundCategoryDetail, fetchFundCategoryDetailById } from '../../services/api';
 import type { FundCategory, FundCategoryDetail } from '../../services/api';
@@ -76,7 +76,6 @@ const MutualFunds: React.FC = () => {
 
         // Fallback to sebi IDs if UUID approach fails or not available
         if (!category.sebi_category_id || !category.sebi_sub_category_id) {
-            console.warn('Category missing both ID and sebi IDs:', category);
             return;
         }
 
@@ -210,14 +209,6 @@ const MutualFunds: React.FC = () => {
     // Use dynamic funds if available, otherwise use static
     const transformedFunds = transformFundsData();
     const topFunds = transformedFunds.length > 0 ? transformedFunds : defaultTopFunds;
-
-    // Debug: Log which data source is being used
-    console.log('Funds data source:', transformedFunds.length > 0 ? 'DYNAMIC (API)' : 'STATIC (default)', {
-        selectedCategory: selectedCategoryDetail?.sub_category,
-        transformedFundsCount: transformedFunds.length,
-        defaultFundsCount: defaultTopFunds.length,
-        topFundsCount: topFunds.length
-    });
 
 
     // Default static features

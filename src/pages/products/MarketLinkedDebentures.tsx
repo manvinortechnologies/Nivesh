@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
-import ContactModal from '../../components/ContactModal';
+import ContactModal from '@/components/modals/ContactModal';
 import MLDImage from '../../assets/MLD.jpeg';
 import MLD2Image from '../../assets/MLD2.webp';
 import { fetchFAQs, type FAQ } from '../../services/api';

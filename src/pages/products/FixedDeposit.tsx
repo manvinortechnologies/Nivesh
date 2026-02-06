@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
-import ContactModal from '../../components/ContactModal';
+import ContactModal from '@/components/modals/ContactModal';
 import Hero2 from '../../assets/FD.jpeg';
 import OurPartners from '../../components/about/OurPartners';
 import { fetchFAQs, type FAQ } from '../../services/api';
