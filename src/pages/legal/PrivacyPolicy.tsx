@@ -11,7 +11,7 @@ const PrivacyPolicy: React.FC = () => {
             {/* Hero Section */}
             <section className="relative pt-16 md:pt-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                         {/* Breadcrumbs */}
                         <div className="mb-6">
                             <nav className="flex items-center space-x-2 text-sm">
@@ -23,7 +23,10 @@ const PrivacyPolicy: React.FC = () => {
                             </nav>
                         </div>
 
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] mb-4 leading-tight">
+                        <h4 className="text-xl font-bold text-[#243062] mb-4 leading-tight md:hidden">
+                            Privacy Policy
+                        </h4>
+                        <h1 className="hidden md:block text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] mb-4 leading-tight">
                             Privacy Policy
                         </h1>
 
@@ -37,7 +40,7 @@ const PrivacyPolicy: React.FC = () => {
             {/* Content Section */}
             <section className="relative py-2 md:py-4 bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <div className="prose prose-lg max-w-none">
                             {/* Introduction */}
                             <div className="mb-8">
@@ -48,7 +51,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 1: Collection of Personal Information */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    1. Collection of Personal Information
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     1. Collection of Personal Information
                                 </h2>
 
@@ -102,7 +108,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 2: Use of Personal Information */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    2. Use of Personal Information
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     2. Use of Personal Information
                                 </h2>
 
@@ -115,7 +124,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 3: Accessing and Updating Personal Information */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    3. Accessing and Updating Personal Information
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     3. Accessing and Updating Personal Information
                                 </h2>
 
@@ -131,7 +143,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 4: Sharing Personal Information */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    4. Sharing Personal Information
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     4. Sharing Personal Information
                                 </h2>
 
@@ -144,7 +159,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 5: Security Measures */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    5. Security Measures
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     5. Security Measures
                                 </h2>
 
@@ -157,7 +175,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 6: Legal Obligations */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    6. Legal Obligations
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     6. Legal Obligations
                                 </h2>
 
@@ -170,7 +191,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Section 7: Changes to this Privacy Policy */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    7. Changes to this Privacy Policy
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     7. Changes to this Privacy Policy
                                 </h2>
 
@@ -183,7 +207,10 @@ const PrivacyPolicy: React.FC = () => {
 
                             {/* Grievance Officer Contact */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    Grievance Officer
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     Grievance Officer
                                 </h2>
 

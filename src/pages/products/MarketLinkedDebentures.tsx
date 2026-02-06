@@ -74,14 +74,14 @@ const MarketLinkedDebentures: React.FC = () => {
                         {/* Left Column - Content */}
                         <div className="relative z-10">
                             <h2 className="md:hidden text-2xl sm:text-3xl font-bold text-[#243062] mb-4 leading-tight">
-                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2025
+                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2026
                             </h2>
                             <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-4 md:mb-4 leading-tight">
-                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2025
+                                Market Linked Debentures in India: High-Return, Tax-Efficient Investments for 2026
                             </h1>
                             
                             <p className="text-base md:text-lg text-neutral-600 mb-8 leading-relaxed">
-                                In 2025, Indian investors have shifted focus to Market Linked Debentures (MLDs) as sophisticated investment tools offering diversification and tax-efficient benefits. Unlike conventional fixed-income investments, MLDs provide participation in capital markets while offering principal protection. MLDs are gaining traction among High Net-Worth Individuals (HNIs) and family offices, with placements linked to Nifty, Sensex, or commodities (silver, gold, etc.).
+                                In 2026, Indian investors have shifted focus to Market Linked Debentures (MLDs) as sophisticated investment tools offering diversification and tax-efficient benefits. Unlike conventional fixed-income investments, MLDs provide participation in capital markets while offering principal protection. MLDs are gaining traction among High Net-Worth Individuals (HNIs) and family offices, with placements linked to Nifty, Sensex, or commodities (silver, gold, etc.).
                             </p>
                             
                             <Button
@@ -112,20 +112,22 @@ const MarketLinkedDebentures: React.FC = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         {/* Left Column - Visual Graphic */}
                         <div className="relative">
-                            <div className="relative rounded-xl overflow-hidden" style={{
-                                background: 'linear-gradient(135deg, #8B4513 0%, #FF8C00 100%)',
-                                minHeight: '400px'
-                            }}>
+                            <div
+                                className="relative rounded-xl overflow-hidden min-h-[220px] sm:min-h-[280px] md:min-h-[360px] lg:min-h-[400px]"
+                                style={{
+                                    background: 'linear-gradient(135deg, #8B4513 0%, #FF8C00 100%)',
+                                }}
+                            >
                                 <div className="absolute inset-0 opacity-20">
                                     <div className="absolute inset-0" style={{
                                         backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 0%, transparent 50%)',
                                     }}></div>
                                 </div>
-                                <div className="relative h-full flex items-center justify-center p-8">
+                                <div className="relative h-full min-h-[220px] sm:min-h-[280px] md:min-h-[360px] lg:min-h-[400px] flex items-center justify-center p-4 sm:p-6 md:p-8">
                                     <img
                                         src={MLD2Image}
                                         alt="Market Linked Debentures"
-                                        className="w-full h-auto object-contain max-h-96"
+                                        className="w-full h-auto object-contain max-h-48 sm:max-h-64 md:max-h-80 lg:max-h-96"
                                     />
                                 </div>
                             </div>
@@ -235,7 +237,7 @@ const MarketLinkedDebentures: React.FC = () => {
                 <div className="container-custom relative z-10">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 text-center leading-tight">
-                            Why MLDs are the Go-To Option in 2025?
+                            Why MLDs are the Go-To Option in 2026?
                         </h2>
                         <p className="text-base md:text-lg text-gray-200 mb-8 text-center leading-relaxed">
                             As regional inflationary pressures rise and global markets undergo persistent volatility, market-linked debentures in India offer a remarkable combination of safety, growth potential, and tax considerations.
@@ -271,7 +273,10 @@ const MarketLinkedDebentures: React.FC = () => {
                                         onClick={() => toggleBenefit(index)}
                                         className="w-full flex items-center justify-between p-5 md:p-6 text-left bg-primary border-none outline-none cursor-pointer hover:bg-primary/10 transition-colors duration-200"
                                     >
-                                        <h3 className="text-lg md:text-xl font-bold text-white pr-4">
+                                        <h4 className="text-base font-bold text-white pr-4 md:hidden">
+                                            {benefit.title}
+                                        </h4>
+                                        <h3 className="hidden md:block text-lg md:text-xl font-bold text-white pr-4">
                                             {benefit.title}
                                         </h3>
                                         <svg
@@ -489,7 +494,7 @@ const MarketLinkedDebentures: React.FC = () => {
             </section>
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pageSource="Market Linked Debentures" />
         </div>
     );
 };

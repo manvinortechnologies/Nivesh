@@ -398,7 +398,7 @@ const GiftCity: React.FC = () => {
             </section>
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pageSource="Gift City" />
         </div>
     );
 };

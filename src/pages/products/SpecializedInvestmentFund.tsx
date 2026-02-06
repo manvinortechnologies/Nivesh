@@ -398,7 +398,7 @@ const SpecializedInvestmentFund: React.FC = () => {
             </section>
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pageSource="Specialized Investment Fund" />
         </div>
     );
 };

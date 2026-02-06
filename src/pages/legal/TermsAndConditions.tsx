@@ -11,7 +11,7 @@ const TermsAndConditions: React.FC = () => {
             {/* Hero Section */}
             <section className="relative pt-16 md:pt-24 overflow-hidden bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                         {/* Breadcrumbs */}
                         <div className="mb-6">
                             <nav className="flex items-center space-x-2 text-sm">
@@ -23,7 +23,10 @@ const TermsAndConditions: React.FC = () => {
                             </nav>
                         </div>
 
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] mb-4 leading-tight">
+                        <h2 className="text-2xl font-bold text-[#243062] mb-4 leading-tight md:hidden">
+                            Terms and Conditions
+                        </h2>
+                        <h1 className="hidden md:block text-3xl md:text-4xl lg:text-5xl font-bold text-[#243062] mb-4 leading-tight">
                             Terms and Conditions
                         </h1>
 
@@ -37,7 +40,7 @@ const TermsAndConditions: React.FC = () => {
             {/* Content Section */}
             <section className="relative py-2 md:py-4 bg-white">
                 <div className="container-custom relative z-10">
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <div className="prose prose-lg max-w-none">
                             {/* Introduction */}
                             <div className="mb-8">
@@ -48,7 +51,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Main Terms Section */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h4 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    The Use Of This Website Is Subject To The Following Terms Of Use
+                                </h4>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     The Use Of This Website Is Subject To The Following Terms Of Use
                                 </h2>
 
@@ -127,7 +133,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Commission Disclosure Section */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    COMMISSION DISCLOSURE
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     COMMISSION DISCLOSURE
                                 </h2>
 
@@ -140,7 +149,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Partner Onboarding Fee Cancellation Policy Section */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    Partner Onboarding Fee Cancellation Policy
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     Partner Onboarding Fee Cancellation Policy
                                 </h2>
 
@@ -176,7 +188,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Refund Section */}
                             <div className="mb-12">
-                                <h2 className="text-2xl md:text-3xl font-bold text-[#243062] mb-6">
+                                <h3 className="text-xl font-bold text-[#243062] mb-6 md:hidden">
+                                    Refund of Partner Onboarding Fee
+                                </h3>
+                                <h2 className="hidden md:block text-2xl md:text-3xl font-bold text-[#243062] mb-6">
                                     Refund of Partner Onboarding Fee
                                 </h2>
 

@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
                         </p>
                         <div className="space-y-2 text-xs text-neutral-400">
                             <p><span className="font-semibold">Registered Office Address:</span> Private No-S-203, 20, ABC Complex, Veer Savarkar Block, Shakarpur, Shahdara, Delhi-110092</p>
-                            <p>Providential Platforms Private Limited</p>
+                            
                         </div>
                     </div>
 
@@ -129,44 +129,44 @@ const Footer: React.FC = () => {
                         <h3 className="text-white font-semibold mb-3 md:mb-4 lg:mb-6 text-xs md:text-sm">Product</h3>
                         <ul className="space-y-2 text-xs">
                             <li>
-                                <a href={buildUrl('/mutual-funds')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/mutual-funds" className="text-neutral-400 hover:text-primary transition-colors">
                                     Mutual Funds
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/fixed-deposit')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/fixed-deposit" className="text-neutral-400 hover:text-primary transition-colors">
                                     Fixed Deposit
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/pms')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/pms" className="text-neutral-400 hover:text-primary transition-colors">
                                     PMS
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/alternative-investment-fund')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/alternative-investment-fund" className="text-neutral-400 hover:text-primary transition-colors">
                                     Alternative Investment Fund
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/national-pension-scheme')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/national-pension-scheme" className="text-neutral-400 hover:text-primary transition-colors">
                                     National Pension Scheme
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/bond')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/bond" className="text-neutral-400 hover:text-primary transition-colors">
                                     Bond
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/loans/instant-home-loan')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/loans/instant-home-loan" className="text-neutral-400 hover:text-primary transition-colors">
                                     Instant Home Loan
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href={buildUrl('/loans/loan-against-securities')} className="text-neutral-400 hover:text-primary transition-colors">
+                                <Link to="/loans/loan-against-securities" className="text-neutral-400 hover:text-primary transition-colors">
                                     Loan Against Securities
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -177,7 +177,7 @@ const Footer: React.FC = () => {
                         <ul className="space-y-2 text-xs mb-4">
                             <li>
                                 <Link to="/partner" className="text-neutral-400 hover:text-primary transition-colors">
-                                    Partner
+                                    Be a Nivesh Partner
                                 </Link>
                             </li>
                             <li>
@@ -303,6 +303,42 @@ const Footer: React.FC = () => {
                 </div>
             </div>
 
+            {/* Company Registration & AMFI Info */}
+            <div className="border-t border-neutral-800 bg-neutral-900">
+                <div className="container-custom py-6 px-4 sm:px-6 md:py-8 md:px-0 lg:py-10">
+                    <div className="max-w-3xl mx-auto text-center space-y-3 sm:space-y-3 md:space-y-2" style={{ fontSize: '12px' }}>
+                        <p className="text-white font-medium">
+                            Providential Platforms Private Limited
+                        </p>
+                        <p className="text-white font-medium">
+                            CIN: U74999DL2016PTC303830
+                        </p>
+                        <p className="text-white font-medium">
+                            ARN: 115287
+                        </p>
+                        <p className="text-white font-medium w-fit mx-auto pb-3 border-b border-neutral-500 border-dotted">
+                            AMFI-Registered Mutual Fund Distributor & SIF Distributor
+                        </p>
+                        {/* <p className="text-sm md:text-base text-white font-medium">
+                            ARN Code: ARN-115287
+                        </p> */}
+                        <p className="text-white font-medium">
+                            Date of Initial Registration: 20 September, 2016
+                        </p>
+                        <p className="text-white font-medium">
+                            Current validity of ARN: 19 September, 2028
+                        </p>
+                        {/* <p className="text-[11px] sm:text-xs md:text-sm text-neutral-400 leading-relaxed max-w-3xl mx-auto pt-2">
+                            Disclaimer: Mutual funds and securities investments are subject to market risks. Past performance does not indicate future performance of the schemes of the fund. Please read offer documents carefully before investing.
+                        </p>
+                        <p className="text-[11px] sm:text-xs md:text-sm text-neutral-400">
+                            Copyright © 2024 Providential Platforms Private Limited
+                        </p> */}
+                    </div>
+                </div>
+            </div>
+
+
             {/* Regulatory Info */}
             <div className="border-t border-neutral-800 bg-neutral-900">
                 <div className="container-custom py-8">
@@ -313,10 +349,10 @@ const Footer: React.FC = () => {
                                 <img src={footer1} alt="AMFI" className="h-full object-contain" />
                             </div>
                             <p className="text-xs text-neutral-400 uppercase leading-relaxed mb-1">
-                                Association of Mutual Funds in India Registered MFD
+                                Association of Mutual Funds in India 
                             </p>
-                            <p className="text-sm font-semibold text-white">
-                                ARN: 115287
+                            <p className="text-xs text-neutral-400 uppercase">
+                            Registered MFD
                             </p>
                         </div>
 
@@ -349,32 +385,7 @@ const Footer: React.FC = () => {
                 </div>
             </div>
 
-            {/* Company Registration & AMFI Info */}
-            <div className="border-t border-neutral-800 bg-neutral-900">
-                <div className="container-custom py-6 md:py-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 text-center">
-                        <div className="flex flex-col items-center sm:items-start lg:items-center">
-                            <p className="text-xs text-neutral-400 mb-1">CIN</p>
-                            <p className="text-xs md:text-sm text-white font-semibold">U74999DL2016PTC303830</p>
-                        </div>
-                        <div className="flex flex-col items-center sm:items-start lg:items-center">
-                            <p className="text-xs text-neutral-400 mb-1">Status</p>
-                            <p className="text-xs text-white font-semibold" style={{ fontSize: '12px' }}>
-                                AMFI-Registered Mutual Fund Distributor & SIF Distributor
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center sm:items-start lg:items-center">
-                            <p className="text-xs text-neutral-400 mb-1">Date of Initial Registration</p>
-                            <p className="text-xs md:text-sm text-white font-semibold">20 September, 2016</p>
-                        </div>
-                        <div className="flex flex-col items-center sm:items-start lg:items-center">
-                            <p className="text-xs text-neutral-400 mb-1">Current validity of ARN</p>
-                            <p className="text-xs md:text-sm text-white font-semibold">19 September, 2028</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            
             {/* Bottom Bar */}
             <div className="border-t border-neutral-800">
                 <div className="container-custom py-6">

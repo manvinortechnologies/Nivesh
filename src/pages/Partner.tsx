@@ -4,6 +4,24 @@ import Favicon from '../assets/Favicon.png';
 import PersonImage from '../assets/Person.webp';
 import GraphImage from '../assets/graph.webp';
 import { fetchFAQs, type FAQ } from '../services/api';
+import { API_LEAD_PARTNER } from '../config/api';
+
+const PAGE_SOURCE = 'Partner';
+
+function getQueryVariable(variable: string): string | false {
+    const query = window.location.search.substring(1);
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] === variable) return decodeURIComponent(pair[1] || '');
+    }
+    return false;
+}
+
+function getUtmParam(key: string, fallback = ''): string {
+    const value = getQueryVariable(key);
+    return value !== false ? value : fallback;
+}
 
 const testimonialsData = [
     {
@@ -58,6 +76,9 @@ const Partner: React.FC = () => {
         holderType: 'arnHolder',
         getInfo: true,
     });
+    const [submitLoading, setSubmitLoading] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
     const [expandedTestimonials, setExpandedTestimonials] = useState<{ [key: number]: boolean }>({});
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
     const [faqs, setFaqs] = useState<FAQ[]>([]);
@@ -78,11 +99,40 @@ const Partner: React.FC = () => {
         setCurrentProductIndex((prev) => (prev - 1 + products.length) % products.length);
     };
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
-        // Reset form or show success message
+        setSubmitError(null);
+        setSubmitLoading(true);
+        const source = getUtmParam('utm_source') || PAGE_SOURCE;
+        const campaign = getUtmParam('utm_campaign');
+        const content = getUtmParam('utm_content');
+        const medium = getUtmParam('utm_medium');
+        const payload = {
+            Name: formData.fullName,
+            PhoneNo: formData.mobile,
+            Email: formData.email,
+            Message: formData.holderType === 'arnHolder' ? 'ARN Holder' : 'NON ARN Holder',
+            IsDistributor: 0,
+            TypeRequest: `LeadPartnerForm|${campaign}|${content}|${medium}|${source}`,
+        };
+        try {
+            const res = await fetch(API_LEAD_PARTNER, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+                setFormData({ fullName: '', email: '', mobile: '', holderType: 'arnHolder', getInfo: true });
+                setSubmitSuccess(true);
+                return;
+            } else {
+                setSubmitError('Something went wrong. Please try again.');
+            }
+        } catch {
+            setSubmitError('Something went wrong. Please try again.');
+        } finally {
+            setSubmitLoading(false);
+        }
     };
 
     const toggleTestimonial = (index: number) => {
@@ -205,8 +255,17 @@ const Partner: React.FC = () => {
                                             {/* Phone Notch */}
                                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20"></div>
                                             
-                                            {/* Form Content */}
+                                            {/* Form Content or Success Message */}
                                             <div className="relative z-10 p-6 pt-12 h-full overflow-y-auto">
+                                        {submitSuccess ? (
+                                            <div className="text-center py-6">
+                                                <div className="inline-flex w-12 h-12 rounded-full bg-green-100 text-primary items-center justify-center mb-4 mx-auto">
+                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                </div>
+                                                <h2 className="text-lg font-bold text-neutral-800 mb-2">Thank you!</h2>
+                                                <p className="text-neutral-600 text-sm">We have received your details. Our team will get in touch with you shortly.</p>
+                                            </div>
+                                        ) : (
                                         <form onSubmit={handleFormSubmit} className="space-y-4">
                                             {/* Logo */}
                                             <div className="flex justify-center mb-4">
@@ -298,15 +357,21 @@ const Partner: React.FC = () => {
                                                     </span>
                                                 </label>
                                             </div>
+
+                                            {submitError && (
+                                                <p className="text-sm text-red-600 mt-2">{submitError}</p>
+                                            )}
                                             
                                             {/* Submit Button */}
                                             <button
                                                 type="submit"
-                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm transition-colors duration-200 mt-4"
+                                                disabled={submitLoading}
+                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm transition-colors duration-200 mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
                                             >
-                                                Submit
+                                                {submitLoading ? 'Submitting...' : 'Submit'}
                                             </button>
                                         </form>
+                                        )}
                                             </div>
                                         </div>
                                     </div>

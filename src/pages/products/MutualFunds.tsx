@@ -980,7 +980,11 @@ const MutualFunds: React.FC = () => {
             </section>
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                pageSource={selectedCategoryDetail ? selectedCategoryDetail.sub_category : 'Mutual Funds'}
+            />
         </div>
     );
 };

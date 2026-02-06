@@ -31,10 +31,35 @@ const FAQSection: React.FC = () => {
                     categoryMap.get(categoryName)!.push(faq);
                 });
                 
-                // Convert map to array and sort by category name
+                // Only show these three categories, in this order
+                const allowedCategories = ['Partner', 'Platform Features', 'Products & Services'];
                 const categoryArray: FAQCategory[] = Array.from(categoryMap.entries())
-                    .map(([name, faqs]) => ({ name, faqs }))
-                    .sort((a, b) => a.name.localeCompare(b.name));
+                    .map(([name, faqs]) => {
+                        // Deduplicate by question text (same Q&A shown only once)
+                        const seen = new Set<string>();
+                        const uniqueFaqs = faqs.filter((faq) => {
+                            const key = (faq.question || '').trim().toLowerCase();
+                            if (seen.has(key)) return false;
+                            seen.add(key);
+                            return true;
+                        });
+                        return { name, faqs: uniqueFaqs };
+                    })
+                    .filter((cat) => {
+                        const normalized = cat.name.trim().toLowerCase();
+                        return allowedCategories.some(
+                            (allowed) => normalized === allowed.toLowerCase()
+                        );
+                    })
+                    .sort((a, b) => {
+                        const indexA = allowedCategories.findIndex(
+                            (c) => c.toLowerCase() === a.name.trim().toLowerCase()
+                        );
+                        const indexB = allowedCategories.findIndex(
+                            (c) => c.toLowerCase() === b.name.trim().toLowerCase()
+                        );
+                        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+                    });
                 
                 setCategories(categoryArray);
                 

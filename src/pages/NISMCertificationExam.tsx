@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchFAQs, type FAQ } from '../services/api';
+import { API_LEAD_PARTNER } from '../config/api';
+
+const PAGE_SOURCE = 'NISM Certification Exam';
+
+function getQueryVariable(variable: string): string | false {
+    const query = window.location.search.substring(1);
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] === variable) return decodeURIComponent(pair[1] || '');
+    }
+    return false;
+}
+
+function getUtmParam(key: string, fallback = ''): string {
+    const value = getQueryVariable(key);
+    return value !== false ? value : fallback;
+}
 
 const NISMCertificationExam: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
     const [faqs, setFaqs] = useState<FAQ[]>([]);
     const [loadingFaqs, setLoadingFaqs] = useState(true);
+    const [submitLoading, setSubmitLoading] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -50,11 +71,49 @@ const NISMCertificationExam: React.FC = () => {
         }));
     };
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
-        // Reset form or show success message
+        setSubmitError(null);
+        const name = formData.fullName.trim();
+        const email = formData.email.trim();
+        const mobile = formData.mobile.trim();
+        if (!name || !email || !mobile) {
+            setSubmitError('Please fill in Full Name, Email and Mobile Number.');
+            return;
+        }
+        setSubmitLoading(true);
+        const source = getUtmParam('utm_source') || PAGE_SOURCE;
+        const campaign = getUtmParam('utm_campaign');
+        const content = getUtmParam('utm_content');
+        const medium = getUtmParam('utm_medium');
+        const payload = {
+            Name: name,
+            PhoneNo: mobile,
+            Email: email,
+            Message: formData.holderType === 'arnHolder' ? 'ARN Holder' : 'NON ARN Holder',
+            IsDistributor: 0,
+            TypeRequest: `LeadPartnerForm|${campaign}|${content}|${medium}|${source}`,
+        };
+        try {
+            const res = await fetch(API_LEAD_PARTNER, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+                setFormData({ fullName: '', email: '', mobile: '', holderType: 'arnHolder', getInfo: true });
+                setSubmitSuccess(true);
+                return;
+            }
+            const text = await res.text();
+            setSubmitError('Something went wrong. Please try again.');
+            console.warn('Lead API error', res.status, text);
+        } catch (err) {
+            setSubmitError('Something went wrong. Please try again.');
+            console.warn('Lead API request failed', err);
+        } finally {
+            setSubmitLoading(false);
+        }
     };
 
     return (
@@ -96,9 +155,19 @@ const NISMCertificationExam: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Right Column - Form */}
+                        {/* Right Column - Form or Success Message */}
                         <div className="lg:sticky lg:top-24">
-                            <form 
+                            {submitSuccess ? (
+                                <div className="bg-white border-2 border-green-200 rounded-lg p-6 md:p-8 shadow-sm text-center">
+                                    <div className="inline-flex w-12 h-12 rounded-full bg-green-100 text-primary items-center justify-center mb-4">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                    </div>
+                                    <h2 className="text-xl md:text-2xl font-bold text-neutral-800 mb-2">Thank you!</h2>
+                                    <p className="text-neutral-600">We have received your details. Our team will get in touch with you shortly.</p>
+                                </div>
+                            ) : (
+                            <form
+                                noValidate
                                 onSubmit={handleFormSubmit}
                                 className="bg-white border-2 border-green-200 rounded-lg p-6 md:p-8 shadow-sm"
                             >
@@ -176,16 +245,22 @@ const NISMCertificationExam: React.FC = () => {
                                             I would like to get information on products, investment options via WhatsApp, Email, SMS, phone from Nivesh
                                         </span>
                                     </label>
+
+                                    {submitError && (
+                                        <p className="text-sm text-red-600 mt-2">{submitError}</p>
+                                    )}
                                     
                                     {/* Submit Button */}
                                     <button
                                         type="submit"
-                                        className="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200"
+                                        disabled={submitLoading}
+                                        className="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
-                                        Submit
+                                        {submitLoading ? 'Submitting...' : 'Submit'}
                                     </button>
                                 </div>
                             </form>
+                            )}
                         </div>
                     </div>
                 </div>

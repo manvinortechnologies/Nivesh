@@ -610,7 +610,7 @@ const FixedDeposit: React.FC = () => {
 
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pageSource="Fixed Deposit" />
         </div>
     );
 };

@@ -178,7 +178,7 @@ const UnlistedShares: React.FC = () => {
             </section>
 
             {/* Why Platforms and Apps Matter Section */}
-            <section className="py-12 md:py-20 bg-neutral-50">
+            {/* <section className="py-12 md:py-20 bg-neutral-50">
                 <div className="container-custom">
                     <div className="max-w-5xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 leading-tight">
@@ -225,7 +225,7 @@ const UnlistedShares: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* CTA Section */}
             <section className="py-12 md:py-20 bg-gradient-to-r from-primary/10 to-primary-dark/10">
@@ -329,7 +329,7 @@ const UnlistedShares: React.FC = () => {
             </section>
 
             {/* Contact Modal */}
-            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pageSource="Unlisted Shares" />
         </div>
     );
 };
