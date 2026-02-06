@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../components/ui/Button';
-import Favicon from '../assets/Favicon.png';
-import PersonImage from '../assets/Person.webp';
-import GraphImage from '../assets/graph.webp';
-import { fetchFAQs, type FAQ } from '../services/api';
-import { API_LEAD_PARTNER } from '../config/api';
+import Button from '../../components/ui/Button';
+import Favicon from '../../assets/Favicon.png';
+import PersonImage from '../../assets/Person.webp';
+import GraphImage from '../../assets/graph.webp';
+import { fetchFAQs, type FAQ } from '../../services/api';
+import { API_LEAD_PARTNER } from '../../config/api';
 
 const PAGE_SOURCE = 'Partner';
 
@@ -235,7 +235,7 @@ const Partner: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => window.open('https://lead.nivesh.com/i-am-a-distributor/?utm_campaign=PartnerOnboarding', '_blank')}
                                     className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Be A Partner For Free
@@ -400,7 +400,7 @@ const Partner: React.FC = () => {
                             Grow your Financial Business with Nivesh
                         </h2>
                         <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-8">
-                            Nivesh provides independent financial advisors and mutual fund distributors with a comprehensive digital platform to grow their business, manage client relationships, and offer a wide range of financial products. Join thousands of partners who trust Nivesh to power their financial advisory business.
+                            Nivesh provides independent financial advisors and MFDs with a comprehensive digital platform to grow their business, manage client relationships, and offer a wide range of financial products. Join thousands of partners who trust Nivesh to power their financial advisory business.
                         </p>
                         {/* Graph Image */}
                         <div className="mt-8 flex justify-center">
@@ -414,21 +414,21 @@ const Partner: React.FC = () => {
                 </div>
             </section>
 
-            {/* Discover the Best Online Mutual Funds Distributor Platform Section */}
+            {/* Discover the Best Online MFD Platform Section */}
             <section className="py-12 md:py-20 bg-neutral-50">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
-                            Discover the Best Online Mutual Funds Distributor Platform – Go Digital with Nivesh Today
+                            Discover the Best Online MFD Platform – Go Digital with Nivesh Today
                         </h2>
                         <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-8">
-                            Transform your mutual fund distribution business with Nivesh's cutting-edge technology platform. Our digital-first approach helps you serve clients better, scale your operations, and grow your Assets Under Management (AUM) efficiently.
+                            Transform your MFD business with Nivesh's cutting-edge technology platform. Our digital-first approach helps you serve clients better, scale your operations, and grow your Assets Under Management (AUM) efficiently.
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                             {[
                                 {
                                     title: 'Digital Platform',
-                                    description: 'Complete digital infrastructure for managing your mutual fund distribution business.',
+                                    description: 'Complete digital infrastructure for managing your MFD business.',
                                 },
                                 {
                                     title: 'Client Management',
@@ -467,13 +467,13 @@ const Partner: React.FC = () => {
                             </h2>
                             <div className="space-y-4 text-base md:text-lg text-neutral-700 leading-relaxed">
                                 <p>
-                                    Nivesh fulfills client needs by providing multiple product options, helping Mutual Fund Distributors expand their business through cross-selling and up-selling.
+                                    Nivesh fulfills client needs by providing multiple product options, helping MFDs expand their business through cross-selling and up-selling.
                                 </p>
                                 <p>
-                                    Nivesh's online software makes investment easy and efficient, positioning Nivesh as <strong className="text-[#243062] font-bold">India's best Mutual Fund Distributor platform</strong> that centralizes mutual fund investment solutions.
+                                    Nivesh's online software makes investment easy and efficient, positioning Nivesh as <strong className="text-[#243062] font-bold">India's best MFD platform</strong> that centralizes mutual fund investment solutions.
                                 </p>
                                 <p>
-                                    AMFI-registered Mutual Fund Distributors can act in clients' best interest and scale their business easily, with access to products like Corporate FDs, Bonds, PMS, and AIFs for cross-selling and up-selling without revenue limitations.
+                                    AMFI-registered MFDs can act in clients' best interest and scale their business easily, with access to products like Corporate FDs, Bonds, PMS, and AIFs for cross-selling and up-selling without revenue limitations.
                                 </p>
                                 <p>
                                     The platform is intuitive, user-friendly, and simplifies the entire investment journey.
@@ -923,7 +923,7 @@ const Partner: React.FC = () => {
                                 ),
                             },
                             {
-                                text: 'Paperless Experience For Both Distributors And Clients',
+                                text: 'Paperless Experience For Both MFDs And Clients',
                                 icon: (
                                     <svg className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -1088,12 +1088,12 @@ const Partner: React.FC = () => {
                 </div>
             </section>
 
-            {/* Features of Nivesh Online Mutual Funds Distribution Platform Section */}
+            {/* Features of Nivesh Online MFD Platform Section */}
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="text-center mb-12 md:mb-16">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-4 leading-tight">
-                            Features of Nivesh Online Mutual Funds Distribution Platform
+                            Features of Nivesh Online MFD Platform
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">

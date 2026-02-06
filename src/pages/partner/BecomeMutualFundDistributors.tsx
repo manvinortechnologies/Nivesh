@@ -73,7 +73,7 @@ const BecomeMutualFundDistributors: React.FC = () => {
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                onClick={() => window.open('https://app.nivesh.com/partner_onboarding', '_blank')}
                                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                             >
                                 Get Started Now
@@ -378,7 +378,7 @@ const BecomeMutualFundDistributors: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => window.open('https://app.nivesh.com/partner_onboarding', '_blank')}
                                     className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Start My MFD Journey

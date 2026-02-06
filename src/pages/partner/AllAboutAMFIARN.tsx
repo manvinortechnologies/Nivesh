@@ -143,7 +143,7 @@ const AllAboutAMFIARN: React.FC = () => {
                             
                             <div className="space-y-4 text-sm md:text-base text-neutral-600 leading-relaxed">
                                 <p>
-                                    Mutual fund distributors with an AMFI Registration Number (ARN) are eligible to sell mutual funds. To become an ARN Holder, a distributor must qualify for the NISM Series V-A: Mutual Fund Distributors Certification Examination.
+                                    MFDs with an AMFI Registration Number (ARN) are eligible to sell mutual funds. To become an ARN Holder, a distributor must qualify for the NISM Series V-A: MFDs Certification Examination.
                                 </p>
                                 
                                 <p>
@@ -291,7 +291,7 @@ const AllAboutAMFIARN: React.FC = () => {
                         </h2>
                         <div className="space-y-6 text-white">
                             <p className="text-base md:text-lg leading-relaxed">
-                            AMFI Registration Number (ARN) is an essential factor facilitating the ethical and informed distribution of mutual funds throughout India. The process of AMFI registration helps both SEBI and the Association of Mutual Funds in India (AMFI) control the industry by only allowing experienced professionals to act as mutual fund distributors.
+                            AMFI Registration Number (ARN) is an essential factor facilitating the ethical and informed distribution of mutual funds throughout India. The process of AMFI registration helps both SEBI and the Association of Mutual Funds in India (AMFI) control the industry by only allowing experienced professionals to act as mfds.
                             </p>
                             <p className="text-base md:text-lg leading-relaxed">
                             Whenever you hear Mutual Funds are subject to market risk, it is a word of caution that while risk cannot be eliminated, it can be managed more efficiently with professional guidance. It is here that an AMFI-registered distributor with an ARN code plays its part. When the distributor registers online with the AMFI ARN, he proves proficient with the NISM certification and qualified enough to guide investors with goal specific recommendations.
@@ -426,10 +426,10 @@ const AllAboutAMFIARN: React.FC = () => {
                                             Candidates can attend the CPE Program 6 months prior to the expiry of the said Certificate / ARN Card.
                                         </td>
                                         <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 border-r border-neutral-200 bg-white">
-                                            Any associated person, other than Principal, who has completed the age of 50 years as of May 31, 2010, may attend NISM Series V (a): Mutual Fund Distributors CPE Program under the 'Grandfather by Age Category'.
+                                            Any associated person, other than Principal, who has completed the age of 50 years as of May 31, 2010, may attend NISM Series V (a): MFDs CPE Program under the 'Grandfather by Age Category'.
                                         </td>
                                         <td className="px-4 py-4 md:px-6 md:py-5 text-sm md:text-base text-neutral-700 bg-neutral-50">
-                                            Any associated person, other than Principal, having experience of 10 years or more as a distributor, agent or employed or engaged in the sale and/or distribution of Mutual Fund products, as of May 31, 2010, may attend NISM Series V (a): Mutual Fund Distributors CPE Program under the 'Grandfather by Experience Category'.
+                                            Any associated person, other than Principal, having experience of 10 years or more as a distributor, agent or employed or engaged in the sale and/or distribution of Mutual Fund products, as of May 31, 2010, may attend NISM Series V (a): MFDs CPE Program under the 'Grandfather by Experience Category'.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -507,7 +507,7 @@ const AllAboutAMFIARN: React.FC = () => {
                                         <ul className="space-y-3">
                                             {[
                                                 "Application for renewal of ARN/EUIN.",
-                                                "Copy of the passing certificate of the NISM Mutual Fund Distributors Certification Examination or CPE Certificate",
+                                                "Copy of the passing certificate of the NISM MFDs Certification Examination or CPE Certificate",
                                                 "Two stamp-size colour photographs.",
                                             ].map((point, index) => (
                                                 <li key={index} className="flex items-start gap-3">
@@ -526,7 +526,7 @@ const AllAboutAMFIARN: React.FC = () => {
                                     
                                     <div className="mt-6 pt-6 border-t border-neutral-200">
                                         <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                            It is important to ensure that all documents are legitimate and up-to-date. Staying updated with AMFI Certification is essential for compliance and maintaining your reputation as a professional mutual fund distributor.
+                                            It is important to ensure that all documents are legitimate and up-to-date. Staying updated with AMFI Certification is essential for compliance and maintaining your reputation as a professional MFD.
                                         </p>
                                     </div>
                                 </div>

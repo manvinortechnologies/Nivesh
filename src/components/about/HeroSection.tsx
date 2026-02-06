@@ -35,7 +35,7 @@ const HeroSection: React.FC = () => {
 
                     {/* Description */}
                     <p className="text-base md:text-lg text-black/80 max-w-3xl mx-auto leading-relaxed">
-                        We are an award-winning digital-first platform dedicated to helping mutual fund distributors
+                        We are an award-winning digital-first platform dedicated to helping mfds
                         grow their Assets Under Management (AUM) through cutting-edge technology and personalized support.
                     </p>
                 </div>

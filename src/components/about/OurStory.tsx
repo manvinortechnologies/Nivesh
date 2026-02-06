@@ -14,7 +14,7 @@ const OurStory: React.FC = () => {
 
                         <div className="space-y-6 text-base md:text-lg text-gray-100 leading-relaxed">
                             <p>
-                                <strong className="text-gray-300 font-semibold">Nivesh</strong> is an award-winning digital-first platform that empowers independent mutual funds distributors to grow their Assets Under Management (AUM) using state-of-the-art technology. The penetration of financial products like mutual funds, corporate FDs, and insurance in India is still very low, leaving an untapped market of 19.5 crore households. Mutual fund distributors will play a crucial role in increasing the penetration of financial products, particularly in tier 2 & 3 cities and beyond, as India is not a "DIY" (Do It Yourself) market.
+                                <strong className="text-gray-300 font-semibold">Nivesh</strong> is an award-winning digital-first platform that empowers independent mutual funds distributors to grow their Assets Under Management (AUM) using state-of-the-art technology. The penetration of financial products like mutual funds, corporate FDs, and insurance in India is still very low, leaving an untapped market of 19.5 crore households. MFDs will play a crucial role in increasing the penetration of financial products, particularly in tier 2 & 3 cities and beyond, as India is not a "DIY" (Do It Yourself) market.
                             </p>
 
                             <p>

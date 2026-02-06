@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Button from '../components/ui/Button';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../components/ui/Button';
+import PartnerLeadModal from '../../components/modals/PartnerLeadModal';
 
 const ForMFDs: React.FC = () => {
+    const navigate = useNavigate();
+    const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -18,21 +21,24 @@ const ForMFDs: React.FC = () => {
                             Home
                         </Link>
                         <span className="text-neutral-400">/</span>
-                        <span className="text-neutral-500">For MFDs</span>
+                        <span className="text-neutral-500">Transform Your MFD Business</span>
                     </nav>
                     
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-8 leading-tight">
-                            Transform your distribution business into a digital wealth brand.
-                        </h1>
+                        <h2 className="text-2xl sm:text-3xl md:hidden font-bold text-[#243062] mb-8 leading-tight">
+                                Transform your distribution business into a digital wealth brand.
+                            </h2>
+                            <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl font-bold text-[#243062] mb-8 leading-tight">
+                                Transform your distribution business into a digital wealth brand.
+                            </h1>
                         <p className="text-base md:text-lg text-neutral-700 mb-8 leading-relaxed max-w-3xl mx-auto">
-                            Nivesh empowers Mutual Fund Distributors to scale faster, serve better, and evolve beyond transactions — with a digital platform that's fully white-labeled, multi-product, and client-first.
+                            Nivesh empowers MFDs to scale faster, serve better, and evolve beyond transactions — with a digital platform that's fully white-labeled, multi-product, and client-first.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 mt-20 justify-center">
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                onClick={() => window.open('https://lead.nivesh.com/i-am-a-distributor/?utm_campaign=PartnerOnboarding', '_blank')}
                                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
                             >
                                 Get Your Free Platform
@@ -40,7 +46,7 @@ const ForMFDs: React.FC = () => {
                             <Button
                                 variant="outline"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                onClick={() => setIsLeadModalOpen(true)}
                                 className="!border-2 !border-[#243062] !text-[#243062] hover:!bg-[#243062] hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
                             >
                                 Book a Demo →
@@ -346,7 +352,7 @@ const ForMFDs: React.FC = () => {
                             <Button
                                 variant="outline"
                                 size="lg"
-                                onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                onClick={() => navigate('/the-nivesh-platform')}
                                 className="!border-2 !border-primary !text-primary hover:!bg-primary hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
                             >
                                 View Platform Features →
@@ -562,7 +568,7 @@ const ForMFDs: React.FC = () => {
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => window.open('https://app.nivesh.com/partner_onboarding', '_blank')}
                                     className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Get Started Free
@@ -570,7 +576,7 @@ const ForMFDs: React.FC = () => {
                                 <Button
                                     variant="outline"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => setIsLeadModalOpen(true)}
                                     className="!border-2 !border-primary !text-primary hover:!bg-primary hover:!text-white px-8 py-4 rounded-lg text-lg font-semibold"
                                 >
                                     Talk to a Platform Expert →
@@ -580,6 +586,12 @@ const ForMFDs: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            <PartnerLeadModal
+                isOpen={isLeadModalOpen}
+                onClose={() => setIsLeadModalOpen(false)}
+                pageSource="For MFDs"
+            />
         </div>
     );
 };

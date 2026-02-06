@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchFAQs, type FAQ } from '../services/api';
-import { API_LEAD_PARTNER } from '../config/api';
+import { fetchFAQs, type FAQ } from '../../services/api';
+import { API_LEAD_PARTNER } from '../../config/api';
 
 const PAGE_SOURCE = 'NISM Certification Exam';
 
@@ -139,15 +139,15 @@ const NISMCertificationExam: React.FC = () => {
                             
                             <div className="space-y-4 text-sm md:text-base text-neutral-600 leading-relaxed">
                                 <p>
-                                    The NISM (National Institute of Securities Markets) Certification Exam is a mandatory examination for individuals who wish to become mutual fund distributors in India. NISM is an educational institution established by the Securities and Exchange Board of India (SEBI) to enhance the quality of the securities markets.
+                                    The NISM (National Institute of Securities Markets) Certification Exam is a mandatory examination for individuals who wish to become MFDs in India. NISM is an educational institution established by the Securities and Exchange Board of India (SEBI) to enhance the quality of the securities markets.
                                 </p>
                                 
                                 <p>
-                                    The NISM-Series-V-A: Mutual Fund Distributors Certification Examination is specifically designed for individuals who want to distribute mutual fund products. This certification is a prerequisite for obtaining an AMFI Registration Number (ARN), which is essential for selling mutual funds in India.
+                                    The NISM-Series-V-A: MFD Certification Examination is specifically designed for individuals who want to distribute mutual fund products. This certification is a prerequisite for obtaining an AMFI Registration Number (ARN), which is essential for selling mutual funds in India.
                                 </p>
                                 
                                 <p>
-                                    Passing the NISM exam demonstrates your understanding of mutual fund products, regulations, and distribution practices, ensuring you can provide quality advice to investors.
+                                    Passing the NISM exam demonstrates your understanding of mutual fund products, regulations, and MFD practices, ensuring you can provide quality advice to investors.
                                 </p>
                             </div>
                         </div>
@@ -339,7 +339,7 @@ const NISMCertificationExam: React.FC = () => {
                         <div className="flex justify-center">
                             <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200 hover:shadow-lg transition-all duration-300 w-full max-w-md">
                                 <h5 className="text-lg md:text-xl font-bold text-[#243062]">
-                                    11. Become a Mutual Fund Distributor
+                                    11. Become an MFD
                                 </h5>
                             </div>
                         </div>
@@ -360,9 +360,9 @@ const NISMCertificationExam: React.FC = () => {
                                     According to the guidelines given by The National Institute of Securities Market (NISM):
                                 </p>
                                 <ul className="space-y-3 list-disc list-inside text-sm md:text-base text-neutral-700">
-                                    <li>Anyone who is 18 years and above can participate in the NISM Exam and become a mutual fund distributor.</li>
+                                    <li>Anyone who is 18 years and above can participate in the NISM Exam and become an MFD.</li>
                                     <li>There is no educational qualification listed as per the Association of Mutual Fund (AMFI) website.</li>
-                                    <li>If you are looking to enter the mutual fund distribution business, you need to clear the NISM certification exam and obtain the NISM certificate examination to get started.</li>
+                                    <li>If you are looking to enter the MFD business, you need to clear the NISM certification exam and obtain the NISM certificate examination to get started.</li>
                                 </ul>
                             </div>
                         </div>
@@ -383,7 +383,7 @@ const NISMCertificationExam: React.FC = () => {
                                     <li>Register for the NISM exam by visiting the official website.</li>
                                     <li>Complete the NISM registration process and proceed with the NISM login to schedule your exam.</li>
                                     <li>Choose the NISM certificate course that matches your requirements.</li>
-                                    <li>After passing the mutual fund distributor exam, you will receive the NISM mutual fund certification.</li>
+                                    <li>After passing the MFD exam, you will receive the NISM mutual fund certification.</li>
                                 </ul>
                             </div>
                         </div>
@@ -401,12 +401,12 @@ const NISMCertificationExam: React.FC = () => {
                         <div className="space-y-6">
                             <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                                 <ul className="space-y-3 list-disc list-inside text-sm md:text-base text-[#243062] mb-4">
-                                    <li>It is a mandatory requirement for those who want to become mutual fund distributors.</li>
+                                    <li>It is a mandatory requirement for those who want to become MFDs.</li>
                                     <li>The AMFI certification ensures compliance with industry regulations.</li>
                                     <li>Helps in building credibility and trust among clients.</li>
                                 </ul>
                                 <p className="text-base md:text-lg text-[#243062] leading-relaxed">
-                                This certification allows a person to become a certified mutual fund distributor.
+                                This certification allows a person to become a certified MFD.
                                 </p>
                             </div>
                         </div>
@@ -414,18 +414,18 @@ const NISMCertificationExam: React.FC = () => {
                 </div>
             </section>
 
-            {/* Mode to Appear in the NISM Mutual Fund Distributor Exam Section */}
+            {/* Mode to Appear in the NISM MFD Exam Section */}
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
-                            Mode to Appear in the NISM Mutual Fund Distributor Exam
+                            Mode to Appear in the NISM MFD Exam
                         </h2>
                         
                         {/* Introductory Content */}
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200 mb-6">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                Based on the details provided by the Association of Mutual Funds in India (AMFI), the NISM Mutual Fund Distributor Exam can be attempted either in English or Hindi.
+                                Based on the details provided by the Association of Mutual Funds in India (AMFI), the NISM MFD Exam can be attempted either in English or Hindi.
                             </p>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
                                 The NISM certification examination is provided both online and offline for English speakers.
@@ -465,7 +465,7 @@ const NISMCertificationExam: React.FC = () => {
                             </h3>
                             <ol className="space-y-3 list-decimal list-inside text-sm md:text-base text-neutral-700 ml-2">
                                 <li>Register for the NISM exam on the official portal.</li>
-                                <li>Select the NISM certificate course relevant to mutual fund distribution.</li>
+                                <li>Select the NISM certificate course relevant to MFD.</li>
                                 <li>Appear for the NISM certificate examination as per the chosen mode.</li>
                                 <li>Clear the mutual fund exam to obtain the NISM mutual fund certification.</li>
                             </ol>
@@ -474,7 +474,7 @@ const NISMCertificationExam: React.FC = () => {
                         {/* Additional Information */}
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                            If you are wondering what is NISM certification, it is a mandatory qualification to become a certified mutual fund distributor.
+                            If you are wondering what is NISM certification, it is a mandatory qualification to become a certified MFD.
                             </p>
                         </div>
                     </div>
@@ -490,7 +490,7 @@ const NISMCertificationExam: React.FC = () => {
                         </h2>
                         <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-neutral-200">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                The NISM-Series-V-A: Mutual Fund Distributors Certification Examination fee is <strong className="text-[#243062]">₹1,500</strong> (inclusive of taxes). This fee is payable at the time of registration for the exam.
+                                The NISM-Series-V-A: MFD Certification Examination fee is <strong className="text-[#243062]">₹1,500</strong> (inclusive of taxes). This fee is payable at the time of registration for the exam.
                             </p>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
                                 The exam fee is non-refundable and non-transferable. Candidates must ensure they are fully prepared before registering for the examination. In case of failure, candidates will need to pay the full fee again to retake the exam.
@@ -512,10 +512,10 @@ const NISMCertificationExam: React.FC = () => {
                                 The NISM-Series-V-A certificate is valid for <strong className="text-[#243062]">3 years</strong> from the date of issue. During this period, the certificate holder can use it to obtain and maintain their AMFI Registration Number (ARN).
                             </p>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                To renew the certificate after 3 years, certificate holders must complete the mandatory Continuous Professional Education (CPE) training program. The CPE training ensures that distributors stay updated with the latest developments in the mutual fund industry and regulatory changes.
+                                To renew the certificate after 3 years, certificate holders must complete the mandatory Continuous Professional Education (CPE) training program. The CPE training ensures that MFDs stay updated with the latest developments in the mutual fund industry and regulatory changes.
                             </p>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                It is important to complete the CPE training before the certificate expires to avoid any interruption in your distribution activities.
+                                It is important to complete the CPE training before the certificate expires to avoid any interruption in your MFD activities.
                             </p>
                         </div>
                     </div>
@@ -532,7 +532,7 @@ const NISMCertificationExam: React.FC = () => {
                         <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-neutral-200">
                             {/* Introductory Paragraph */}
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-6">
-                                The NISM Exam follows a structured pattern for candidates appearing in the mutual fund distributor exam. Below are the key details:
+                                The NISM Exam follows a structured pattern for candidates appearing in the MFD exam. Below are the key details:
                             </p>
                             
                             {/* Exam Pattern Table */}
@@ -583,7 +583,7 @@ const NISMCertificationExam: React.FC = () => {
                             {/* Additional Information Paragraphs */}
                             <div className="space-y-4 mb-6">
                                 <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                    If you are wondering what is NISM certification, it is a mandatory qualification for mutual fund distributors. The AMFI certification ensures compliance with industry standards.
+                                    If you are wondering what is NISM certification, it is a mandatory qualification for MFDs. The AMFI certification ensures compliance with industry standards.
                                 </p>
                                 <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
                                     For those searching how to get NISM certificate, the process starts with NISM register, selecting the exam, and passing with the required marks.
@@ -606,14 +606,14 @@ const NISMCertificationExam: React.FC = () => {
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-8 md:mb-12 text-center leading-tight">
-                            Name of Module: NISM-Series-V-A: Mutual Fund Distributors Certification Examination
+                            Name of Module: NISM-Series-V-A: MFD Certification Examination
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                The NISM-Series-V-A: Mutual Fund Distributors Certification Examination is the official certification program for individuals who wish to become mutual fund distributors in India.
+                                The NISM-Series-V-A: MFD Certification Examination is the official certification program for individuals who wish to become MFDs in India.
                             </p>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-4">
-                                This module covers comprehensive topics related to mutual fund products, their features, benefits, risks, regulatory framework, and distribution practices. The examination ensures that candidates have a thorough understanding of:
+                                This module covers comprehensive topics related to mutual fund products, their features, benefits, risks, regulatory framework, and MFD practices. The examination ensures that candidates have a thorough understanding of:
                             </p>
                             <ul className="space-y-2 list-disc list-inside text-sm md:text-base text-neutral-700 mb-4">
                                 <li>Mutual fund concepts and products</li>
@@ -623,7 +623,7 @@ const NISMCertificationExam: React.FC = () => {
                                 <li>Ethical practices and code of conduct</li>
                             </ul>
                             <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
-                                Successful completion of this examination is mandatory for obtaining an AMFI Registration Number (ARN) and becoming a registered mutual fund distributor.
+                                Successful completion of this examination is mandatory for obtaining an AMFI Registration Number (ARN) and becoming a registered MFD.
                             </p>
                         </div>
                     </div>
@@ -640,7 +640,7 @@ const NISMCertificationExam: React.FC = () => {
                         <div className="space-y-6">
                             <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-neutral-200">
                                 <p className="text-base md:text-lg text-neutral-700 leading-relaxed mb-6">
-                                    To enroll for the NISM-Series-V-A: Mutual Fund Distributors Certification Examination, follow these steps:
+                                    To enroll for the NISM-Series-V-A: MFD Certification Examination, follow these steps:
                                 </p>
                                 <ol className="space-y-4 list-decimal list-inside text-sm md:text-base text-neutral-700">
                                     <li className="mb-2">
@@ -650,7 +650,7 @@ const NISMCertificationExam: React.FC = () => {
                                         <strong className="text-[#243062]">Create an Account:</strong> Register yourself on the NISM portal by providing your personal details, email ID, and mobile number.
                                     </li>
                                     <li className="mb-2">
-                                        <strong className="text-[#243062]">Select the Exam:</strong> Choose NISM-Series-V-A: Mutual Fund Distributors Certification Examination from the list of available exams.
+                                        <strong className="text-[#243062]">Select the Exam:</strong> Choose NISM-Series-V-A: MFD Certification Examination from the list of available exams.
                                     </li>
                                     <li className="mb-2">
                                         <strong className="text-[#243062]">Fill Application Form:</strong> Complete the online application form with all required details including personal information, educational qualifications, and contact details.
@@ -725,7 +725,7 @@ const NISMCertificationExam: React.FC = () => {
                                     subtopics: [
                                         'Describe Role of Regulators in India',
                                         'Discuss Role of Securities and Exchange Board of India',
-                                        'Know the Due Diligence Process Followed by AMCs for Distributors of Mutual Funds',
+                                        'Know the Due Diligence Process Followed by AMCs for MFDs',
                                         'Explain Investor Grievance and Redressal Standards (Explain about SCORES)',
                                         'Understand AMFI Code of Conduct for Intermediaries',
                                     ],
@@ -738,17 +738,17 @@ const NISMCertificationExam: React.FC = () => {
                                     ],
                                 },
                                 {
-                                    topic: 'VI. Fund Distribution and Channel Management Practices',
+                                    topic: 'VI. MFD and Channel Management Practices',
                                     subtopics: [
-                                        'Explain the Role and Importance of Mutual Fund Distributors',
-                                        'Understand the Classification of Mutual Fund Distributors',
+                                        'Explain the Role and Importance of MFDs',
+                                        'Understand the Classification of MFDs',
                                         'Explain the Modes of Distribution',
-                                        'Understand the Pre-requisites to Become Distributor of the Mutual Fund',
-                                        'Explain Revenue for a Mutual Fund Distributor',
+                                        'Understand the Pre-requisites to Become an MFD',
+                                        'Explain Revenue for an MFD',
                                         'Know the Commission Disclosure mandated by SEBI',
-                                        'Explain the Due Diligence Process by AMCs for Distributors of Mutual Funds',
+                                        'Explain the Due Diligence Process by AMCs for MFDs',
                                         'Discuss Nomination Facilities to Agents / Distributors and Payment of Commission to Nominee',
-                                        'Explain About Change of Distributor',
+                                        'Explain About Change of MFD',
                                     ],
                                 },
                                 {

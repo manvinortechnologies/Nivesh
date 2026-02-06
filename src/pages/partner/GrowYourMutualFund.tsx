@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
+import PartnerLeadModal from '../../components/modals/PartnerLeadModal';
 import Favicon from '../../assets/Favicon.png';
 import Testimonials from '../../components/home/Testimonials';
 import { fetchFAQs, convertYouTubeUrlToEmbed, type FAQ } from '../../services/api';
@@ -37,6 +38,7 @@ const GrowYourMutualFund: React.FC = () => {
     const [openFaqs, setOpenFaqs] = useState<{ [key: number]: boolean }>({});
     const [faqs, setFaqs] = useState<FAQ[]>([]);
     const [loadingFaqs, setLoadingFaqs] = useState(true);
+    const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -74,20 +76,6 @@ const GrowYourMutualFund: React.FC = () => {
         }));
     };
 
-    const scrollToHero = () => {
-        const heroSection = document.getElementById('hero-section');
-        if (heroSection) {
-            const offset = 80; // Account for fixed navigation bar
-            const elementPosition = heroSection.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    };
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -154,14 +142,14 @@ const GrowYourMutualFund: React.FC = () => {
                             </h1>
                             
                             <p className="text-base sm:text-lg md:text-xl text-neutral-700 mb-6 sm:mb-7 md:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-6 lg:px-0">
-                                Transform your mutual fund distribution business with Nivesh's comprehensive platform. Scale your operations, enhance client relationships, and accelerate your growth with cutting-edge technology and dedicated support.
+                                Transform your mfd business with Nivesh's comprehensive platform. Scale your operations, enhance client relationships, and accelerate your growth with cutting-edge technology and dedicated support.
                             </p>
                             
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-6 sm:mb-7 md:mb-8 px-4 sm:px-0">
                                 <Button
                                     variant="primary"
                                     size="lg"
-                                    onClick={() => window.open('https://app.nivesh.com', '_blank')}
+                                    onClick={() => window.open('https://app.nivesh.com/partner_onboarding', '_blank')}
                                     className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
                                 >
                                     Start Growing Today
@@ -170,7 +158,7 @@ const GrowYourMutualFund: React.FC = () => {
                                     variant="outline"
                                     size="lg"
                                     onClick={() => window.open('https://nivesh.com/en/partner', '_blank')}
-                                    className="border-2 border-[#243062] text-[#243062] hover:bg-[#243062] hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold w-full sm:w-auto"
+                                    className="!border-2 !border-[#243062] !text-[#243062] hover:!bg-[#243062] hover:!text-white hover:!border-[#243062] active:!bg-[#243062] active:!text-white active:!border-[#243062] focus:!bg-[#243062] focus:!text-white focus:!border-[#243062] focus:!outline-none px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold w-full sm:w-auto"
                                 >
                                     Learn More
                                 </Button>
@@ -304,15 +292,15 @@ const GrowYourMutualFund: React.FC = () => {
                 </div>
             </section>
 
-            {/* Building Your Mutual Fund Distribution Business Section */}
+            {/* Building Your MFD Business Section */}
             <section className="py-12 md:py-20 bg-[#F87171]">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-tight">
-                            Building Your Mutual Fund Distribution Business with a Simple But Powerful Formula
+                            Building Your MFD Business with a Simple But Powerful Formula
                         </h2>
                         <p className="text-base md:text-lg lg:text-xl text-white mb-6 leading-relaxed">
-                            With the rapidly evolving mutual fund industry of today, growing your mutual fund distribution business is as uncomplicated as a straightforward but extremely efficient recipe:
+                            With the rapidly evolving mutual fund industry of today, growing your mfd business is as uncomplicated as a straightforward but extremely efficient recipe:
                         </p>
                         <div className="border border-white backdrop-blur-sm rounded-lg p-4 md:p-6 mb-6">
                             <p className="text-lg md:text-xl lg:text-xl font-semibold text-white">
@@ -320,7 +308,7 @@ const GrowYourMutualFund: React.FC = () => {
                             </p>
                         </div>
                         <p className="text-base md:text-lg lg:text-xl text-white leading-relaxed">
-                            This proven technique is central to successful distributors growing their mutual fund businesses. But during 2025, there is one critical ingredient that has been identified as an absolute necessity: digital enablement.
+                            This proven technique is central to successful MFDs growing their mutual fund businesses. But during 2025, there is one critical ingredient that has been identified as an absolute necessity: digital enablement.
                         </p>
                     </div>
                 </div>
@@ -345,7 +333,7 @@ const GrowYourMutualFund: React.FC = () => {
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={scrollToHero}
+                                onClick={() => setIsLeadModalOpen(true)}
                                 className="bg-[#243062] hover:bg-[#1a2447] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
                             >
                                 Join Us
@@ -393,7 +381,7 @@ const GrowYourMutualFund: React.FC = () => {
                             <Button
                                 variant="primary"
                                 size="lg"
-                                onClick={scrollToHero}
+                                onClick={() => setIsLeadModalOpen(true)}
                                 className="bg-[#243062] hover:bg-[#1a2447] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
                             >
                                 Join Us
@@ -412,7 +400,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                                The foundation of any successful mutual fund distribution business lies in understanding your clients' goals. Whether they aim to save for retirement, build an emergency fund, or achieve short-term goals, providing personalized recommendation fosters trust and loyalty.
+                                The foundation of any successful mfd business lies in understanding your clients' goals. Whether they aim to save for retirement, build an emergency fund, or achieve short-term goals, providing personalized recommendation fosters trust and loyalty.
                             </p>
                             <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
                                 Key Steps to Build Client Trust:
@@ -436,7 +424,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                                In today's tech-driven world, integrating digital tools into your mutual fund distribution business is essential. Clients expect seamless processes for onboarding, investment tracking, and reporting.
+                                In today's tech-driven world, integrating digital tools into your mfd business is essential. Clients expect seamless processes for onboarding, investment tracking, and reporting.
                             </p>
                             <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
                                 How Digital Tools Can Help Grow Your Business:
@@ -460,14 +448,14 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                                Promoting Systematic Investment Plans (SIPs) is a proven way to grow your mutual fund distribution business. SIPs encourage clients to invest regularly, ensuring a steady inflow of funds for both the client and distributor.
+                                Promoting Systematic Investment Plans (SIPs) is a proven way to grow your MFD business. SIPs encourage clients to invest regularly, ensuring a steady inflow of funds for both the client and MFD.
                             </p>
                             <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
                                 Benefits of Focusing on SIPs:
                             </h3>
                             <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
                                 <li>Builds a long-term relationship with clients.</li>
-                                <li>Ensures consistent Mutual Fund Distributor commissions for distributors.</li>
+                                <li>Ensures consistent MFD commissions for MFDs.</li>
                                 <li>SIPs are easy to explain and help clients understand the power of compounding.</li>
                             </ul>
                         </div>
@@ -484,7 +472,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                                Clients appreciate distributors who provide comprehensive solutions. By offering multiple investment options like tax-saving funds, debt funds, and diversified equity funds, you can maximize your Mutual Fund Distributor income.
+                                Clients appreciate MFDs who provide comprehensive solutions. By offering multiple investment options like tax-saving funds, debt funds, and diversified equity funds, you can maximize your MFD income.
                             </p>
                             <h3 className="text-xl md:text-2xl font-bold text-[#243062] mb-4">
                                 Suggestions to Diversify Portfolios:
@@ -508,7 +496,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                            Long-term growth in the mutual fund distribution business relies on client retention. Offering exceptional service and goal specific recommendations ensures client loyalty.
+                            Long-term growth in the MFD business relies on client retention. Offering exceptional service and goal specific recommendations ensures client loyalty.
                             </p>
                             <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
                                 <li>Communicate regularly about market updates and portfolio performance.</li>
@@ -529,7 +517,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                            The mutual fund industry is constantly evolving. To stay ahead, keep yourself informed about market trends, new mutual fund launches, and regulatory updates. This knowledge positions you as a trusted mutual fund distributor in the eyes of your clients.                            </p>
+                            The mutual fund industry is constantly evolving. To stay ahead, keep yourself informed about market trends, new mutual fund launches, and regulatory updates. This knowledge positions you as a trusted MFD in the eyes of your clients.                            </p>
                         </div>
                     </div>
                 </div>
@@ -544,7 +532,7 @@ const GrowYourMutualFund: React.FC = () => {
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed mb-6">
-                                Using a platform like Nivesh can significantly enhance the growth of your mutual fund distribution business by providing:
+                                Using a platform like Nivesh can significantly enhance the growth of your MFD business by providing:
                             </p>
                             <ul className="space-y-4 list-disc list-inside text-sm md:text-base text-neutral-700 leading-relaxed">
                                 <li>Instant client onboarding.</li>
@@ -557,22 +545,22 @@ const GrowYourMutualFund: React.FC = () => {
                 </div>
             </section>
 
-            {/* Scale Your Mutual Fund Distribution Business Strategically With NIVESH Section */}
+            {/* Scale Your MFD Business Strategically With NIVESH Section */}
             <section className="py-12 md:py-20 bg-white">
                 <div className="container-custom">
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 text-center leading-tight">
-                            Scale Your Mutual Fund Distribution Business Strategically With NIVESH
+                            Scale Your MFD Business Strategically With NIVESH
                         </h2>
                         <div className="bg-neutral-50 rounded-xl p-6 md:p-8 border border-neutral-200 space-y-4">
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                Growing your mutual fund distribution business requires a combination of personalized service, smart marketing, and effective use of technology. By focusing on client satisfaction, offering value-added services, and leveraging digital tools, you can position yourself as a leading AMFI Mutual Fund Distributor and achieve long-term success.
+                                Growing your MFD business requires a combination of personalized service, smart marketing, and effective use of technology. By focusing on client satisfaction, offering value-added services, and leveraging digital tools, you can position yourself as a leading AMFI MFD and achieve long-term success.
                             </p>
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                Start implementing these growth strategies today to expand your client base, increase your Mutual Fund Distributor income, and build a thriving business!
+                                Start implementing these growth strategies today to expand your client base, increase your MFD income, and build a thriving business!
                             </p>
                             <p className="text-sm md:text-base text-neutral-700 leading-relaxed">
-                                Take the first step to growing your business today with platforms like Nivesh, and position yourself as a leader in the mutual fund distribution industry!
+                                Take the first step to growing your business today with platforms like Nivesh, and position yourself as a leader in the MFD industry!
                             </p>
                         </div>
                     </div>
@@ -639,10 +627,10 @@ const GrowYourMutualFund: React.FC = () => {
                     <div className="max-w-5xl mx-auto">
                         <div className="text-center mb-12 md:mb-16">
                             <h2 className="text-3xl md:text-5xl font-bold text-[#243062] mb-6 md:mb-8 leading-tight">
-                                Grow Digitally with Nivesh: Paperless Solutions for Mutual Fund Distributors
+                                Grow Digitally with Nivesh: Paperless Solutions for MFDs
                             </h2>
                             <p className="text-base md:text-lg text-neutral-700 max-w-3xl mx-auto leading-relaxed">
-                                Nivesh provides your mutual fund distribution industry with a 100% digital, paperless platform that is perfectly suited for efficiency, compliance, and customer happiness. Here's how:
+                                Nivesh provides your MFD industry with a 100% digital, paperless platform that is perfectly suited for efficiency, compliance, and customer happiness. Here's how:
                             </p>
                         </div>
                         
@@ -1056,7 +1044,11 @@ const GrowYourMutualFund: React.FC = () => {
 
             <Testimonials variant="default" />
 
-            
+            <PartnerLeadModal
+                isOpen={isLeadModalOpen}
+                onClose={() => setIsLeadModalOpen(false)}
+                pageSource="Grow Your Mutual Fund"
+            />
         </div>
     );
 };

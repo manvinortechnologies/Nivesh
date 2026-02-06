@@ -22,7 +22,7 @@ const MFDRevolution: React.FC = () => {
 
                         <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-r-xl">
                             <p className="text-base md:text-lg font-medium text-neutral-800 italic">
-                                "The future belongs to Mutual Fund Distributors who put clients at the center...and tech at their fingertips."
+                                "The future belongs to MFDs who put clients at the center...and tech at their fingertips."
                             </p>
                         </div>
                     </div>
